@@ -7,7 +7,7 @@ A demo project implemented in Laravel 9 in partial fulfillment of the requiremen
 ## Setup Guide
 ### 1. Clone GitHub repo for this project locally
 ```
-git clone https://github.com/xyberpastoril/pcbms.git
+git clone https://github.com/xyberpastoril/PCBMS.git
 ```
 ### 2. `cd` into the `pcbms` project
 ```
