@@ -28,6 +28,12 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],  
+            [
+                'name' => 'Test Cashier',
+                'email' => 'cashier@email.com',
+                'password' => Hash::make('cashier'),
+                'username' => 'cashier',
+                'designation' => 'cashier',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],           
