@@ -1,9 +1,14 @@
-@extends('layouts.app')
+@extends('includes.template')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row mt-5">
+        <div class="col-lg-8">
+            <img class="mb-3" src="{{ asset('img/VSU Logo.png') }}" width="auto" height="50px">
+            <p class="m-0" style="font-size:24px">Office of the Vice President of Research, Extension, and Innovation</p>
+            <p class="m-0 display-5">Pasalubong Center Business Management System</p>
+        </div>
+        <div class="col-lg-4">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
@@ -12,7 +17,7 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
