@@ -35,5 +35,10 @@ Just in case your database server's configuration is different from the default 
 php artisan migrate --seed
 ```
 ## Default Username and Password
-Username: **admin**<br>
-Password: **admin**
+### For Store Manager
+Username: **manager**<br>
+Password: **manager**
+
+### For Cashier
+Username: **cashier**<br>
+Password: **cashier**
