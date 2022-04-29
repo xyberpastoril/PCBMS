@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable(); // TODO: Remove this later
             $table->string('password');
             $table->rememberToken(); // TODO: Remove this later
-            $table->timestamps(); // TODO: Remove updated_at
+            $table->timestamp('created_at')->default(now());
         });
     }
 

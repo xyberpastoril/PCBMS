@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('customer_id')->constrained();
-            $table->timestamps(); // TODO: Remove `updated at`
+            $table->timestamp('created_at')->default(now());
         });
     }
 

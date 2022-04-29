@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('mobile_number');
             $table->mediumText('physical_address');
-            $table->timestamps(); // TODO: Remove updated_at
+            $table->timestamp('created_at')->default(now());
         });
     }
 

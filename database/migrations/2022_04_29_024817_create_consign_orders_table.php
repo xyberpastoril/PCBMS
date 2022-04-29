@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('order_sent_at')->nullable();
             $table->timestamp('order_delivered_at')->nullable();
             $table->string('delivered_by')->nullable();
-            $table->timestamps(); // TODO: Remove `updated_at`
+            $table->timestamp('created_at')->default(now());
         });
     }
 

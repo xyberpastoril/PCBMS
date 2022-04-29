@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps(); // TODO: Remove updated at
+            $table->timestamp('created_at')->default(now());
         });
     }
 

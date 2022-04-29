@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->timestamp('login')->default(now());
             $table->timestamp('logout')->default(now()->addHour());
-            $table->timestamps(); // TODO: Remove
         });
     }
 

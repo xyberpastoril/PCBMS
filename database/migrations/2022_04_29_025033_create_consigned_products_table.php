@@ -28,7 +28,6 @@ return new class extends Migration
             $table->integer('quantity')->default(0);
             $table->integer('quantity_paid')->default(0);
             $table->integer('quantity_returned')->default(0);
-            $table->timestamps(); // TODO: Remove timestamps.
         });
     }
 

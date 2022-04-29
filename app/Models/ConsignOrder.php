@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class ConsignOrder extends Model
 {
     use HasFactory;
+    
+    /**
+     * The name of the "updated at" column.
+     *
+     * @var string|null
+     */
+    const UPDATED_AT = null;
 
     /**
      * The attributes that are mass assignable.

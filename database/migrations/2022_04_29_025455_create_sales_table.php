@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('invoice_id')->constrained();
             $table->foreignId('consigned_product_id')->constrained();
             $table->integer('quantity_sold');
-            $table->timestamps(); // TODO: Remove timestamps
         });
     }
 
