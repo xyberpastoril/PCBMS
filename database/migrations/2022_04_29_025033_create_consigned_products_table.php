@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('consign_order_id')->constrained();
             $table->foreignId('product_id')->constrained();
-            $table->date('expires_on');
-            $table->float('unit_price');
-            $table->float('sale_price');
-            $table->integer('quantity');
+            $table->date('expires_on')->nullable();
+            $table->float('unit_price')->nullable();
+            $table->float('sale_price')->nullable();
+            $table->integer('quantity')->default(0);
             $table->integer('quantity_paid')->default(0);
             $table->integer('quantity_returned')->default(0);
             $table->timestamps(); // TODO: Remove timestamps.

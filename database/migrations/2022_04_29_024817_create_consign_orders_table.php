@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->timestamp('order_sent_at')->nullable();
             $table->timestamp('order_delivered_at')->nullable();
-            $table->string('delivered_by');
+            $table->string('delivered_by')->nullable();
             $table->timestamps(); // TODO: Remove `updated_at`
         });
     }
