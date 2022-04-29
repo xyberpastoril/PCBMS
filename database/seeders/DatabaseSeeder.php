@@ -16,27 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        DB::table('users')->insert([
-            [
-                'name' => 'Test Manager',
-                'email' => 'manager@email.com',
-                'password' => Hash::make('manager'),
-                'username' => 'manager',
-                'designation' => 'manager',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],  
-            [
-                'name' => 'Test Cashier',
-                'email' => 'cashier@email.com',
-                'password' => Hash::make('cashier'),
-                'username' => 'cashier',
-                'designation' => 'cashier',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],           
+        $this->call([
+            UserSeeder::class,
         ]);
     }
 }
