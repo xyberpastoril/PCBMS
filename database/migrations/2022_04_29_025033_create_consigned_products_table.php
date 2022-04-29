@@ -17,6 +17,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('consign_order_id')->constrained();
             $table->foreignId('product_id')->constrained();
+            $table->enum('unit', [
+                'pack',
+                'piece',
+            ]);
+            $table->string('particulars');
             $table->date('expires_on')->nullable();
             $table->float('unit_price')->nullable();
             $table->float('sale_price')->nullable();
