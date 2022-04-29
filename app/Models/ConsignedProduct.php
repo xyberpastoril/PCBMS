@@ -21,4 +21,34 @@ class ConsignedProduct extends Model
         'unit',
         'particulars',
     ];
+
+    /**
+     * Get the product that owns the consign product.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Get the consign order that owns the consign product.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function consignOrder()
+    {
+        return $this->belongsTo(ConsignOrder::class);
+    }
+
+    /**
+     * Get the sales of the consigned product.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

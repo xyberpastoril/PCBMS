@@ -19,4 +19,24 @@ class Sale extends Model
         'consigned_product_id',
         'quantity_sold',
     ];
+
+    /**
+     * Get the invoice that owns the sale.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
+    /**
+     * Get the consigned product that owns the sale.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function consignedProduct()
+    {
+        return $this->belongsTo(ConsignedProduct::class);
+    }
 }

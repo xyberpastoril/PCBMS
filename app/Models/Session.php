@@ -17,4 +17,14 @@ class DailyTimeRecord extends Model
     protected $fillable = [
         'user_id',
     ];
+
+    /**
+     * Get the user that owns the session.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

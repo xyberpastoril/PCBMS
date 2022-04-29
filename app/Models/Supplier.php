@@ -20,4 +20,24 @@ class Supplier extends Model
         'mobile_number',
         'physical_address',
     ];
+
+    /**
+     * Get the consign orders of the supplier.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function consignOrders()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    /**
+     * Get the products of the supplier.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

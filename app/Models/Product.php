@@ -18,4 +18,24 @@ class Product extends Model
         'supplier_id',
         'name',
     ];
+
+    /**
+     * Get the supplier that owns the product.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+    /**
+     * Get the consigned products of the product.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function consignedProducts()
+    {
+        return $this->hasMany(ConsignedProduct::class);
+    }
 }

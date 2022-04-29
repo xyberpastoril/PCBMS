@@ -42,4 +42,34 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime', // TODO: Remove this later
     ];
+
+    /**
+     * Get the sessions of the user.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sessions()
+    {
+        return $this->hasMany(Session::class);
+    }
+
+    /**
+     * Get the consign orders of the user.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function consignOrders()
+    {
+        return $this->hasMany(ConsignOrder::class);
+    }
+
+    /**
+     * Get the invoices of the user.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

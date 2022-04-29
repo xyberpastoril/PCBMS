@@ -17,4 +17,14 @@ class Customer extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * Get the invoices of the customer.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }
