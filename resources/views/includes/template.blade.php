@@ -4,6 +4,7 @@
         @include('includes.meta')
         @include('includes.assets')
         @stack('styles')
+        @stack('header_scripts')
     </head>
 
     <body>
