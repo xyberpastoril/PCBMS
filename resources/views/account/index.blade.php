@@ -68,24 +68,27 @@
                                 </form>
                             </div>
                         </div>
-                        @if(session('status') == 'two-factor-authentication-enabled')
-                            You have now enabled 2FA, please scan the following QR code into your phones authenticator application.
-                            {!! auth()->user()->twoFactorQrCodeSvg() !!}
-
-                            <p>Please store these recovery codes in a secure location</p>
-                            @foreach(json_decode(decrypt(Auth::user()->two_factor_recovery_codes, true)) as $code)
-                                {{ trim($code) }} <br>
-                            @endforeach
-                        @endif
-                        @if(!Auth::user()->two_factor_secret)
-                            <p>
-                                Two Factor Authentication adds an additional layer of protection to your account by asking for your password and a verification code from your authentication app of your choice.
-                            </p>
-                        @else
+                        @if(Auth::user()->two_factor_confirmed)
                             <p>
                                 You have Two Factor Authentication enabled.
                             </p>
-                            <button id="show-recovery-codes" type="button" class="btn btn-sm btn-primary">Show Recovery Codes</button>
+                            {{-- <p>Please store these recovery codes in a secure location</p>
+                            @foreach(json_decode(decrypt(Auth::user()->two_factor_recovery_codes, true)) as $code)
+                                {{ trim($code) }} <br>
+                            @endforeach --}}
+                            <button id="show-recovery-codes" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-form_recovery_codes">Show Recovery Codes</button>
+                        @elseif(auth()->user()->two_factor_secret)
+                            <p>Validate 2FA by scanning the following QR Code and entering the authentication code</p>
+                            {!! auth()->user()->twoFactorQrCodeSvg() !!}
+                            <form action="{{route('two-factor.confirm')}}" method="post">
+                                @csrf
+                                <input name="code" required/>
+                                <button type="submit">Validate 2FA</button>
+                            </form>
+                        @else
+                            <p>
+                                Two Factor Authentication adds an additional layer of protection to your account by asking for your password and a verification code from your authentication app of your choice.
+                            </p>
                         @endif
                     </div>
                 </div>
@@ -189,32 +192,33 @@
 </div>
 
 {{-- Confirm Password --}}
-<div class="modal fade" id="modal-form_confirm_password" tabindex="-1" role="dialog" aria-labelledby="modal-form_confirm_password-label" aria-hidden="true">
+<div class="modal fade" id="modal-form_recovery_codes" tabindex="-1" role="dialog" aria-labelledby="modal-form_recovery_codes-label" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal-form_confirm_password-label">Edit Password</h5>
+                <h5 class="modal-title" id="modal-form_recovery_codes-label">Recovery Codes</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div id="modal-form_confirm_password-spinner" class="spinner-border text-center p-5" role="status" style="display:none">
+            <div id="modal-form_recovery_codes-body" class="modal-body">
+                <div id="modal-form_recovery_codes-spinner" class="spinner-border text-center p-5" role="status" style="display:none">
                     <span class="sr-only">Loading...</span>
                 </div>
-                <form id="form_confirm_password" method="post">
+                <form id="form_recovery_codes" method="post">
                     @csrf
+                    <p>{{ __('Please confirm your password before continuing.') }}</p>
                     <div class="form-group row mb-3">
                         <label for="c_password_confirm" class="col-12 col-lg-6 col-form-label">Confirm Password<span class="text-danger ml-1">*</span></label>
                         <div class="col-12 col-lg-6">
-                            <input type="password" class="form-control" id="c_password_confirm" name="confirm_password" data-field="confirm_password" required>
+                            <input type="password" class="form-control" id="c_password_confirm" name="confirm_password" required>
                         </div>
-                        <p id="err-form_password-confirm_password" data-field="confirm_password"  class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                        <p id="err-form_password-confirm_password" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
                     </div>
                     
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="btn_close-form_confirm_password" data-bs-dismiss="modal" data-close="1" form="form_confirm_password">Cancel</button>
-                <button type="submit" class="btn btn-primary" id="btn_submit-form_confirm_password" form="form_confirm_password" data-submit="1">Confirm Password</button>
+            <div id="modal-form_recovery_codes-footer" class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btn_close-form_recovery_codes" data-bs-dismiss="modal" form="form_recovery_codes">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="btn_submit-form_recovery_codes" form="form_recovery_codes">Confirm Password</button>
             </div>
         </div>
     </div>
@@ -224,4 +228,41 @@
 
 @push('scripts')
 <script src="/js/account/update_account.js"></script>
+<script>
+    $("#form_recovery_codes").submit(function(e){
+        e.preventDefault();
+
+        btn_submit = $("#btn_submit-form_recovery_codes");
+
+        disableButton(btn_submit);
+        $("#err-form_password-confirm_password").hide();
+
+        // Create request
+        var request = $.ajax({
+            url: `/ajax/account/show/recoverycodes`,
+            method: "POST",
+            data: $(`#form_recovery_codes`).serialize()
+        });
+
+        // If request has successfully processed.
+        request.done(function(res, status, jqXHR) {
+            console.log("Request successful.");
+            console.log(res);
+            $("#form_recovery_codes").hide();
+            $("#modal-form_recovery_codes-footer").hide();
+
+            let inner = '<p>Kindly save these codes to a secure location.</p>';
+            inner += res;
+            $("#modal-form_recovery_codes-body").append(inner);
+        });
+
+        // If request has errors (including validation errors).
+        request.fail(function(jqXHR, status, error){
+            console.log("Request failed.");
+            console.log(jqXHR);
+
+            $("#err-form_password-confirm_password").show().html(jqXHR.responseJSON.errors.confirm_password[0]);
+        });
+    });
+</script>
 @endpush

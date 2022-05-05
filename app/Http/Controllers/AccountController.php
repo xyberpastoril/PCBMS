@@ -21,6 +21,15 @@ class AccountController extends Controller
     }
 
     /**
+     * Showing Info
+     */
+    public function showRecoveryCodes()
+    {
+        foreach(Auth::user()->recoveryCodes() as $code)
+            echo $code . '<br>';
+    }
+
+    /**
      * Updating Info from Account Settings
      */
 

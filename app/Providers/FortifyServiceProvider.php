@@ -7,7 +7,12 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Actions\Fortify\RedirectIfTwoFactorConfirmed;
+use App\Actions\Fortify\DisableTwoFactorAuthentication;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Features;
+use Laravel\Fortify\Actions\AttemptToAuthenticate;
+use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Hash;
@@ -33,6 +38,11 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        $this->app->bind(Laravel\Fortify\Actions\DisableTwoFactorAuthentication::class, function(){
+            return new \App\Actions\Fortify\DisableTwoFactorAuthentication();
+        });
+        
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
@@ -83,6 +93,16 @@ class FortifyServiceProvider extends ServiceProvider
                 Hash::check($request->password, $user->password)) {
                 return $user;
             }
+        });
+
+        Fortify::authenticateThrough(function(){
+            return array_filter([
+                config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
+        
+            Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorConfirmed::class : null,
+                AttemptToAuthenticate::class,
+                PrepareAuthenticatedSession::class,
+            ]);
         });
     }
 }

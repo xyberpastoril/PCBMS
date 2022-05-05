@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Fortify\TwoFactorAuthenticationProvider;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -81,5 +82,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function confirmTwoFactorAuth($code)
+    {
+        $codeIsValid = app(TwoFactorAuthenticationProvider::class)
+            ->verify(decrypt($this->two_factor_secret), $code);
+
+        if ($codeIsValid) {
+            $this->two_factor_confirmed = true;
+            $this->save();
+
+            return true;
+        }
+
+        return false;
     }
 }

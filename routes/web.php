@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/2fa-confirm', [\App\Http\Controllers\TwoFactorAuthController::class, 'confirm'])->name('two-factor.confirm');
+
 Route::group([
     'middleware' => ['auth', 'verified']
 ], function(){
@@ -31,6 +33,7 @@ Route::group([
         Route::get('/account/', [\App\Http\Controllers\AccountController::class, 'index'])->name('index');
     
         // AJAX
+        Route::post('/ajax/account/show/recoverycodes', [\App\Http\Controllers\AccountController::class, 'showRecoveryCodes']);
         Route::put('/ajax/account/update/username', [\App\Http\Controllers\AccountController::class, 'updateUsername']);
         Route::put('/ajax/account/update/password', [\App\Http\Controllers\AccountController::class, 'updatePassword']);
     });
