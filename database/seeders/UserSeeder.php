@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Test Manager',
                 'password' => Hash::make('manager'),
+                'email' => 'manager@example.com',
                 'username' => 'manager',
                 'designation' => 'manager',
                 'created_at' => now(),
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Test Cashier',
                 'password' => Hash::make('cashier'),
+                'email' => 'cashier@example.com',
                 'username' => 'cashier',
                 'designation' => 'cashier',
                 'created_at' => now(),
