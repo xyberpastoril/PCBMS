@@ -69,21 +69,19 @@
                             </div>
                         </div>
                         @if(Auth::user()->two_factor_confirmed)
-                            <p>
-                                You have Two Factor Authentication enabled.
-                            </p>
-                            {{-- <p>Please store these recovery codes in a secure location</p>
-                            @foreach(json_decode(decrypt(Auth::user()->two_factor_recovery_codes, true)) as $code)
-                                {{ trim($code) }} <br>
-                            @endforeach --}}
-                            <button id="show-recovery-codes" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-form_recovery_codes">Show Recovery Codes</button>
+                            <p>You have Two Factor Authentication enabled.</p>
+                            <button id="show-recovery-codes" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-form_recovery_codes">
+                                Show Recovery Codes
+                            </button>
                         @elseif(auth()->user()->two_factor_secret)
                             <p>Validate 2FA by scanning the following QR Code and entering the authentication code</p>
                             {!! auth()->user()->twoFactorQrCodeSvg() !!}
-                            <form action="{{route('two-factor.confirm')}}" method="post">
+                            <form action="{{ route('two-factor.confirm') }}" method="post" class="mt-3">
                                 @csrf
-                                <input name="code" required/>
-                                <button type="submit">Validate 2FA</button>
+                                <div class="input-group">
+                                    <input name="code" class="form-control" required/>
+                                    <button type="submit" class="btn btn-primary">Validate 2FA</button>
+                                </div>
                             </form>
                         @else
                             <p>

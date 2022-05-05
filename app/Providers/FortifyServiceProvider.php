@@ -37,12 +37,7 @@ class FortifyServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-
-        $this->app->bind(Laravel\Fortify\Actions\DisableTwoFactorAuthentication::class, function(){
-            return new \App\Actions\Fortify\DisableTwoFactorAuthentication();
-        });
-        
+    {        
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
@@ -57,6 +52,11 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
+        
+        $this->app->singleton(
+            \Laravel\Fortify\Actions\DisableTwoFactorAuthentication::class,
+            \App\Actions\Fortify\DisableTwoFactorAuthentication::class
+        );
 
         Fortify::loginView(function() {
             return view('auth.login');
@@ -98,8 +98,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::authenticateThrough(function(){
             return array_filter([
                 config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
-        
-            Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorConfirmed::class : null,
+                Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorConfirmed::class : null,
                 AttemptToAuthenticate::class,
                 PrepareAuthenticatedSession::class,
             ]);
