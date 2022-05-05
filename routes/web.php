@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-    'middleware' => ['auth']
+    'middleware' => ['auth', 'verified']
 ], function(){
     /**
      * Homepage
