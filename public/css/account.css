@@ -1,0 +1,78 @@
+#account-header-grid {
+    display:grid;
+    gap:16px;
+    grid-template-columns:128px auto;
+    margin-bottom:24px;
+}
+
+#account-picture-128 {
+    width:128px;
+    border-radius:100%;
+}
+
+#account-name-header {
+    margin-top:16px;
+    margin-bottom:0px;
+    font-size:36px;
+}
+
+.account-h2 {
+    font-size:20px;
+    font-weight: 700;
+}
+
+.card-content-grid-header-2 {
+    display:grid;
+    gap:16px;
+    grid-template-columns:auto 128px;
+}
+
+.card-content-grid-header-3 {
+    display:grid;
+    gap:16px;
+    grid-template-columns:144px auto 128px;
+    grid-template-areas:
+        "header content btn";
+}
+
+.card-content-header {
+    grid-area: header;
+}
+
+.card-content-value {
+    grid-area: content;
+}
+
+.card-content-btn {
+    grid-area: btn;
+}
+
+@media (max-width:991px) {
+    #account-header-grid {
+        grid-template-columns:auto;
+    }
+
+    #account-picture-128 {
+        margin:0 auto;
+        display:block;
+    }
+
+    #account-name-header {
+        margin-top:0px;
+        text-align:center;
+    }
+
+    #account-edit-photo-btn {
+        display:block;
+        margin:0 auto;
+    }
+
+    .card-content-grid-header-3 {
+        display:grid;
+        gap:16px;
+        grid-template-columns:auto 128px;
+        grid-template-areas:
+            "header btn"
+            "content content";
+    }
+}
