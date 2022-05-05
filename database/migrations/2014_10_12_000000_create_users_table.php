@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken(); // TODO: Remove this later
             $table->timestamp('created_at')->default(now());
+            $table->timestamp('password_updated_at')->nullable();
         });
     }
 

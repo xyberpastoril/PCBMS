@@ -34,4 +34,26 @@ Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, '
     // Route::view('/settings', 'settings.index')->name('settings');
 // });
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group([
+    'middleware' => ['auth']
+], function(){
+    /**
+     * Homepage
+     */
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    
+    /**
+     * Account Settings
+     */
+    Route::group([
+        'as' => 'account.'
+    ], function(){
+        // HTTP
+        Route::get('/account/', [\App\Http\Controllers\AccountController::class, 'index'])->name('index');
+    
+        // AJAX
+        Route::put('/ajax/account/update/username', [\App\Http\Controllers\AccountController::class, 'updateUsername']);
+        Route::put('/ajax/account/update/password', [\App\Http\Controllers\AccountController::class, 'updatePassword']);
+    });
+});
