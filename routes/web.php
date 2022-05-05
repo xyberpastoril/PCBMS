@@ -50,7 +50,7 @@ Route::group([
         'as' => 'account.'
     ], function(){
         // HTTP
-        Route::get('/account/', [\App\Http\Controllers\AccountController::class, 'index'])->name('account');
+        Route::get('/account/', [\App\Http\Controllers\AccountController::class, 'index'])->name('index');
     
         // AJAX
         Route::put('/ajax/account/update/username', [\App\Http\Controllers\AccountController::class, 'updateUsername']);
