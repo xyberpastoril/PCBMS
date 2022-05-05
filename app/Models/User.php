@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Fortify\TwoFactorAuthenticationProvider;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable;
     
     /**
      * The name of the "updated at" column.
@@ -26,6 +28,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'email',
         'username',
         'designation',
         'password',
@@ -79,5 +82,20 @@ class User extends Authenticatable
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function confirmTwoFactorAuth($code)
+    {
+        $codeIsValid = app(TwoFactorAuthenticationProvider::class)
+            ->verify(decrypt($this->two_factor_secret), $code);
+
+        if ($codeIsValid) {
+            $this->two_factor_confirmed = true;
+            $this->save();
+
+            return true;
+        }
+
+        return false;
     }
 }
