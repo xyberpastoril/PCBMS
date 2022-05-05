@@ -6,12 +6,6 @@
 
 @section('content')
 
-{{-- Alert Success --}}
-<div id="alert-success" class="alert alert-success" style="display:none">
-    <span id="alert-success-content" class="m-0"></span>
-    <button type="button" class="btn-close" aria-label="Close"></button>
-</div>
-
 {{-- Content --}}
 <div class="card" class="content-card">
     <div class="card-body">
@@ -171,6 +165,8 @@
     </div>
 </div>
 
-<script src="/js/account/update_account.js"></script>
-
 @endsection
+
+@push('scripts')
+<script src="/js/account/update_account.js"></script>
+@endpush

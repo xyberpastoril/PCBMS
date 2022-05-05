@@ -48,9 +48,9 @@ $(".account-update").submit(function(e){
         console.log("Request successful.");
         console.log(res);
         if(res == '1') {
-            // $(`#modal-${e.target.id}`).hide();
             btn_close.click();
-            showSuccessAlert(`${capitalizeFirstLetter(e.target.dataset.update)} successfully updated.`);
+            let msg = `${capitalizeFirstLetter(e.target.dataset.update)} successfully updated.`;
+            generateToast(msg, 'bg-success');
         }
 
         if(e.target.dataset.issensitive != undefined) {
