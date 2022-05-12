@@ -51,12 +51,12 @@
                 </li> --}}
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0 order-2">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ route('account.index')}}">
                         <i class="fa-solid fa-gear"></i>
                         <b>Account Settings</b>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="javascript:void(0)" onclick="event.preventDefault();
                     document.getElementById('form-logout').submit();">
