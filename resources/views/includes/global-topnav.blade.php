@@ -1,6 +1,19 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="{{ url('/') }}">PCBMS</a>
+    <a class="navbar-brand ps-3" href="{{ url('/') }}">
+        <img src="{{ asset('img/VSU Logo.png') }}" style="
+                width: 30px;
+                height: 30px;
+                object-fit: cover;
+                object-position: left top;
+                display: block;
+                float: left;">
+        <span style="
+            font-size: 24px;
+            line-height: 0;
+            display: inline-block;
+            margin-left: 8px;">PCBMS</span>
+    </a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
