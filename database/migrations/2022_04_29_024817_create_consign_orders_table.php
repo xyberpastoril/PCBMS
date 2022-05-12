@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('consign_orders', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->foreignId('supplier_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->timestamp('order_sent_at')->nullable();

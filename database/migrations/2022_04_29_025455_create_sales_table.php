@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->foreignId('invoice_id')->constrained();
             $table->foreignId('consigned_product_id')->constrained();
             $table->integer('quantity_sold');

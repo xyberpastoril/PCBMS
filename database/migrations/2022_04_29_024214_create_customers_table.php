@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->string('name');
             $table->timestamp('created_at')->default(now());
         });

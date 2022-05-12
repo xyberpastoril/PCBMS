@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->foreignId('supplier_id')->constrained();
             $table->string('name');
             $table->timestamp('created_at')->default(now());

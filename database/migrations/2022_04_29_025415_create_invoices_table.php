@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('customer_id')->constrained();
             $table->timestamp('created_at')->default(now());
