@@ -1,95 +1,89 @@
-@extends('includes.template')
+@extends('includes.new-template')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/account.css') }}">
+@push('global-styles')
+<link rel="stylesheet" href="{{ url('/css/account.css') }}">
 @endpush
 
 @section('content')
 
 {{-- Content --}}
-<div class="card" class="content-card">
-    <div class="card-body">
-        <h1>Account Settings</h1>
-        
-        <hr>
-        
-        <div class="row">
-            <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="card-content-grid-header-3">
-                            <div class="card-content-header">
-                                <p class="account-h2 m-0">Username</p>
-                            </div>
-                            <div class="card-content-value">
-                                <p id="value_current-username" class="mt-1 mb-0">{{ Auth::user()->username }}</p>
-                            </div>
-                            <div class="card-content-btn">
-                                <button type="button" class="btn btn-sm btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-form_username">Edit Username</button>
-                            </div>
-                        </div>
+<h1 class="mt-4">Account Settings</h1>
+
+<div class="row">
+    <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-content-grid-header-3">
+                    <div class="card-content-header">
+                        <p class="account-h2 m-0">Username</p>
                     </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-content-grid-header-3">
-                            <div class="card-content-header">
-                                <p class="account-h2 m-0">Password</p>
-                            </div>
-                            <div class="card-content-value">
-                                <p id="value_current-password" class="mt-1 mb-0">Last updated: {{ (Auth::user()->password_updated_at ? \Carbon\Carbon::create(Auth::user()->password_updated_at)->diffForHumans() : 'Never') }}</p>
-                            </div>
-                            <div class="card-content-btn">
-                                <button type="button" class="btn btn-sm btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-form_password">Edit Password</button>
-                            </div>
-                        </div>
+                    <div class="card-content-value">
+                        <p id="value_current-username" class="mt-1 mb-0">{{ Auth::user()->username }}</p>
+                    </div>
+                    <div class="card-content-btn">
+                        <button type="button" class="btn btn-sm btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-form_username">Edit Username</button>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-                
-                
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="card-content-grid-header-2">
-                            <div>
-                                <p class="account-h2">Two Factor Authentication</p>
-                            </div>
-                            <div>
-                                <form method="POST" action="{{ url('user/two-factor-authentication') }}">
-                                    @csrf
-                                    @if(!Auth::user()->two_factor_secret)
-                                        <button type="submit" class="btn btn-sm btn-primary w-100">Setup 2FA</button>
-                                    @else
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger w-100">Disable 2FA</button>
-                                    @endif
-                                </form>
-                            </div>
-                        </div>
-                        @if(Auth::user()->two_factor_confirmed)
-                            <p>You have Two Factor Authentication enabled.</p>
-                            <button id="show-recovery-codes" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-form_recovery_codes">
-                                Show Recovery Codes
-                            </button>
-                        @elseif(auth()->user()->two_factor_secret)
-                            <p>Validate 2FA by scanning the following QR Code and entering the authentication code</p>
-                            {!! auth()->user()->twoFactorQrCodeSvg() !!}
-                            <form action="{{ route('two-factor.confirm') }}" method="post" class="mt-3">
-                                @csrf
-                                <div class="input-group">
-                                    <input name="code" class="form-control" required/>
-                                    <button type="submit" class="btn btn-primary">Validate 2FA</button>
-                                </div>
-                            </form>
-                        @else
-                            <p>
-                                Two Factor Authentication adds an additional layer of protection to your account by asking for your password and a verification code from your authentication app of your choice.
-                            </p>
-                        @endif
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="card-content-grid-header-3">
+                    <div class="card-content-header">
+                        <p class="account-h2 m-0">Password</p>
+                    </div>
+                    <div class="card-content-value">
+                        <p id="value_current-password" class="mt-1 mb-0">Last updated: {{ (Auth::user()->password_updated_at ? \Carbon\Carbon::create(Auth::user()->password_updated_at)->diffForHumans() : 'Never') }}</p>
+                    </div>
+                    <div class="card-content-btn">
+                        <button type="button" class="btn btn-sm btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-form_password">Edit Password</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+        
+        
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-content-grid-header-2">
+                    <div>
+                        <p class="account-h2">Two Factor Authentication</p>
+                    </div>
+                    <div>
+                        <form method="POST" action="{{ url('user/two-factor-authentication') }}">
+                            @csrf
+                            @if(!Auth::user()->two_factor_secret)
+                                <button type="submit" class="btn btn-sm btn-primary w-100">Setup 2FA</button>
+                            @else
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger w-100">Disable 2FA</button>
+                            @endif
+                        </form>
+                    </div>
+                </div>
+                @if(Auth::user()->two_factor_confirmed)
+                    <p>You have Two Factor Authentication enabled.</p>
+                    <button id="show-recovery-codes" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-form_recovery_codes">
+                        Show Recovery Codes
+                    </button>
+                @elseif(auth()->user()->two_factor_secret)
+                    <p>Validate 2FA by scanning the following QR Code and entering the authentication code</p>
+                    {!! auth()->user()->twoFactorQrCodeSvg() !!}
+                    <form action="{{ route('two-factor.confirm') }}" method="post" class="mt-3">
+                        @csrf
+                        <div class="input-group">
+                            <input name="code" class="form-control" required/>
+                            <button type="submit" class="btn btn-primary">Validate 2FA</button>
+                        </div>
+                    </form>
+                @else
+                    <p>
+                        Two Factor Authentication adds an additional layer of protection to your account by asking for your password and a verification code from your authentication app of your choice.
+                    </p>
+                @endif
             </div>
         </div>
     </div>
@@ -224,7 +218,7 @@
 
 @endsection
 
-@push('scripts')
+@push('app-scripts')
 <script src="/js/account/update_account.js"></script>
 <script>
     $("#form_recovery_codes").submit(function(e){
