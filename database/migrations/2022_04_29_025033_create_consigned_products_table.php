@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('consigned_products', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->foreignId('consign_order_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->enum('unit', [

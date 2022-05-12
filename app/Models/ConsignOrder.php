@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Traits\HasUuidTrait;
 
 class ConsignOrder extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuidTrait;
     
     /**
      * The name of the "updated at" column.
