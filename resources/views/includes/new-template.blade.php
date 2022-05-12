@@ -5,7 +5,7 @@
         @include('includes.global-styles')
         @stack('global-styles')
         @include('includes.global-scripts')
-        @stack('globbal-scripts')
+        @stack('global-scripts')
     </head>
 
     <body>
