@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/2fa-confirm', [\App\Http\Controllers\TwoFactorAuthController::class, 'confirm'])->name('two-factor.confirm');
 
 Route::group([
-    'middleware' => ['auth', 'verified']
 ], function(){
+    'middleware' => ['auth']
     /**
      * Homepage
      */
