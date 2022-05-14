@@ -105,6 +105,15 @@ Route::group([
                 Route::delete('/products/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'destroyAjax'])->name('destroy');
             });
         });
+
+        // Inventory Controller
+        Route::group([
+            'as' => 'inventory.',
+        ], function()
+        {
+            // HTTP
+            Route::get('/inventory', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'index'])->name('index');
+        });
     });
 
     /**

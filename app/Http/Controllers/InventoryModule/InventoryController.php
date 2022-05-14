@@ -9,7 +9,7 @@ class InventoryController extends Controller
 {
     public function index()
     {
-        //
+        return view('inventory.inventory.index');
     }
 
     // TODO: Order Products
