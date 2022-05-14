@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/2fa-confirm', [\App\Http\Controllers\TwoFactorAuthController::class, 'confirm'])->name('two-factor.confirm');
 
 Route::group([
-    'middleware' => ['auth', 'verified']
-], function(){
+    'middleware' => ['auth']
+], function()
+{
     /**
      * Homepage
      */
@@ -28,13 +29,136 @@ Route::group([
      */
     Route::group([
         'as' => 'account.'
-    ], function(){
+    ], function()
+    {
         // HTTP
-        Route::get('/account/', [\App\Http\Controllers\AccountController::class, 'index'])->name('index');
-    
+        Route::get('/account/', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'index'])->name('index');
+        
         // AJAX
-        Route::post('/ajax/account/show/recoverycodes', [\App\Http\Controllers\AccountController::class, 'showRecoveryCodes']);
-        Route::put('/ajax/account/update/username', [\App\Http\Controllers\AccountController::class, 'updateUsername']);
-        Route::put('/ajax/account/update/password', [\App\Http\Controllers\AccountController::class, 'updatePassword']);
+        Route::group([
+            'as' => 'ajax.',
+            'prefix' => 'ajax'
+        ], function()
+        {
+            Route::group([
+                'as' => 'show.',
+                'prefix' => 'account/show'
+            ], function()
+            {
+                Route::post('/recoverycodes', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'showRecoveryCodes'])->name('recovery-codes');
+            });
+            
+            Route::group([
+                'as' => 'update.',
+                'prefix' => 'account/update'
+            ], function()
+            {
+                Route::put('/username', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'username'])->name('username');
+                Route::put('/password', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'password'])->name('password');
+            });
+        });
+    
+    });
+
+    /**
+     * Inventory Module [1 & 2]
+     */
+    Route::group([
+        'as' => 'inventory.'
+    ], function() 
+    {
+        // Suppliers Controller
+        Route::group([
+            'as' => 'supplier.'
+        ], function() {
+            // HTTP
+            Route::get('/suppliers', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'index'])->name('index');
+
+            // AJAX
+            Route::group([
+                'as' => 'ajax.',
+                'prefix' => 'ajax/suppliers'
+            ], function()
+            {
+                Route::get('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'editAjax'])->name('edit');
+                Route::put('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'updateAjax'])->name('update');
+                Route::delete('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'destroyAjax'])->name('destroy');
+            });
+        });
+
+        // Products Controller
+        Route::group([
+            'as' => 'product.'
+        ], function() 
+        {
+            // HTTP
+            Route::get('/products', [\App\Http\Controllers\InventoryModule\ProductController::class, 'index'])->name('index');
+            
+            // AJAX
+            Route::group([
+                'as' => 'ajax.',
+                'prefix' => 'ajax/products'
+            ], function()
+            {
+                Route::get('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'editAjax'])->name('edit');
+                Route::put('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'updateAjax'])->name('update');
+                Route::delete('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'destroyAjax'])->name('destroy');
+            });
+        });
+
+        // Inventory Controller
+        Route::group([
+            'as' => 'inventory.',
+        ], function()
+        {
+            // HTTP
+            Route::get('/inventory', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'index'])->name('index');
+        });
+    });
+
+    /**
+     * Sales Module [3]
+     */
+    Route::group([
+        'as'=> 'sales.'
+    ], function() 
+    {
+        // TODO: Add sales routes later when necessary.
+    });
+
+    /**
+     * Personnel Module [4]
+     */
+    Route::group([
+        'as' => 'personnel.'
+    ], function() 
+    {
+        // HTTP
+        Route::get('/personnel', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'index'])->name('index');
+
+        // AJAX
+        Route::group([
+            'as' => 'ajax.',
+            'prefix' => 'ajax/personnel'
+        ], function()
+        {
+            Route::get('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'editAjax'])->name('edit');
+            Route::put('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'updateAjax'])->name('update');
+            Route::delete('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'destroyAjax'])->name('destroy');
+        });
+    });
+
+    /**
+     * Reports Module [5]
+     */
+    Route::group([
+        'as' => 'reports.'
+    ], function() 
+    {
+        // HTTP
+        Route::get('/reports', [\App\Http\Controllers\ReportsModule\ReportsController::class, 'index'])->name('index');
+
+        // AJAX
+        // TODO: Add reports ajax routes later when necessary.
     });
 });
