@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/2fa-confirm', [\App\Http\Controllers\TwoFactorAuthController::class, 'confirm'])->name('two-factor.confirm');
 
 Route::group([
-], function(){
     'middleware' => ['auth']
+], function()
+{
     /**
      * Homepage
      */
@@ -28,7 +29,8 @@ Route::group([
      */
     Route::group([
         'as' => 'account.'
-    ], function(){
+    ], function()
+    {
         // HTTP
         Route::get('/account/', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'index'])->name('index');
         
@@ -56,6 +58,98 @@ Route::group([
             });
         });
     
+    });
+
+    /**
+     * Inventory Module [1 & 2]
+     */
+    Route::group([
+        'as' => 'inventory.'
+    ], function() 
+    {
+        // Suppliers Controller
+        Route::group([
+            'as' => 'supplier.'
+        ], function() {
+            // HTTP
+            Route::get('/suppliers', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'index'])->name('index');
+
+            // AJAX
+            Route::group([
+                'as' => 'ajax.',
+                'prefix' => 'ajax'
+            ], function()
+            {
+                Route::get('/suppliers/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'editAjax'])->name('edit');
+                Route::put('/suppliers/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'updateAjax'])->name('update');
+                Route::delete('/suppliers/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'destroyAjax'])->name('destroy');
+            });
+        });
+
+        // Products Controller
+        Route::group([
+            'as' => 'product.'
+        ], function() 
+        {
+            // HTTP
+            Route::get('/products', [\App\Http\Controllers\InventoryModule\ProductController::class, 'index'])->name('index');
+            
+            // AJAX
+            Route::group([
+                'as' => 'ajax.',
+                'prefix' => 'ajax'
+            ], function()
+            {
+                Route::get('/products/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'editAjax'])->name('edit');
+                Route::put('/products/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'updateAjax'])->name('update');
+                Route::delete('/products/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'destroyAjax'])->name('destroy');
+            });
+        });
+    });
+
+    /**
+     * Sales Module [3]
+     */
+    Route::group([
+        'as'=> 'sales.'
+    ], function() 
+    {
+        // TODO: Add sales routes later when necessary.
+    });
+
+    /**
+     * Personnel Module [4]
+     */
+    Route::group([
+        'as' => 'personnel.'
+    ], function() 
+    {
+        // HTTP
+        Route::get('/personnel', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'index'])->name('index');
+
         // AJAX
+        Route::group([
+            'as' => 'ajax.',
+            'prefix' => 'ajax'
+        ], function()
+        {
+            Route::get('/personnel/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'editAjax'])->name('edit');
+            Route::put('/personnel/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'updateAjax'])->name('update');
+            Route::delete('/personnel/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'destroyAjax'])->name('destroy');
+        });
+    });
+
+    /**
+     * Reports Module [5]
+     */
+    Route::group([
+        'as' => 'reports.'
+    ], function() 
+    {
+        // HTTP
+        Route::get('/reports', [\App\Http\Controllers\ReportsModule\ReportsController::class, 'index'])->name('index');
+
+        // AJAX
+        // TODO: Add reports ajax routes later when necessary.
     });
 });
