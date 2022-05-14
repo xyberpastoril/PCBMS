@@ -53,8 +53,8 @@ Route::group([
                 'prefix' => 'account/update'
             ], function()
             {
-                Route::put('/username', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'username']);
-                Route::put('/password', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'password']);
+                Route::put('/username', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'username'])->name('username');
+                Route::put('/password', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'password'])->name('password');
             });
         });
     
@@ -77,12 +77,12 @@ Route::group([
             // AJAX
             Route::group([
                 'as' => 'ajax.',
-                'prefix' => 'ajax'
+                'prefix' => 'ajax/suppliers'
             ], function()
             {
-                Route::get('/suppliers/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'editAjax'])->name('edit');
-                Route::put('/suppliers/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'updateAjax'])->name('update');
-                Route::delete('/suppliers/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'destroyAjax'])->name('destroy');
+                Route::get('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'editAjax'])->name('edit');
+                Route::put('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'updateAjax'])->name('update');
+                Route::delete('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'destroyAjax'])->name('destroy');
             });
         });
 
@@ -97,12 +97,12 @@ Route::group([
             // AJAX
             Route::group([
                 'as' => 'ajax.',
-                'prefix' => 'ajax'
+                'prefix' => 'ajax/products'
             ], function()
             {
-                Route::get('/products/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'editAjax'])->name('edit');
-                Route::put('/products/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'updateAjax'])->name('update');
-                Route::delete('/products/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'destroyAjax'])->name('destroy');
+                Route::get('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'editAjax'])->name('edit');
+                Route::put('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'updateAjax'])->name('update');
+                Route::delete('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'destroyAjax'])->name('destroy');
             });
         });
 
@@ -139,12 +139,12 @@ Route::group([
         // AJAX
         Route::group([
             'as' => 'ajax.',
-            'prefix' => 'ajax'
+            'prefix' => 'ajax/personnel'
         ], function()
         {
-            Route::get('/personnel/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'editAjax'])->name('edit');
-            Route::put('/personnel/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'updateAjax'])->name('update');
-            Route::delete('/personnel/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'destroyAjax'])->name('destroy');
+            Route::get('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'editAjax'])->name('edit');
+            Route::put('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'updateAjax'])->name('update');
+            Route::delete('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'destroyAjax'])->name('destroy');
         });
     });
 
