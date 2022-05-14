@@ -30,11 +30,32 @@ Route::group([
         'as' => 'account.'
     ], function(){
         // HTTP
-        Route::get('/account/', [\App\Http\Controllers\AccountController::class, 'index'])->name('index');
+        Route::get('/account/', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'index'])->name('index');
+        
+        // AJAX
+        Route::group([
+            'as' => 'ajax.',
+            'prefix' => 'ajax'
+        ], function()
+        {
+            Route::group([
+                'as' => 'show.',
+                'prefix' => 'account/show'
+            ], function()
+            {
+                Route::post('/recoverycodes', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'showRecoveryCodes'])->name('recovery-codes');
+            });
+            
+            Route::group([
+                'as' => 'update.',
+                'prefix' => 'account/update'
+            ], function()
+            {
+                Route::put('/username', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'username']);
+                Route::put('/password', [\App\Http\Controllers\PersonnelModule\AccountController::class, 'password']);
+            });
+        });
     
         // AJAX
-        Route::post('/ajax/account/show/recoverycodes', [\App\Http\Controllers\AccountController::class, 'showRecoveryCodes']);
-        Route::put('/ajax/account/update/username', [\App\Http\Controllers\AccountController::class, 'updateUsername']);
-        Route::put('/ajax/account/update/password', [\App\Http\Controllers\AccountController::class, 'updatePassword']);
     });
 });

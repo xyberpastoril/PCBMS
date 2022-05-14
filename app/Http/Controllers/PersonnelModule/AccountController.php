@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\PersonnelModule;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AccountSettings\UpdateUsernameRequest;
 use App\Http\Requests\AccountSettings\UpdatePasswordRequest;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
