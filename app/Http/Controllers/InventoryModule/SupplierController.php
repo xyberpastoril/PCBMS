@@ -22,7 +22,7 @@ class SupplierController extends Controller
             'name' => $validated['name'],
             'physical_address' => $validated['physical_address'],
             'mobile_number' => $validated['mobile_number'],
-            'email_address' => $validated['email_address'],
+            'email' => $validated['email_address'],
         ]);
 
         return 'Supplier successfully added.';
