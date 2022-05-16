@@ -20,7 +20,7 @@ $(".ajax-submit").submit(function(e){
     {
         let name = e.target[i].name;
         let data = e.target[i].dataset;
-        if(name != undefined)
+        if(name != undefined && name != '' && name != '_token' && name != '_method')
         {
             console.log(`Found input element: ${name}`);
             errorTextElements.push($(`#error-${e.target.id}-${name}`));
