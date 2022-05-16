@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests\InventoryModule\Supplier;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreSupplierRequest extends FormRequest
 {

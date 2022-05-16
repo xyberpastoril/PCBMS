@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\InventoryModule\Supplier;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\FormRequest;
 
 class UpdateSupplierRequest extends FormRequest
 {
