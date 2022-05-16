@@ -34,7 +34,7 @@ $(".ajax-submit").submit(function(e){
     hideFormErrors(errorTextElements);
     disableSubmitButton(submitButtonElement);
 
-    console.log(`Creating a request from ${e.target.id}`);
+    console.log(`Creating a POST request from ${e.target.id}`);
     console.log($(`#${e.target.id}`).serialize());
 
     // Creating a request
