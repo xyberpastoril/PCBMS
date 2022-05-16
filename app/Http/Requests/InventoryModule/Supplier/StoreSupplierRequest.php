@@ -14,7 +14,7 @@ class StoreSupplierRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::user()->designation == 'manager';
     }
 
     /**
@@ -25,7 +25,10 @@ class StoreSupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required'],
+            'physical_address' => ['required'],
+            'mobile_number' => ['required'], // Add formatting later
+            'email_address' => ['sometimes', 'email'],
         ];
     }
 }

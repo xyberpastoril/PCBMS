@@ -80,6 +80,7 @@ Route::group([
                 'prefix' => 'ajax/suppliers'
             ], function()
             {
+                Route::post('/', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'storeAjax'])->name('store');
                 Route::get('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'editAjax'])->name('edit');
                 Route::put('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'updateAjax'])->name('update');
                 Route::delete('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'destroyAjax'])->name('destroy');

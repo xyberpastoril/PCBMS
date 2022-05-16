@@ -16,7 +16,16 @@ class SupplierController extends Controller
 
     public function storeAjax(StoreSupplierRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        Supplier::create([
+            'name' => $validated['name'],
+            'physical_address' => $validated['physical_address'],
+            'mobile_number' => $validated['mobile_number'],
+            'email_address' => $validated['email_address'],
+        ]);
+
+        return 'Supplier successfully added.';
     }
 
     public function editAjax(Supplier $supplier)
