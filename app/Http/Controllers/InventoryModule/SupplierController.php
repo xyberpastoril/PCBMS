@@ -6,12 +6,28 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\InventoryModule\Supplier\StoreSupplierRequest;
 use App\Http\Requests\InventoryModule\Supplier\UpdateSupplierRequest;
 use App\Models\Supplier;
+use Illuminate\Support\Facades\Request;
 
 class SupplierController extends Controller
 {
     public function index()
     {
         return view('inventory.supplier.index');
+    }
+
+    public function showRowsAjax(Request $request)
+    {
+        $suppliers = Supplier::select(
+            'uuid',
+            'name',
+            'physical_address',
+            'email',
+            'mobile_number',
+        );
+
+        // TODO: Add condition if offset needed
+
+        return $suppliers->paginate(10);
     }
 
     public function storeAjax(StoreSupplierRequest $request)
