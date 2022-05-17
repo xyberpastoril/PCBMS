@@ -124,87 +124,57 @@
 
 @push('app-scripts')
 <script src="{{ url('/js/form-ajax-submit.js') }}"></script>
+<script src="{{ url('/js/pagination-ajax.js') }}"></script>
 <script>
+    var suppliersTable;
+
     $(document).ready(function(){
-        console.log(`Creating a GET request to load suppliers.`);
-        var request = requestSupplierList('/ajax/suppliers/');
-    });
+        console.log("Creating a PaginationAjax instance.");;
 
-    function requestSupplierList(url)
-    {
-        $("#table-spinner-suppliers").show();
-        $(".btn-paginate").attr('disabled', true);
-
-        var request =  $.ajax({
-            url: url,
-            headers: { 'X-Requested-With': 'XMLHttpRequest' },
-            method: 'GET',
+        suppliersTable = new PaginationAjax({
+            url: '/ajax/suppliers',
+            modelName: 'suppliers',
+            columns: [
+                'name',
+                'physical_address',
+                'email',
+                'mobile_number',
+            ]
         });
 
+        request = suppliersTable.requestData();
+        processSuppliersRequest(request);
+    });  
+
+    function processSuppliersRequest(request)
+    {
         request.done(function(res, status, jqXHR) {
-            console.log(`GET request to load suppliers has successfully been made.`);
+            console.log(`GET request to load ${suppliersTable.modelName} has successfully been made.`);
             console.log(res);
 
             // Print data to table
-            displaySupplierTableRows(res.data);
-            displaySupplierPaginationButtons(res.links);
+            suppliersTable.displayTableRows(res.data);
+            suppliersTable.displayPaginationButtons(res.links);
 
-            $(".btn-paginate").click(function(e){
-                console.log("Pagintate button has been clicked.");
+            $(`.btn-paginate-${suppliersTable.modelName}`).click(function(e) {
+                console.log("Paginate button has been clicked.");
                 console.log(e.target.dataset.href);
 
-                var request = requestSupplierList(e.target.dataset.href);
+                request = suppliersTable.requestData(e.target.dataset.href);
+                processSuppliersRequest(request);
             });
         });
 
         request.fail(function(jqXHR, status, error) {
-            console.log(`GET request to load suppliers has failed.`);
+            console.log(`GET request to load ${suppliersTable.modelName} has failed.`);
             console.log(jqXHR);
 
             generateToast(jqXHR.responseJSON.message, 'bg-danger');
         });
 
         request.always(function(){
-            $("#table-spinner-suppliers").hide();
+            suppliersTable.spinnerElement.hide();
         });
-
-        return request;
-    }
-
-    function displaySupplierTableRows(rows)
-    {
-        $(`#table-content-suppliers`).html("");
-
-        var inner = '';
-        rows.forEach(function(row){           
-            inner += `
-            <tr>
-                <td>
-                    ${row.uuid}
-                </td>
-                <td>${row.name}</td>
-                <td>${row.physical_address}</td>
-                <td>${row.email}</td>
-                <td>${row.mobile_number}</td>
-            </tr>
-            `;
-        });
-
-        $(`#table-content-suppliers`).append(inner);
-    }
-
-    function displaySupplierPaginationButtons(links)
-    {
-        $("#table-links-suppliers").html("");
-
-        var inner = '';
-        links.forEach(function(link) {
-            inner += `
-                <button type="button" class="btn btn-${link.active ? '' : 'outline-'}primary btn-paginate" data-href="${link.url}" ${link.url == null ? 'disabled=true' : ''}>${link.label}</button>
-            `;
-        });
-
-        $("#table-links-suppliers").append(inner);
     }
 </script>
 @endpush
