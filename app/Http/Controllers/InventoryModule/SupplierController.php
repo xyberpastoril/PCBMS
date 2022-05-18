@@ -46,7 +46,7 @@ class SupplierController extends Controller
 
     public function editAjax(Supplier $supplier)
     {
-        //
+        return $supplier;
     }
 
     public function updateAjax(UpdateSupplierRequest $request, Supplier $supplier)

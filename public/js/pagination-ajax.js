@@ -10,9 +10,11 @@ class PaginationAjax {
      */
     constructor(args) {
         this.url = args.url;
+        this.ajaxUrl = args.ajaxUrl;
         this.modelName = args.modelName;
         this.columns = args.columns;
-
+        this.actions = args.actions;
+        this.customActionsHtml = args.customActionsHtml;
 
         this.tbodyElement = $(`#table-content-${args.modelName}`);
         this.btnGroupElement = $(`#table-links-${args.modelName}`);
@@ -21,13 +23,13 @@ class PaginationAjax {
 
     }
 
-    requestData(url = null) 
+    requestData(ajaxUrl = null) 
     {
         this.spinnerElement.show();
         this.enableLinksButtonElements(false);
 
         this.request = $.ajax({
-            url: url ? url : this.url,
+            url: ajaxUrl ? ajaxUrl : this.ajaxUrl,
             headers: { 'X-Requested-With': 'XMLHttpRequest' },
             method: 'GET',
         });
@@ -43,6 +45,8 @@ class PaginationAjax {
         console.log(this.columns);
 
         var columns = this.columns;
+        var actions = this.actions;
+        var modelName = this.modelName;
 
         var inner = '';
         rows.forEach(function(row){           
@@ -50,7 +54,7 @@ class PaginationAjax {
             inner += `
             <tr>
                 <td>
-                    TBA
+                    ${displayActionButtons(row.uuid, modelName, actions)}
                 </td>
                 `
 
@@ -68,6 +72,9 @@ class PaginationAjax {
         });
 
         this.tbodyElement.append(inner);
+        
+        // Add events to the buttons
+        actionsAddEventListeners(this.modelName, this.ajaxUrl, this.actions);
     }
 
     displayPaginationButtons(links) 
@@ -90,4 +97,141 @@ class PaginationAjax {
         if(val) this.linksButtonElements.removeAttr('disabled');
         else this.linksButtonElements.attr('disabled', true);
     }
+}
+
+function processRequest(request, table)
+{
+    console.log("Processing request");
+    request.done(function(res, status, jqXHR) {
+        console.log(`GET request to load ${table.modelName} has successfully been made.`);
+        console.log(res);
+
+        // Print data to table
+        table.displayTableRows(res.data);
+        table.displayPaginationButtons(res.links);
+
+        $(`.btn-paginate-${table.modelName}`).click(function(e) {
+            console.log("Paginate button has been clicked.");
+            console.log(e.target.dataset.href);
+
+            request = table.requestData(e.target.dataset.href);
+            processRequest(request, table);
+        });
+    });
+
+    request.fail(function(jqXHR, status, error) {
+        console.log(`GET request to load ${table.modelName} has failed.`);
+        console.log(jqXHR);
+
+        generateToast(jqXHR.responseJSON.message, 'bg-danger');
+    });
+
+    request.always(function(){
+        table.spinnerElement.hide();
+    });
+}
+
+function displayActionButtons(id, modelName, actions, customActionsHtml = undefined)
+{
+    var inner = '';
+
+    actions.forEach(function(a){
+        if(a == 'edit') {
+            inner += `
+            <button 
+                type="button" 
+                class="btn btn-primary btn-edit-${modelName}" 
+                data-id="${id}"
+                data-bs-toggle="modal"
+                data-bs-target="#modal-edit-${modelName}">
+                <span class="icon text-white-50">
+                    <i class="fas fa-pen"></i>
+                </span>
+            </button>
+            `;
+        }
+        else if(a == 'delete') {
+            inner += `
+            <button 
+                type="button" 
+                class="btn btn-danger btn-delete-${modelName}" 
+                data-id="${id}"
+                data-bs-toggle="modal"
+                data-bs-target="#modal-delete-${modelName}">
+                <span class="icon text-white-50">
+                    <i class="fas fa-trash"></i>
+                </span>
+            </button>
+            `;
+        }
+    });
+
+    if(customActionsHtml != undefined)
+    {
+        inner += customActionsHtml;
+    }
+
+
+    return inner;
+}
+
+function actionsAddEventListeners(modelName, ajaxUrl, actions)
+{
+    console.log("Adding event listenders to actions.");
+    actions.forEach(function(a){
+        console.log(a);
+        if(a == 'edit') {
+            $(`.btn-edit-${modelName}`).click(function(e) {
+                console.log(`Edit button clicked for model: ${modelName}`);
+                console.log(e);
+
+                $(`#modal-spinner-edit-${modelName}`).show();
+                $(`#form-edit-${modelName}`).hide();
+                $(`#submit-form-edit-${modelName}`).attr('disabled', true);
+
+                var request = $.ajax({
+                    url: `${ajaxUrl}/${e.currentTarget.dataset.id}`,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    method: 'GET',
+                });
+
+                request.done(function(res, status, jqXHR){
+                    console.log(`GET Request successful to fill in current values in ${modelName} edit form.`);
+                    console.log(res);
+
+                    var form = document.querySelector(`#form-edit-${modelName}`);
+                    console.log(form);
+                    form.action = `${ajaxUrl}/${e.target.dataset.id}`;
+
+                    // TODO: Fill input fields
+                    console.log("Collecting editable input elements");
+                    var inputElements = document.querySelectorAll(`#form-edit-${modelName} input`);
+                    console.log(inputElements);
+
+                    inputElements.forEach(function(i){
+                        if(i.name != '_token' && i.name != '_method')
+                        {
+                            console.log(`${i.name} : ${res[i.name]}`);
+                            $(`#input-form-edit-${modelName}-${i.name}`).val(res[i.name]);
+                        }
+                    });
+
+                    $(`#modal-spinner-edit-${modelName}`).hide();
+                    $(`#form-edit-${modelName}`).show();
+                    $(`#submit-form-edit-${modelName}`).removeAttr('disabled');
+                });
+
+                request.fail(function(jqXHR, status, error) {
+                    console.log(`GET Request failed to fill in current values in ${modelName} edit form.`);
+                    console.log(jqXHR);
+
+                    $(`#close-form-edit-${modelName}`).click();
+                    generateToast(jqXHR.responseJSON.message, 'bg-danger');
+                });
+            });
+        }
+        else if(a == 'delete') {
+            
+        }
+    });
 }
