@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests\InventoryModule\Product;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::user()->designation == 'manager';
     }
 
     /**
@@ -24,7 +25,7 @@ class UpdateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required'],
         ];
     }
 }
