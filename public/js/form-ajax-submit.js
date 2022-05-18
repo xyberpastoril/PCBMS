@@ -51,6 +51,11 @@ $(".ajax-submit").submit(function(e){
 
         closeButtonElement.click();
         generateToast(res, 'bg-success');
+
+        console.log("TEST");
+        console.log(e.target.dataset.model + 'Table');
+        request = window[e.target.dataset.model + 'Table'].requestData();
+        processRequest(request, window[e.target.dataset.model + 'Table']);
     });
 
     // If request has errors (e.g. validation errors).

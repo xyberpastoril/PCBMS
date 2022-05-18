@@ -49,7 +49,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="form-create-supplier" class="ajax-submit" method="post" action="{{ url('/ajax/suppliers') }}">
+                <form id="form-create-supplier" data-model="supplier" class="ajax-submit" method="post" action="{{ url('/ajax/suppliers') }}">
                     @csrf
 
                     {{-- Name --}}
@@ -133,7 +133,7 @@
                 <div id="modal-spinner-edit-supplier" style="display:none" class="spinner-border spinner-border-sm text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <form id="form-edit-supplier" class="ajax-submit" method="post" action="">
+                <form id="form-edit-supplier" data-model="supplier" class="ajax-submit" method="post" action="">
                     @csrf
                     @method('PUT')
 
@@ -217,7 +217,7 @@
     $(document).ready(function(){
         console.log("Creating a PaginationAjax instance.");;
 
-        suppliersTable = new PaginationAjax({
+        supplierTable = new PaginationAjax({
             url: '/suppliers',
             ajaxUrl: '/ajax/suppliers',
             modelName: 'supplier',
@@ -233,8 +233,8 @@
             ]
         });
 
-        request = suppliersTable.requestData();
-        processRequest(request, suppliersTable);
+        request = supplierTable.requestData();
+        processRequest(request, supplierTable);
     });  
 </script>
 @endpush
