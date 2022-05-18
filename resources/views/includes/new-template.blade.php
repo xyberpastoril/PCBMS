@@ -23,6 +23,8 @@
             </div>
         </div>
 
+        @yield('modals')
+
         <div id="toast-container" class="toast-container position-fixed top-0 mt-5 end-0 p-3"></div>
 
         <form id="form-logout" action="{{ route('logout') }}" method="POST" class="d-none">
