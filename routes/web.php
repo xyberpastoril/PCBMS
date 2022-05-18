@@ -102,6 +102,8 @@ Route::group([
                 'prefix' => 'ajax/products'
             ], function()
             {
+                Route::get('/', [\App\Http\Controllers\InventoryModule\ProductController::class, 'showRowsAjax'])->name('show-rows');
+                Route::post('/', [\App\Http\Controllers\InventoryModule\ProductController::class, 'storeAjax'])->name('store');
                 Route::get('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'editAjax'])->name('edit');
                 Route::put('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'updateAjax'])->name('update');
                 Route::delete('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'destroyAjax'])->name('destroy');
