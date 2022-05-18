@@ -146,7 +146,7 @@
 <script src="{{ url('/js/form-ajax-submit.js') }}"></script>
 <script src="{{ url('/js/pagination-ajax.js') }}"></script>
 <script>
-    var ProductsTable;
+    var productsTable;
 
     $(document).ready(function(){
         console.log("Creating a PaginationAjax instance.");;
