@@ -206,6 +206,32 @@
     </div>
 </div>
 
+<!-- Delete Supplier Modal -->
+<div class="modal fade" id="modal-delete-supplier" tabindex="-1" aria-labelledby="modal-label-delete-supplier" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label-delete-supplier">Delete Supplier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-spinner-delete-supplier" style="display:none" class="spinner-border spinner-border-sm text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <form id="form-delete-supplier" data-model="supplier" class="ajax-submit" method="post" action="">
+                    @csrf
+                    @method('DELETE')
+                    <p>Are you sure you want to delete <span id="form-delete-supplier-name" class="text-danger"></span>?</p>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="close-form-delete-supplier" type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, Cancel</button>
+                <button id="submit-form-delete-supplier" type="submit" class="btn btn-danger" form="form-delete-supplier">Yes, Delete Supplier</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('app-scripts')

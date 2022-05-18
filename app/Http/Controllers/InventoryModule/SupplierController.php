@@ -65,6 +65,8 @@ class SupplierController extends Controller
 
     public function destroyAjax(Supplier $supplier)
     {
-        //
+        $supplier->delete();
+        
+        return 'Supplier successfully deleted.';
     }
 }

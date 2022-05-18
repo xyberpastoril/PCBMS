@@ -230,7 +230,42 @@ function actionsAddEventListeners(modelName, ajaxUrl, actions)
             });
         }
         else if(a == 'delete') {
-            
+            $(`.btn-delete-${modelName}`).click(function(e) {
+                console.log(`Delete button clicked for model: ${modelName}`);
+                console.log(e);
+
+                $(`#modal-spinner-delete-${modelName}`).show();
+                $(`#form-delete-${modelName}`).hide();
+                $(`#submit-form-delete-${modelName}`).attr('disabled', true);
+
+                var request = $.ajax({
+                    url: `${ajaxUrl}/${e.currentTarget.dataset.id}`,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    method: 'GET',
+                });
+
+                request.done(function(res, status, jqXHR){
+                    console.log(`GET Request successful to fill in current values in ${modelName} delete form.`);
+                    console.log(res);
+
+                    var form = document.querySelector(`#form-delete-${modelName}`);
+                    console.log(form);
+                    form.action = `${ajaxUrl}/${res.uuid}`;
+                    $(`#form-delete-${modelName}-name`).html(res.name);
+
+                    $(`#modal-spinner-delete-${modelName}`).hide();
+                    $(`#form-delete-${modelName}`).show();
+                    $(`#submit-form-delete-${modelName}`).removeAttr('disabled');
+                });
+
+                request.fail(function(jqXHR, status, error) {
+                    console.log(`GET Request failed to fill in current values in ${modelName} delete form.`);
+                    console.log(jqXHR);
+
+                    $(`#close-form-delete-${modelName}`).click();
+                    generateToast(jqXHR.responseJSON.message, 'bg-danger');
+                });
+            });
         }
     });
 }
