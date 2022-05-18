@@ -201,9 +201,8 @@ function actionsAddEventListeners(modelName, ajaxUrl, actions)
 
                     var form = document.querySelector(`#form-edit-${modelName}`);
                     console.log(form);
-                    form.action = `${ajaxUrl}/${e.target.dataset.id}`;
+                    form.action = `${ajaxUrl}/${res.uuid}`;
 
-                    // TODO: Fill input fields
                     console.log("Collecting editable input elements");
                     var inputElements = document.querySelectorAll(`#form-edit-${modelName} input`);
                     console.log(inputElements);

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\InventoryModule\Supplier;
 
 use App\Http\Requests\Api\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateSupplierRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateSupplierRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::user()->designation == 'manager';
     }
 
     /**
@@ -24,7 +25,10 @@ class UpdateSupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required'],
+            'physical_address' => ['required'],
+            'mobile_number' => ['required'], // Add formatting later
+            'email' => ['sometimes', 'email'],
         ];
     }
 }

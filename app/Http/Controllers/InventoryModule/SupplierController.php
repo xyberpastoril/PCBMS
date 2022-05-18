@@ -51,7 +51,16 @@ class SupplierController extends Controller
 
     public function updateAjax(UpdateSupplierRequest $request, Supplier $supplier)
     {
-        //
+        $validated = $request->validated();
+
+        $supplier->update([
+            'name' => $validated['name'],
+            'physical_address' => $validated['physical_address'],
+            'mobile_number' => $validated['mobile_number'],
+            'email' => $validated['email'],
+        ]);
+
+        return 'Supplier successfully updated.';
     }
 
     public function destroyAjax(Supplier $supplier)
