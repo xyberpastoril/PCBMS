@@ -118,6 +118,15 @@ Route::group([
             // HTTP
             Route::get('/inventory', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'index'])->name('index');
         });
+
+        // Consign Orders Controller
+        Route::group([
+            'as' => 'consign-order.',
+        ], function()
+        {
+            // HTTP
+            Route::get('/orders', [\App\Http\Controllers\InventoryModule\ConsignOrderController::class, 'index'])->name('index');
+        });
     });
 
     /**
