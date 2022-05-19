@@ -26,7 +26,6 @@ class ConsignedProduct extends Model
         'consign_order_id',
         'product_id',
         'quantity',
-        'unit',
         'particulars',
     ];
 
