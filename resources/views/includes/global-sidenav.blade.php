@@ -21,6 +21,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Inventory
                 </a>
+                <a class="nav-link" href="{{ url('/orders/') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                    Consign Orders
+                </a>
                 <hr class="mx-3">
                 <a class="nav-link" href="{{ url('/reports/') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
