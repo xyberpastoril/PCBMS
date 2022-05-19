@@ -23,6 +23,7 @@ class ProductController extends Controller
         $products = Product::select(
             'products.uuid',
             'products.name',
+            'products.unit',
         );
 
         return $products->paginate(10);
@@ -34,6 +35,7 @@ class ProductController extends Controller
 
         Product::create([
             'name' => $validated['name'],
+            'unit' => $validated['unit'],
         ]);
 
         return 'Product successfully added.';
@@ -50,7 +52,10 @@ class ProductController extends Controller
 
         $product->update([
             'name' => $validated['name'],
+            'unit' => $validated['unit'],
         ]);
+
+        return 'Product successfully updated.';
     }
 
     public function destroyAjax(Product $product)

@@ -24,6 +24,7 @@
                         </div>
                     </th>
                     <th>Name</th>
+                    <th>Unit</th>
                 </thead>
                 <tbody id="table-content-product"></tbody>
             </table>
@@ -62,6 +63,21 @@
                         </div>
                         {{-- Error --}}
                         <p id="error-form-create-product-name" data-field="name" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                    </div>
+
+                    {{-- Unit --}}
+                    <div class="form-group row mb-3">
+                        {{-- Label --}}
+                        <label for="input-form-create-product-unit" class="col-12 col-lg-6 col-form-label"> 
+                            Unit
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            <input type="text" class="form-control" id="input-form-create-product-unit" name="unit" required>
+                        </div>
+                        {{-- Error --}}
+                        <p id="error-form-create-product-unit" data-field="unit" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
                     </div>
 
                 </form>
@@ -103,6 +119,21 @@
                         </div>
                         {{-- Error --}}
                         <p id="error-form-edit-product-name" data-field="name" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                    </div>
+
+                    {{-- Unit --}}
+                    <div class="form-group row mb-3">
+                        {{-- Label --}}
+                        <label for="input-form-edit-product-unit" class="col-12 col-lg-6 col-form-label"> 
+                            Unit
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            <input type="text" class="form-control" id="input-form-edit-product-unit" name="unit" required>
+                        </div>
+                        {{-- Error --}}
+                        <p id="error-form-edit-product-unit" data-field="unit" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
                     </div>
                 </form>
             </div>
@@ -157,6 +188,7 @@
             modelName: 'product',
             columns: [
                 'name',
+                'unit',
             ],
             actions: [
                 'edit',
