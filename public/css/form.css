@@ -1,0 +1,5 @@
+.form-input-price::-webkit-inner-spin-button,
+    .form-input-price::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
