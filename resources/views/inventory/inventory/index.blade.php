@@ -98,7 +98,7 @@
                         </label>
                         <div class="col-12 col-lg-4">
                             {{-- Input --}}
-                            <input type="text" class="form-control" id="input-form-receive-products-consign_order" name="consign_order">
+                            <input type="text" class="form-control" id="input-form-receive-products-consign_order" name="consign_order" disabled placeholder="To be added later">
                             {{-- Error --}}
                             <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
