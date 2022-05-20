@@ -184,6 +184,7 @@ Route::group([
     ], function()
     {
         // AJAX
+        Route::get('/suppliers/{query}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'searchTagifyAjax'])->name('suppliers');
         Route::get('/products/{query}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'searchTagifyAjax'])->name('products');
     });
 });

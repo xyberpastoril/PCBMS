@@ -30,6 +30,22 @@ class SupplierController extends Controller
         return $suppliers->paginate(10);
     }
 
+    public function searchTagifyAjax($query)
+    {
+        $suppliers = Supplier::select(
+            'suppliers.uuid as value',
+            'suppliers.name',
+            'suppliers.mobile_number',
+        )
+        ->where('suppliers.name', 'LIKE', "%{$query}%")
+        ->orWhere('suppliers.email', 'LIKE', "%{$query}%")
+        ->orWhere('suppliers.mobile_number', 'LIKE', "%{$query}%")
+        ->limit(5)
+        ->get();
+
+        return $suppliers;
+    }
+
     public function storeAjax(StoreSupplierRequest $request)
     {
         $validated = $request->validated();
