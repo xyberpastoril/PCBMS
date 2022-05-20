@@ -64,7 +64,10 @@ function onProductItemInput(e) {
 
         // Hide loading animation and show the suggestions dropdown.
         tagify.loading(false).dropdown.show(value);
-    })
+    }).catch(function(error) {
+        console.log("error");
+        tagify.loading(false);
+    });
 }
 
 function productItemTagTemplate(tagData){
