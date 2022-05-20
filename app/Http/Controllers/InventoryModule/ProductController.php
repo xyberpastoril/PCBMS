@@ -33,6 +33,7 @@ class ProductController extends Controller
     {
         $products = Product::select(
             'products.uuid as value',
+            'products.id',
             'products.name',
             'products.unit',
         )

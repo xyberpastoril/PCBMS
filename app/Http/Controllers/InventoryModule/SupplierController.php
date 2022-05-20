@@ -34,6 +34,7 @@ class SupplierController extends Controller
     {
         $suppliers = Supplier::select(
             'suppliers.uuid as value',
+            'suppliers.id',
             'suppliers.name',
             'suppliers.physical_address',
         )
