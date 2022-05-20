@@ -26,7 +26,6 @@ class InventoryController extends Controller
             'consigned_products.particulars',
             'products.unit',
             DB::raw('DATE_FORMAT(consign_orders.order_delivered_at, "%Y-%m-%d") as order_delivered_at'),
-            // DB::raw('unix_timestamp(consign_orders.order_delivered_at) as order_delivered_at'),
             'consigned_products.expiration_date',
             'consigned_products.unit_price',
             'consigned_products.sale_price',
