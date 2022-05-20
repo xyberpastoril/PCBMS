@@ -30,11 +30,27 @@ function initTagifyProduct(elm)
 function onProductItemSelectSuggestion(e) {
     id = e.detail.tagify.DOM.originalInput.dataset.id;
     console.log(`Product selected : ${id}`);
+
+    if(e.detail.tagify.DOM.originalInput.dataset.rp != undefined) {
+        $(`#rp_particulars_${id}`).removeAttr('disabled');
+        $(`#rp_expiration_dates_${id}`).removeAttr('disabled');
+        $(`#rp_unit_prices_${id}`).removeAttr('disabled');
+        $(`#rp_sale_prices_${id}`).removeAttr('disabled');
+        $(`#rp_quantities_${id}`).removeAttr('disabled');
+    }
 }
 
 function onProductItemRemove(e) {
     id = e.detail.tagify.DOM.originalInput.dataset.id;
     console.log(`Product removed from selection : ${id}`);
+
+    if(e.detail.tagify.DOM.originalInput.dataset.rp != undefined) {
+        $(`#rp_particulars_${id}`).attr('disabled', true);
+        $(`#rp_expiration_dates_${id}`).attr('disabled', true);
+        $(`#rp_unit_prices_${id}`).attr('disabled', true);
+        $(`#rp_sale_prices_${id}`).attr('disabled', true);
+        $(`#rp_quantities_${id}`).attr('disabled', true);
+    }
 }
 
 function onProductItemInput(e) {

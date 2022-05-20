@@ -54,22 +54,22 @@ function createReceivedProductEntry(item = undefined)
             </button>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_products_${received_products_count}" class="r_products form-control-sm" name="products[]"
+            <input data-id="${received_products_count}" data-rp="1" id="rp_products_${received_products_count}" class="r_products form-control-sm" name="products[]"
         </td>
         <td>
             <input data-id="${received_products_count}" id="rp_particulars_${received_products_count}" type="text" class="form-control form-control-sm" name="particulars[]" placeholder="Enter Particulars" disabled>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_expiration_dates_${received_products_count}" type="date" class="form-control form-control-sm" name="expiration_dates[]">
+            <input data-id="${received_products_count}" id="rp_expiration_dates_${received_products_count}" type="date" class="form-control form-control-sm" name="expiration_dates[]" disabled>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_unit_prices_${received_products_count}" type="number" step="0.01" class="form-input-price form-control form-control-sm text-end" name="unit_prices[]" placeholder="0.00">
+            <input data-id="${received_products_count}" id="rp_unit_prices_${received_products_count}" type="number" step="0.01" class="form-input-price form-control form-control-sm text-end" name="unit_prices[]" placeholder="0.00" disabled>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_sale_prices_${received_products_count}" type="number" step="0.01" class="form-input-price form-control form-control-sm text-end" name="sale_prices[]" placeholder="0.00">
+            <input data-id="${received_products_count}" id="rp_sale_prices_${received_products_count}" type="number" step="0.01" class="form-input-price form-control form-control-sm text-end" name="sale_prices[]" placeholder="0.00" disabled>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_quantities_${received_products_count}" type="text" class="form-control form-control-sm" name="quantities[]" placeholder="0">
+            <input data-id="${received_products_count}" id="rp_quantities_${received_products_count}" type="text" class="form-control form-control-sm" name="quantities[]" placeholder="0" disabled>
         </td>
     </tr>
     `;
