@@ -116,8 +116,8 @@
                                 <th>Sale Price</th>
                                 <th>Quantity</th>
                             </thead>
-                            <tbody>
-                                <tr>
+                            <tbody id="receive-product-items">
+                                {{-- <tr>
                                     <td>
                                         <button type="button" data-id="1" id="rp_item_delete_1" class="btn btn-sm btn-icon btn-danger rp_item_delete" data-toggle="tooltip" data-placement="bottom" title="Edit">
                                             <span class="icon text-white-50">
@@ -143,7 +143,7 @@
                                     <td>
                                         <input type="text" class="form-control form-control-sm" name="quantities[]" placeholder="0">
                                     </td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -172,3 +172,7 @@
     </div>
 </div>
 @endsection
+
+@push('app-scripts')
+<script src="{{ url('/js/inventory/inventory/receive-products.js') }}"></script>
+@endpush

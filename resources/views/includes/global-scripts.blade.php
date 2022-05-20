@@ -3,3 +3,8 @@
 <script src="https://unpkg.com/@yaireo/tagify"></script>
 <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 
+{{-- Custom --}}
+<script>
+    // This variable is used to allow cancellation of requests for Tagify inputs
+    var controller;
+</script>
