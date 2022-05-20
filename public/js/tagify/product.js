@@ -28,13 +28,13 @@ function initTagifyProduct(elm)
 }
 
 function onProductItemSelectSuggestion(e) {
-    console.log(`Product selected : ${id}`);
     id = e.detail.tagify.DOM.originalInput.dataset.id;
+    console.log(`Product selected : ${id}`);
 }
 
 function onProductItemRemove(e) {
-    console.log(`Product removed from selection : ${id}`);
     id = e.detail.tagify.DOM.originalInput.dataset.id;
+    console.log(`Product removed from selection : ${id}`);
 }
 
 function onProductItemInput(e) {
