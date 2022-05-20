@@ -35,10 +35,11 @@ class SupplierController extends Controller
         $suppliers = Supplier::select(
             'suppliers.uuid as value',
             'suppliers.name',
-            'suppliers.mobile_number',
+            'suppliers.physical_address',
         )
         ->where('suppliers.name', 'LIKE', "%{$query}%")
         ->orWhere('suppliers.email', 'LIKE', "%{$query}%")
+        ->orWhere('suppliers.physical_address', 'LIKE', "%{$query}%")
         ->orWhere('suppliers.mobile_number', 'LIKE', "%{$query}%")
         ->limit(5)
         ->get();
