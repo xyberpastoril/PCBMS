@@ -1,7 +1,7 @@
 /**
  * Suppliers Tagify
  */
-var elm_supplier = document.querySelector(`#input-form-receive-products-name`);
+var elm_supplier = document.querySelector(`#input-form-receive-products-supplier`);
 var elm_supplier_tagify = initTagifySupplier(elm_supplier);
 
 /**

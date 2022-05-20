@@ -62,15 +62,15 @@
                     {{-- Supplier / Delivery Date --}}
                     <div class="form-group row mb-3">
                         {{-- Supplier --}}
-                        <label for="input-form-receive-products-name" class="col-12 col-lg-2 col-form-label"> 
+                        <label for="input-form-receive-products-supplier" class="col-12 col-lg-2 col-form-label"> 
                             Supplier
                             <span class="text-danger ml-1">*</span>
                         </label>
                         <div class="col-12 col-lg-4">
                             {{-- Input --}}
-                            <input type="text" class="form-control" id="input-form-receive-products-name" name="name" required>
+                            <input type="text" class="form-control" id="input-form-receive-products-supplier" name="supplier" required>
                             {{-- Error --}}
-                            <p id="error-form-receive-products-name" data-field="name" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                            <p id="error-form-receive-products-supplier" data-field="supplier" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
 
                         {{-- Delivery Date --}}
