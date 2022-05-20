@@ -25,6 +25,9 @@ class ConsignOrder extends Model
     protected $fillable = [
         'supplier_id',
         'user_id',
+        'order_sent_at',
+        'order_delivered_at',
+        'delivered_by',
     ];
 
     /**

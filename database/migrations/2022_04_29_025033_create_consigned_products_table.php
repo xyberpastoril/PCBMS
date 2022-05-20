@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('consigned_products', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
-            $table->foreignId('consign_order_id')->constrained();
+            $table->foreignId('consign_order_id')->nullable()->constrained();
             $table->foreignId('product_id')->constrained();
             $table->string('particulars');
-            $table->date('expires_on')->nullable();
+            $table->date('expiration_date')->nullable();
             $table->float('unit_price')->nullable();
             $table->float('sale_price')->nullable();
             $table->integer('quantity')->default(0);
