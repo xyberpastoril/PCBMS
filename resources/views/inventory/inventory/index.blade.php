@@ -46,3 +46,129 @@
 </div>
 
 @endsection
+
+@section('modals')
+<div class="modal fade" id="modal-receive-products" tabindex="-1" aria-labelledby="modal-label-receive-products" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label_receive-products">Receive Products</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-receive-products" class="ajax-submit" method="post" action="{{ url('/ajax/products') }}">
+                    @csrf
+
+                    {{-- Supplier / Delivery Date --}}
+                    <div class="form-group row mb-3">
+                        {{-- Supplier --}}
+                        <label for="input-form-receive-products-name" class="col-12 col-lg-2 col-form-label"> 
+                            Supplier
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        <div class="col-12 col-lg-4">
+                            {{-- Input --}}
+                            <input type="text" class="form-control" id="input-form-receive-products-name" name="name" required>
+                            {{-- Error --}}
+                            <p id="error-form-receive-products-name" data-field="name" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                        </div>
+
+                        {{-- Delivery Date --}}
+                        <label for="input-form-receive-products-name" class="col-12 col-lg-2 col-form-label"> 
+                            Delivery Date
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        <div class="col-12 col-lg-4">
+                            {{-- Input --}}
+                            <input type="date" class="form-control" id="input-form-receive-products-date" name="date" value="{{ now()->format('Y-m-d') }}" required>
+                            {{-- Error --}}
+                            <p id="error-form-receive-products-date" data-field="date" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                        </div>
+                    </div>
+
+                    {{-- N/A / Consign Order --}}
+                    <div class="form-group row mb-3">
+                        {{-- Input N/A --}}
+                        <div class="col-12 col-lg-2"></div>
+                        <div class="col-12 col-lg-4"></div>
+
+                        {{-- Label --}}
+                        <label for="input-form-receive-products-consign_order" class="col-12 col-lg-2 col-form-label"> 
+                            Consign Order
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        <div class="col-12 col-lg-4">
+                            {{-- Input --}}
+                            <input type="text" class="form-control" id="input-form-receive-products-consign_order" name="consign_order">
+                            {{-- Error --}}
+                            <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <th></th>
+                                <th>Product</th>
+                                <th>Particulars</th>
+                                <th>Expiration Date</th>
+                                <th>Unit Price</th>
+                                <th>Sale Price</th>
+                                <th>Quantity</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <button type="button" data-id="1" id="rp_item_delete_1" class="btn btn-sm btn-icon btn-danger rp_item_delete" data-toggle="tooltip" data-placement="bottom" title="Edit">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm" name="products[]" placeholder="Search Product">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm" name="particulars[]" placeholder="Enter Particulars">
+                                    </td>
+                                    <td>
+                                        <input type="date" class="form-control form-control-sm" name="expiration_dates[]">
+                                    </td>
+                                    <td>
+                                        <input type="number" step="0.01" class="form-input-price form-control form-control-sm text-end" name="unit_prices[]" placeholder="0.00">
+                                    </td>
+                                    <td>
+                                        <input type="number" step="0.01" class="form-input-price form-control form-control-sm text-end" name="sale_prices[]" placeholder="0.00">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm" name="quantities[]" placeholder="0">
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-icon btn-primary rp_add_item_entry" data-toggle="tooltip" data-placement="bottom" title="Edit">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-plus"></i>
+                                            </span>
+                                        </button>
+                                    </td>
+                                    <td colspan="6">
+                                        <p class="pb-0 m-0 text-muted">Create New Row</p>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="close-form-receive-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="submit-form-receive-products" type="submit" class="btn btn-primary" form="form-receive-products">Create Product</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
