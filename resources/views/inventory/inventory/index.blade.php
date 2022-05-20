@@ -95,7 +95,6 @@
                         {{-- Label --}}
                         <label for="input-form-receive-products-consign_order" class="col-12 col-lg-2 col-form-label"> 
                             Consign Order
-                            <span class="text-danger ml-1">*</span>
                         </label>
                         <div class="col-12 col-lg-4">
                             {{-- Input --}}
@@ -109,12 +108,12 @@
                         <table class="table table-sm table-bordered">
                             <thead>
                                 <th></th>
-                                <th>Product</th>
-                                <th>Particulars</th>
-                                <th>Expiration Date</th>
-                                <th>Unit Price</th>
+                                <th>Product<span class="text-danger ml-1">*</span></th>
+                                <th>Particulars<span class="text-danger ml-1">*</span></th>
+                                <th>Expiration Date<span class="text-danger ml-1">*</span></th>
+                                <th>Unit Price<span class="text-danger ml-1">*</span></th>
                                 <th>Sale Price</th>
-                                <th>Quantity</th>
+                                <th>Quantity<span class="text-danger ml-1">*</span></th>
                             </thead>
                             <tbody id="receive-product-items"></tbody>
                             <tfoot>
