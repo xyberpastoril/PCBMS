@@ -116,35 +116,7 @@
                                 <th>Sale Price</th>
                                 <th>Quantity</th>
                             </thead>
-                            <tbody id="receive-product-items">
-                                {{-- <tr>
-                                    <td>
-                                        <button type="button" data-id="1" id="rp_item_delete_1" class="btn btn-sm btn-icon btn-danger rp_item_delete" data-toggle="tooltip" data-placement="bottom" title="Edit">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-trash"></i>
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm" name="products[]" placeholder="Search Product">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm" name="particulars[]" placeholder="Enter Particulars">
-                                    </td>
-                                    <td>
-                                        <input type="date" class="form-control form-control-sm" name="expiration_dates[]">
-                                    </td>
-                                    <td>
-                                        <input type="number" step="0.01" class="form-input-price form-control form-control-sm text-end" name="unit_prices[]" placeholder="0.00">
-                                    </td>
-                                    <td>
-                                        <input type="number" step="0.01" class="form-input-price form-control form-control-sm text-end" name="sale_prices[]" placeholder="0.00">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm" name="quantities[]" placeholder="0">
-                                    </td>
-                                </tr> --}}
-                            </tbody>
+                            <tbody id="receive-product-items"></tbody>
                             <tfoot>
                                 <tr>
                                     <td>
