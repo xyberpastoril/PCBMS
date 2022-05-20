@@ -5,6 +5,7 @@ namespace App\Http\Controllers\InventoryModule;
 use App\Actions\DecodeTagifyField;
 use App\Http\Controllers\Controller;
 use App\Models\ConsignOrder;
+use App\Models\ConsignedProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,24 @@ class InventoryController extends Controller
         return view('inventory.inventory.index');
     }
 
-    public function receiveProducts(Request $request)
+    public function showRowsAjax()
+    {
+        $consigned_products = ConsignedProduct::select(
+            'consigned_products.uuid',
+            'products.name',
+            'consigned_products.particulars',
+            'products.unit',
+            'consigned_products.expiration_date',
+            'consigned_products.unit_price',
+            'consigned_products.sale_price',
+            'consigned_products.quantity',
+        )
+        ->leftJoin('products', 'consigned_products.product_id', 'products.id');
+
+        return $consigned_products->paginate(10);
+    }
+
+    public function receiveProductsAjax(Request $request)
     {
         // TODO: Create Form Validation
 
