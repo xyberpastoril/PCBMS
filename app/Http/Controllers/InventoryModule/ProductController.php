@@ -29,6 +29,21 @@ class ProductController extends Controller
         return $products->paginate(10);
     }
 
+    public function searchTagifyAjax($query)
+    {
+        $products = Product::select(
+            'products.uuid as value',
+            'products.name',
+            'products.unit',
+        )
+        ->where('products.name', 'LIKE', "%{$query}%")
+        ->orWhere('products.unit', 'LIKE', "%{$query}%")
+        ->limit(5)
+        ->get();
+
+        return $products;
+    }
+
     public function storeAjax(StoreProductRequest $request)
     {
         $validated = $request->validated();

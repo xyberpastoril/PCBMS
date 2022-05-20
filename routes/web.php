@@ -174,4 +174,16 @@ Route::group([
         // AJAX
         // TODO: Add reports ajax routes later when necessary.
     });
+
+    /**
+     * Search
+     */
+    Route::group([
+        'as' => 'search.',
+        'prefix' => 'ajax/search',
+    ], function()
+    {
+        // AJAX
+        Route::get('/products/{query}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'searchTagifyAjax'])->name('products');
+    });
 });

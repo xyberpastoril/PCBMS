@@ -54,7 +54,7 @@ function onProductItemInput(e) {
 
     // Fetches the list of products based from the value,
     // then loads it if successful.
-    fetch(`/ajax/products/search/${value}`, {
+    fetch(`/ajax/search/products/${value}`, {
         signal: controller.signal,
     })
     .then(RES => RES.json())
@@ -65,7 +65,7 @@ function onProductItemInput(e) {
         // Hide loading animation and show the suggestions dropdown.
         tagify.loading(false).dropdown.show(value);
     }).catch(function(error) {
-        console.log("error");
+        console.log(error);
         tagify.loading(false);
     });
 }
