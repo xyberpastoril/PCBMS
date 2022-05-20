@@ -74,7 +74,7 @@
                         </div>
 
                         {{-- Delivery Date --}}
-                        <label for="input-form-receive-products-name" class="col-12 col-lg-2 col-form-label"> 
+                        <label for="input-form-receive-products-date" class="col-12 col-lg-2 col-form-label"> 
                             Delivery Date
                             <span class="text-danger ml-1">*</span>
                         </label>
