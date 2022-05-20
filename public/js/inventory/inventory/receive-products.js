@@ -1,3 +1,13 @@
+/**
+ * Suppliers Tagify
+ */
+var elm_supplier = document.querySelector(`#input-form-receive-products-name`);
+var elm_supplier_tagify = initTagifySupplier(elm_supplier);
+
+/**
+ * Products Tagify
+ */
+
 // This array lists down the tagify instances of the delivered products.
 var received_products = [];
 

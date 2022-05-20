@@ -147,5 +147,6 @@
 
 @push('app-scripts')
 <script src="{{ url('/js/tagify/product.js') }}"></script>
+<script src="{{ url('/js/tagify/supplier.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/receive-products.js') }}"></script>
 @endpush
