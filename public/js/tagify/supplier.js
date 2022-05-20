@@ -103,7 +103,7 @@ function SupplierItemSuggestionTemplate(tagData){
             </div>` : ''
             }
             <strong>${tagData.name}</strong><br>
-            <span>Birr ${tagData.sale_price}</span>
+            <span>${tagData.physical_address}</span>
         </div>
     `
 }

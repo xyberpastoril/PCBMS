@@ -117,7 +117,7 @@ function productItemSuggestionTemplate(tagData){
             </div>` : ''
             }
             <strong>${tagData.name}</strong><br>
-            <span>Birr ${tagData.sale_price}</span>
+            <span>${tagData.unit}</span>
         </div>
     `
 }
