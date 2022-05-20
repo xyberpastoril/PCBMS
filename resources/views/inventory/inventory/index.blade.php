@@ -56,7 +56,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="form-receive-products" class="ajax-submit" method="post" action="{{ url('/ajax/products') }}">
+                <form id="form-receive-products" method="post" action="{{ url('/ajax/inventory/receive-products') }}">
                     @csrf
 
                     {{-- Supplier / Delivery Date --}}

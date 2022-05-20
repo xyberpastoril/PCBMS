@@ -117,6 +117,15 @@ Route::group([
         {
             // HTTP
             Route::get('/inventory', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'index'])->name('index');
+
+            // AJAX
+            Route::group([
+                'as' => 'ajax.',
+                'prefix' => 'ajax/inventory'
+            ], function()
+            {
+                Route::post('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'receiveProducts'])->name('receive-products');
+            });
         });
 
         // Consign Orders Controller
