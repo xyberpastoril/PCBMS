@@ -26,6 +26,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'unit' => ['required'],
         ];
     }
 }
