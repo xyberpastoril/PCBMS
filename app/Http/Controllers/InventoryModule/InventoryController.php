@@ -25,12 +25,16 @@ class InventoryController extends Controller
             'products.name',
             'consigned_products.particulars',
             'products.unit',
+            DB::raw('DATE_FORMAT(consign_orders.order_delivered_at, "%Y-%m-%d") as order_delivered_at'),
+            // DB::raw('unix_timestamp(consign_orders.order_delivered_at) as order_delivered_at'),
             'consigned_products.expiration_date',
             'consigned_products.unit_price',
             'consigned_products.sale_price',
             'consigned_products.quantity',
+            DB::raw('(consigned_products.unit_price * consigned_products.quantity) as amount')
         )
-        ->leftJoin('products', 'consigned_products.product_id', 'products.id');
+        ->leftJoin('products', 'consigned_products.product_id', 'products.id')
+        ->leftJoin('consign_orders', 'consigned_products.consign_order_id', 'consign_orders.id');
 
         return $consigned_products->paginate(10);
     }

@@ -23,11 +23,10 @@
                 <thead>
                     <th>
                         Actions
-                        <div id="table-spinner-inventory" style="display:none" class="spinner-border spinner-border-sm text-primary" role="status">
+                        <div id="table-spinner-received-products" style="display:none" class="spinner-border spinner-border-sm text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </th>
-                    <th>ID</th>
                     <th>Product Name</th>
                     <th>Particulars</th>
                     <th>Delivered At</th>
@@ -37,11 +36,11 @@
                     <th>Quantity</th>
                     <th>Amount</th>
                 </thead>
-                <tbody id="table-content-inventory"></tbody>
+                <tbody id="table-content-received-products"></tbody>
             </table>
         </div>
 
-        <div id="table-links-inventory" class="btn-group mb-4" role="group"></div>
+        <div id="table-links-received-products" class="btn-group mb-4" role="group"></div>
     </div>
 </div>
 
@@ -148,4 +147,35 @@
 <script src="{{ url('/js/tagify/product.js') }}"></script>
 <script src="{{ url('/js/tagify/supplier.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/receive-products.js') }}"></script>
+<script src="{{ url('/js/inventory/inventory/pagination-ajax-received-products.js') }}"></script>
+<script>
+    var receivedProductsTable;
+
+    $(document).ready(function(){
+        console.log("Creating a PaginationAjax instance.");;
+
+        receivedProductsTable = new ReceivedProductsPaginationAjax({
+            url: '/',
+            ajaxUrl: '/ajax/inventory/receive-products',
+            modelName: 'received-products',
+            columns: [
+                'name',
+                'particulars',
+                'order_delivered_at',
+                'expiration_date',
+                'unit_price',
+                'sale_price',
+                'quantity',
+                'amount',
+            ],
+            actions: [
+                // 'edit',
+                // 'delete',
+            ]
+        });
+
+        request = receivedProductsTable.requestData();
+        processRequestReceivedProducts(request, receivedProductsTable);
+    });  
+</script>
 @endpush
