@@ -8,32 +8,35 @@
                     Dashboard
                 </a>
                 <hr class="mx-3 mb-0">
-                <div class="sb-sidenav-menu-heading">Inventory</div>
-                <a class="nav-link" href="{{ url('/suppliers/') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                    Suppliers
-                </a>
-                <a class="nav-link" href="{{ url('/products/') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                    Products
-                </a>
-                <a class="nav-link" href="{{ url('/inventory/') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                    Inventory
-                </a>
-                <a class="nav-link" href="{{ url('/orders/') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                    Consign Orders
-                </a>
-                <hr class="mx-3">
-                <a class="nav-link" href="{{ url('/reports/') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                    Reports
-                </a>
-                <a class="nav-link" href="{{ url('/personnel/') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                    Personnel
-                </a>
+                @if(Auth::user()->designation == 'manager')
+                    <div class="sb-sidenav-menu-heading">Inventory</div>
+                    <a class="nav-link" href="{{ url('/suppliers/') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                        Suppliers
+                    </a>
+                    <a class="nav-link" href="{{ url('/products/') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Products
+                    </a>
+                    <a class="nav-link" href="{{ url('/inventory/') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                        Inventory
+                    </a>
+                    <a class="nav-link" href="{{ url('/orders/') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                        Consign Orders
+                    </a>
+                    <hr class="mx-3 mb-0">
+                    <div class="sb-sidenav-menu-heading">Administration</div>
+                    <a class="nav-link" href="{{ url('/reports/') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Reports
+                    </a>
+                    <a class="nav-link" href="{{ url('/personnel/') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Personnel
+                    </a>
+                @endif
             </div>
         </div>
         <div class="sb-sidenav-footer">
