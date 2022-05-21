@@ -27,8 +27,8 @@ $("#form-receive-products").submit(function(e){
         }
     }
 
-    closeButtonElement = $(`#form-receive-products.close`);
     submitButtonElement = $(`#form-receive-products.submit`);
+    closeButtonElement = $(`#close-form-receive-products`);
 
     // Hide error elements and disable submit button.
     hideFormErrorsReceiveProducts();
