@@ -54,22 +54,28 @@ function createReceivedProductEntry(item = undefined)
             </button>
         </td>
         <td>
-            <input data-id="${received_products_count}" data-rp="1" id="rp_products_${received_products_count}" class="r_products form-control-sm" name="products[]"
+            <input data-id="${received_products_count}" data-rp="1" id="rp_products_${received_products_count}" class="rp_products form-control-sm" name="products[]">
+            <p class="text-danger error error-rp_products" style="display:none"></p>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_particulars_${received_products_count}" type="text" class="form-control form-control-sm" name="particulars[]" placeholder="Enter Particulars" disabled>
+            <input data-id="${received_products_count}" id="rp_particulars_${received_products_count}" type="text" class="rp_particulars form-control form-control-sm" name="particulars[]" placeholder="Enter Particulars" disabled required>
+            <p class="text-danger error error-rp_particulars" style="display:none"></p>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_expiration_dates_${received_products_count}" type="date" class="form-control form-control-sm" name="expiration_dates[]" disabled>
+            <input data-id="${received_products_count}" id="rp_expiration_dates_${received_products_count}" type="date" class="rp_expiration_dates form-control form-control-sm" name="expiration_dates[]" disabled required>
+            <p class="text-danger error error-rp_expiration_dates" style="display:none"></p>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_unit_prices_${received_products_count}" type="number" step="0.01" class="form-input-price form-control form-control-sm text-end" name="unit_prices[]" placeholder="0.00" disabled>
+            <input data-id="${received_products_count}" id="rp_unit_prices_${received_products_count}" type="number" step="0.01" class="rp_unit_prices form-input-price form-control form-control-sm text-end" name="unit_prices[]" placeholder="0.00" disabled required>
+            <p class="text-danger error error-rp_unit_prices" style="display:none"></p>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_sale_prices_${received_products_count}" type="number" step="0.01" class="form-input-price form-control form-control-sm text-end" name="sale_prices[]" placeholder="0.00" disabled>
+            <input data-id="${received_products_count}" id="rp_sale_prices_${received_products_count}" type="number" step="0.01" class="rp_sale_prices form-input-price form-control form-control-sm text-end" name="sale_prices[]" placeholder="0.00" disabled required>
+            <p class="text-danger error error-rp_sale_prices" style="display:none"></p>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_quantities_${received_products_count}" type="text" class="form-control form-control-sm" name="quantities[]" placeholder="0" disabled>
+            <input data-id="${received_products_count}" id="rp_quantities_${received_products_count}" type="text" class="rp_quantities form-control form-control-sm" name="quantities[]" placeholder="0" disabled required>
+            <p class="text-danger error error-rp_quantities" style="display:none"></p>
         </td>
     </tr>
     `;

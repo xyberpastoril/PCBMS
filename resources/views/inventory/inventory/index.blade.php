@@ -67,9 +67,9 @@
                         </label>
                         <div class="col-12 col-lg-4">
                             {{-- Input --}}
-                            <input type="text" class="form-control" id="input-form-receive-products-supplier" name="supplier" required>
+                            <input type="text" class="form-control rp_supplier" id="input-form-receive-products-supplier" name="supplier">
                             {{-- Error --}}
-                            <p id="error-form-receive-products-supplier" data-field="supplier" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                            <p id="error-form-receive-products-supplier" data-field="supplier" class="text-danger error error-rp_supplier col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
 
                         {{-- Delivery Date --}}
@@ -79,9 +79,9 @@
                         </label>
                         <div class="col-12 col-lg-4">
                             {{-- Input --}}
-                            <input type="date" class="form-control" id="input-form-receive-products-date" name="date" value="{{ now()->format('Y-m-d') }}" required>
+                            <input type="date" class="form-control rp_date" id="input-form-receive-products-date" name="date" value="{{ now()->format('Y-m-d') }}">
                             {{-- Error --}}
-                            <p id="error-form-receive-products-date" data-field="date" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                            <p id="error-form-receive-products-date" data-field="date" class="text-danger error error-rp_date col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
                     </div>
 
@@ -97,9 +97,9 @@
                         </label>
                         <div class="col-12 col-lg-4">
                             {{-- Input --}}
-                            <input type="text" class="form-control" id="input-form-receive-products-consign_order" name="consign_order" disabled placeholder="To be added later">
+                            <input type="text" class="form-control rp_consign_order" id="input-form-receive-products-consign_order" name="consign_order" disabled placeholder="To be added later">
                             {{-- Error --}}
-                            <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                            <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger error error-rp_consign_order col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
                     </div>
 
@@ -135,8 +135,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="close-form-receive-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="submit-form-receive-products" type="submit" class="btn btn-primary" form="form-receive-products">Create Product</button>
+                <button id="close-form-receive-products" type="button" class="btn btn-secondary close" data-bs-dismiss="modal">Close</button>
+                <button id="submit-form-receive-products" type="submit" class="btn btn-primary submit" form="form-receive-products">Create Product</button>
             </div>
         </div>
     </div>
@@ -147,6 +147,7 @@
 <script src="{{ url('/js/tagify/product.js') }}"></script>
 <script src="{{ url('/js/tagify/supplier.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/receive-products.js') }}"></script>
+<script src="{{ url('/js/inventory/inventory/form-ajax-submit-receive-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pagination-ajax-received-products.js') }}"></script>
 <script>
     var receivedProductsTable;
