@@ -41,8 +41,6 @@ class InventoryController extends Controller
 
     public function receiveProductsAjax(ReceiveProductsRequest $request)
     {
-        // TODO: Create Form Validation
-
         $supplier = DecodeTagifyField::run($request->supplier);
         $products = DecodeTagifyField::run($request->products);
 
@@ -74,8 +72,7 @@ class InventoryController extends Controller
         // Store array of received products to the database.
         DB::table('consigned_products')->insert($received_products);
 
-        // TODO: Experiment this with AJAX.
-        return redirect('/inventory/');
+        return 'Received Products successfully added.';
     }
 
     // TODO: Pay Supplier
