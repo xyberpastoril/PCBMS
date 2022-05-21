@@ -23,7 +23,7 @@ Route::group([
      * Homepage
      */
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    
+
     /**
      * Account Settings
      */
@@ -61,132 +61,148 @@ Route::group([
     });
 
     /**
-     * Inventory Module [1 & 2]
+     * Accessible only to MANAGER
      */
     Route::group([
-        'as' => 'inventory.'
+        'middleware' => ['manager'],
     ], function() 
     {
-        // Suppliers Controller
+        /**
+         * Inventory Module [1 & 2]
+         */
         Route::group([
-            'as' => 'supplier.'
-        ], function() {
-            // HTTP
-            Route::get('/suppliers', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'index'])->name('index');
-
-            // AJAX
+            'as' => 'inventory.'
+        ], function() 
+        {
+            // Suppliers Controller
             Route::group([
-                'as' => 'ajax.',
-                'prefix' => 'ajax/suppliers'
+                'as' => 'supplier.'
+            ], function() {
+                // HTTP
+                Route::get('/suppliers', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'index'])->name('index');
+
+                // AJAX
+                Route::group([
+                    'as' => 'ajax.',
+                    'prefix' => 'ajax/suppliers'
+                ], function()
+                {
+                    Route::get('/', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'showRowsAjax'])->name('show-rows');
+                    Route::post('/', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'storeAjax'])->name('store');
+                    Route::get('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'editAjax'])->name('edit');
+                    Route::put('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'updateAjax'])->name('update');
+                    Route::delete('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'destroyAjax'])->name('destroy');
+                });
+            });
+
+            // Products Controller
+            Route::group([
+                'as' => 'product.'
+            ], function() 
+            {
+                // HTTP
+                Route::get('/products', [\App\Http\Controllers\InventoryModule\ProductController::class, 'index'])->name('index');
+                
+                // AJAX
+                Route::group([
+                    'as' => 'ajax.',
+                    'prefix' => 'ajax/products'
+                ], function()
+                {
+                    Route::get('/', [\App\Http\Controllers\InventoryModule\ProductController::class, 'showRowsAjax'])->name('show-rows');
+                    Route::post('/', [\App\Http\Controllers\InventoryModule\ProductController::class, 'storeAjax'])->name('store');
+                    Route::get('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'editAjax'])->name('edit');
+                    Route::put('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'updateAjax'])->name('update');
+                    Route::delete('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'destroyAjax'])->name('destroy');
+                });
+            });
+
+            // Inventory Controller
+            Route::group([
+                'as' => 'inventory.',
             ], function()
             {
-                Route::get('/', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'showRowsAjax'])->name('show-rows');
-                Route::post('/', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'storeAjax'])->name('store');
-                Route::get('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'editAjax'])->name('edit');
-                Route::put('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'updateAjax'])->name('update');
-                Route::delete('/{supplier}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'destroyAjax'])->name('destroy');
+                // HTTP
+                Route::get('/inventory', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'index'])->name('index');
+
+                // AJAX
+                Route::group([
+                    'as' => 'ajax.',
+                    'prefix' => 'ajax/inventory'
+                ], function()
+                {
+                    Route::get('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showRowsAjax'])->name('show-rows');
+                    Route::post('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'receiveProductsAjax'])->name('receive-products');
+                });
+            });
+
+            // Consign Orders Controller
+            Route::group([
+                'as' => 'consign-order.',
+            ], function()
+            {
+                // HTTP
+                Route::get('/orders', [\App\Http\Controllers\InventoryModule\ConsignOrderController::class, 'index'])->name('index');
             });
         });
 
-        // Products Controller
+        /**
+         * Personnel Module [4]
+         */
         Route::group([
-            'as' => 'product.'
+            'as' => 'personnel.'
         ], function() 
         {
             // HTTP
-            Route::get('/products', [\App\Http\Controllers\InventoryModule\ProductController::class, 'index'])->name('index');
-            
-            // AJAX
-            Route::group([
-                'as' => 'ajax.',
-                'prefix' => 'ajax/products'
-            ], function()
-            {
-                Route::get('/', [\App\Http\Controllers\InventoryModule\ProductController::class, 'showRowsAjax'])->name('show-rows');
-                Route::post('/', [\App\Http\Controllers\InventoryModule\ProductController::class, 'storeAjax'])->name('store');
-                Route::get('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'editAjax'])->name('edit');
-                Route::put('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'updateAjax'])->name('update');
-                Route::delete('/{product}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'destroyAjax'])->name('destroy');
-            });
-        });
-
-        // Inventory Controller
-        Route::group([
-            'as' => 'inventory.',
-        ], function()
-        {
-            // HTTP
-            Route::get('/inventory', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'index'])->name('index');
+            Route::get('/personnel', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'index'])->name('index');
 
             // AJAX
             Route::group([
                 'as' => 'ajax.',
-                'prefix' => 'ajax/inventory'
+                'prefix' => 'ajax/personnel'
             ], function()
             {
-                Route::get('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showRowsAjax'])->name('show-rows');
-                Route::post('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'receiveProductsAjax'])->name('receive-products');
+                Route::get('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'editAjax'])->name('edit');
+                Route::put('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'updateAjax'])->name('update');
+                Route::delete('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'destroyAjax'])->name('destroy');
             });
         });
 
-        // Consign Orders Controller
+        /**
+         * Reports Module [5]
+         */
         Route::group([
-            'as' => 'consign-order.',
-        ], function()
+            'as' => 'reports.'
+        ], function() 
         {
             // HTTP
-            Route::get('/orders', [\App\Http\Controllers\InventoryModule\ConsignOrderController::class, 'index'])->name('index');
+            Route::get('/reports', [\App\Http\Controllers\ReportsModule\ReportsController::class, 'index'])->name('index');
+
+            // AJAX
+            // TODO: Add reports ajax routes later when necessary.
         });
     });
 
     /**
-     * Sales Module [3]
+     * Accessible only to CASHIER
      */
     Route::group([
-        'as'=> 'sales.'
-    ], function() 
+        'middleware' => ['cashier']
+    ], function()
     {
-        // TODO: Add sales routes later when necessary.
-    });
-
-    /**
-     * Personnel Module [4]
-     */
-    Route::group([
-        'as' => 'personnel.'
-    ], function() 
-    {
-        // HTTP
-        Route::get('/personnel', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'index'])->name('index');
-
-        // AJAX
+        /**
+         * Sales Module [3]
+         */
         Route::group([
-            'as' => 'ajax.',
-            'prefix' => 'ajax/personnel'
-        ], function()
+            'as'=> 'sales.'
+        ], function() 
         {
-            Route::get('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'editAjax'])->name('edit');
-            Route::put('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'updateAjax'])->name('update');
-            Route::delete('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'destroyAjax'])->name('destroy');
+            // TODO: Add sales routes later when necessary.
         });
     });
 
     /**
-     * Reports Module [5]
-     */
-    Route::group([
-        'as' => 'reports.'
-    ], function() 
-    {
-        // HTTP
-        Route::get('/reports', [\App\Http\Controllers\ReportsModule\ReportsController::class, 'index'])->name('index');
-
-        // AJAX
-        // TODO: Add reports ajax routes later when necessary.
-    });
-
-    /**
-     * Search
+     * AJAX Search
      */
     Route::group([
         'as' => 'search.',
