@@ -12,21 +12,6 @@ $("#form-receive-products").submit(function(e){
     console.log(e);
     e.preventDefault();
 
-    var errorTextElements = [], submitButtonElement, closeButtonElement;
-    
-    console.log(`Getting errorTextElements, submitButtonElement, and closeButtonElement`);
-    console.log(e.target);
-    for(i = 0; i < e.target.length; i++)
-    {
-        let name = e.target[i].name;
-        let data = e.target[i].dataset;
-        if(name != undefined && name != '' && name != '_token' && name != '_method')
-        {
-            console.log(`Found input element: ${name}`);
-            // errorTextElements.push($(`#error-${e.target.id}-${name}`));
-        }
-    }
-
     closeButtonElement = $(`#close-form-receive-products`);
     submitButtonElement = $(`#submit-form-receive-products`);
 
@@ -114,14 +99,6 @@ function showFormErrorsReceiveProducts(errors)
             }
         }
     });
-    
-    
-    // errorTextElements.forEach(function(e){
-    //     err = e[0].dataset.field;
-    //     if(isErrorInArray(error_list, err)){
-    //         e.show().html(errors[err][0]);
-    //     }
-    // });
 }
 
 function isErrorInArray(error, index)
