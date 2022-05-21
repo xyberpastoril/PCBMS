@@ -11,8 +11,8 @@
 <div class="tab-pane fade show active" id="inventory" role="tabpanel" aria-labelledby="inventory-tab">
     <div class="btn-group mb-4" role="group">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-receive-products">Receive Products</button>
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-pay-suppliers">Pay Suppliers</button>
-        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-expired-products">Return Expired Products</button>
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-pay-suppliers" disabled>Pay Suppliers</button>
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-expired-products" disabled>Return Expired Products</button>
     </div>
 </div>
 
