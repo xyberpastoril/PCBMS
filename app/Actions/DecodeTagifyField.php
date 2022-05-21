@@ -19,7 +19,7 @@ class DecodeTagifyField
     {
         try
         {
-            if(is_array($raw) && count($raw) > 1) 
+            if(is_array($raw) && count($raw) > 0) 
             {
                 for($i = 0; $i < count($raw); $i++) {
                     $processed[] = json_decode($raw[$i])[0];
