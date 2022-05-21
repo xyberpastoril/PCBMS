@@ -4,6 +4,7 @@ namespace App\Http\Controllers\InventoryModule;
 
 use App\Actions\DecodeTagifyField;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\InventoryModule\Inventory\ReceiveProductsRequest;
 use App\Models\ConsignOrder;
 use App\Models\ConsignedProduct;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class InventoryController extends Controller
         return $consigned_products->paginate(10);
     }
 
-    public function receiveProductsAjax(Request $request)
+    public function receiveProductsAjax(ReceiveProductsRequest $request)
     {
         // TODO: Create Form Validation
 
