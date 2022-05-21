@@ -103,13 +103,15 @@ function showFormErrorsReceiveProducts(errorTextElements, errors)
         let err = e;
         err = err.split(".");
         if(Array.isArray(err)) {
-            let errElm = $(`#form-receive-products .error-rp_${err[0]}`);
-            console.log(err);
-            // console.log(`Processing error: ${e} : #form-receive-products .error-rp_${e}`);
-            // console.log(`${errors[e]} : ${err[1]}`);
-            // console.log(errElm[0]);
-            
-            errElm.show().html(errors[e]);
+            if(err.length == 2) {
+                let errElm = $(`#form-receive-products .error-rp_${err[0]}`);
+                errElm[parseInt(err[1])].innerHTML = errors[e];
+                errElm[parseInt(err[1])].style = "display: flex";
+            }
+            else {
+                let errElm = $(`#form-receive-products .error-rp_${err[0]}`);      
+                errElm.show().html(errors[e]);
+            }
         }
     });
     
