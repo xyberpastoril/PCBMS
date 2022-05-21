@@ -57,7 +57,7 @@ $("#form-receive-products").submit(function(e){
         if(e.target.dataset.model != undefined)
         {
             request = window[e.target.dataset.model + 'Table'].requestData();
-            processRequest(request, window[e.target.dataset.model + 'Table']);
+            processRequestReceivedProducts(request, window[e.target.dataset.model + 'Table']);
         }
     });
 
@@ -75,7 +75,7 @@ $("#form-receive-products").submit(function(e){
         else
         {
             console.log(jqXHR.responseJSON.errors);
-            showFormErrorsReceiveProducts(errorTextElements, jqXHR.responseJSON.errors);
+            showFormErrorsReceiveProducts(jqXHR.responseJSON.errors);
         }
 
     });
@@ -92,7 +92,7 @@ function hideFormErrorsReceiveProducts()
     $(`.error`).hide();
 }
 
-function showFormErrorsReceiveProducts(errorTextElements, errors)
+function showFormErrorsReceiveProducts(errors)
 {
     error_list = Object.keys(errors);
     console.log("Show form errors");

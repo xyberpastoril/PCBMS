@@ -55,7 +55,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="form-receive-products" method="post" action="{{ url('/ajax/inventory/receive-products') }}">
+                <form id="form-receive-products" method="post" data-model="receivedProducts" action="{{ url('/ajax/inventory/receive-products') }}">
                     @csrf
 
                     {{-- Supplier / Delivery Date --}}
@@ -135,8 +135,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="close-form-receive-products" type="button" class="btn btn-secondary close" data-bs-dismiss="modal">Close</button>
-                <button id="submit-form-receive-products" type="submit" class="btn btn-primary submit" form="form-receive-products">Create Product</button>
+                <button id="close-form-receive-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="submit-form-receive-products" type="submit" class="btn btn-primary" form="form-receive-products">Create Product</button>
             </div>
         </div>
     </div>
