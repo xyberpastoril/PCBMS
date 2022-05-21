@@ -25,8 +25,13 @@ class ConsignedProduct extends Model
     protected $fillable = [
         'consign_order_id',
         'product_id',
-        'quantity',
         'particulars',
+        'expiration_date',
+        'unit_price',
+        'sale_price',
+        'quantity',
+        'quantity_paid',
+        'quantity_returned',
     ];
 
     /**

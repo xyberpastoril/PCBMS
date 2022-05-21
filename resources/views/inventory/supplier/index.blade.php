@@ -76,7 +76,7 @@
                         </label>
                         {{-- Input --}}
                         <div class="col-12 col-lg-6">
-                            <input type="email" class="form-control" id="input-form-create-supplier-physical_address" name="physical_address" required>
+                            <input type="text" class="form-control" id="input-form-create-supplier-physical_address" name="physical_address" required>
                         </div>
                         {{-- Error --}}
                         <p id="error-form-create-supplier-physical_address" data-field="physical_address" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
@@ -91,7 +91,7 @@
                         </label>
                         {{-- Input --}}
                         <div class="col-12 col-lg-6">
-                            <input type="email" class="form-control" id="input-form-create-supplier-mobile_number" name="mobile_number" required>
+                            <input type="text" class="form-control" id="input-form-create-supplier-mobile_number" name="mobile_number" required>
                         </div>
                         {{-- Error --}}
                         <p id="error-form-create-supplier-mobile_number" data-field="mobile_number" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
