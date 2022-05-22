@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PersonnelModule;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PersonnelModule\DestroyPersonnelRequest;
 use App\Http\Requests\PersonnelModule\StorePersonnelRequest;
 use App\Http\Requests\PersonnelModule\UpdatePersonnelRequest;
 use Illuminate\Support\Facades\Auth;
@@ -62,8 +63,11 @@ class PersonnelController extends Controller
         return 'Personnel successfully updated.';
     }
 
-    public function destroyAjax(User $user)
+    public function destroyAjax(DestroyPersonnelRequest $request, User $user)
     {
-        //
+        $validated = $request->validated();
+        $user->delete();
+
+        return 'Personnel successfully deleted.';
     }
 }

@@ -215,6 +215,46 @@
     </div>
 </div>
 
+<!-- Delete Personnel Modal -->
+<div class="modal fade" id="modal-delete-personnel" tabindex="-1" aria-labelledby="modal-label-delete-personnel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label-delete-personnel">Delete Personnel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-spinner-delete-personnel" style="display:none" class="spinner-border spinner-border-sm text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <form id="form-delete-personnel" data-model="personnel" class="ajax-submit" method="post" action="">
+                    @csrf
+                    @method('DELETE')
+                    <p>You are about to delete <span id="form-delete-personnel-name" class="text-danger"></span>. To proceed, please enter your password.</p>
+                    {{-- Password --}}
+                    <div class="form-group row mb-3">
+                        {{-- Label --}}
+                        <label for="input-form-delete-personnel-password" class="col-12 col-lg-6 col-form-label"> 
+                            Password
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            <input type="password" class="form-control" id="input-form-delete-personnel-password" name="password" required>
+                        </div>
+                        {{-- Error --}}
+                        <p id="error-form-delete-personnel-password" data-field="password" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="close-form-delete-personnel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="submit-form-delete-personnel" type="submit" class="btn btn-danger" form="form-delete-personnel">Delete Personnel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('app-scripts')
@@ -237,7 +277,7 @@
             ],
             actions: [
                 'edit',
-                // 'delete',
+                'delete',
             ]
         });
 
