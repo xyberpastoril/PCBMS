@@ -215,6 +215,22 @@ function actionsAddEventListeners(modelName, ajaxUrl, actions)
                         }
                     });
 
+                    var selectElements = document.querySelectorAll(`#form-edit-${modelName} select`);
+                    console.log(selectElements);
+
+                    selectElements.forEach(function(s){
+                        var s = s;
+                        console.log(`${s.name} : ${s.id} : ${res[s.name]}`);
+                        var options = document.querySelectorAll(`#${s.id} option`);
+                        console.log(`#${s.id} option`);
+                        console.log(options);
+                        options.forEach(function(o){
+                            if(o.value == res[s.name]) {
+                                $(`#${o.id}`).attr("selected", true);
+                            }
+                        });
+                    });
+
                     $(`#modal-spinner-edit-${modelName}`).hide();
                     $(`#form-edit-${modelName}`).show();
                     $(`#submit-form-edit-${modelName}`).removeAttr('disabled');
