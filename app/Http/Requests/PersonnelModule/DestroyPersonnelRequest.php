@@ -5,7 +5,7 @@ namespace App\Http\Requests\PersonnelModule;
 use App\Http\Requests\Api\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StorePersonnelRequest extends FormRequest
+class DestroyPersonnelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +25,7 @@ class StorePersonnelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'username' => ['required'],
-            'password' => ['required', 'min:8'],
-            'confirm_password' => ['required', 'same:password'],
-            'designation' => ['required'],
+            'password' => ['required', 'current_password'],
         ];
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('uuid')->unique();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
             $table->string('username')->unique();
             $table->enum('designation', [
                 'manager',

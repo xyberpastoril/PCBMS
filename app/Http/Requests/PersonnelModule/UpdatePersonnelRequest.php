@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests\PersonnelModule;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdatePersonnelRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdatePersonnelRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::user()->designation == 'manager';
     }
 
     /**
@@ -24,7 +25,9 @@ class UpdatePersonnelRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required'],
+            'username' => ['required'],
+            'designation' => ['required'],
         ];
     }
 }

@@ -162,6 +162,8 @@ Route::group([
                 'prefix' => 'ajax/personnel'
             ], function()
             {
+                Route::get('/', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'showRowsAjax'])->name('show-rows');
+                Route::post('/', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'storeAjax'])->name('store');
                 Route::get('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'editAjax'])->name('edit');
                 Route::put('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'updateAjax'])->name('update');
                 Route::delete('/{user}', [\App\Http\Controllers\PersonnelModule\PersonnelController::class, 'destroyAjax'])->name('destroy');
