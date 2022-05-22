@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PersonnelModule\StorePersonnelRequest;
 use App\Http\Requests\PersonnelModule\UpdatePersonnelRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class PersonnelController extends Controller
 {
@@ -31,7 +32,16 @@ class PersonnelController extends Controller
 
     public function storeAjax(StorePersonnelRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        User::create([
+            'name' => $validated['name'],
+            'username' => $validated['name'],
+            'password' => Hash::make($validated['password']),
+            'designation' => $validated['designation'],
+        ]);
+
+        return 'Personnel successfully added.';
     }
 
     public function editAjax(User $user)
