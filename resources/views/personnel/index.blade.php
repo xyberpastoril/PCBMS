@@ -140,6 +140,81 @@
     </div>
 </div>
 
+<!-- Edit Personnel Modal -->
+<div class="modal fade" id="modal-edit-personnel" tabindex="-1" aria-labelledby="modal-label-edit-personnel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label_edit-personnel">Edit Personnel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-spinner-edit-personnel" style="display:none" class="spinner-border spinner-border-sm text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <form id="form-edit-personnel" data-model="personnel" class="ajax-submit" method="post" action="">
+                    @csrf
+                    @method('PUT')
+
+                    {{-- Name --}}
+                    <div class="form-group row mb-3">
+                        {{-- Label --}}
+                        <label for="input-form-edit-personnel-name" class="col-12 col-lg-6 col-form-label"> 
+                            Name
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            <input type="text" class="form-control" id="input-form-edit-personnel-name" name="name" required>
+                        </div>
+                        {{-- Error --}}
+                        <p id="error-form-edit-personnel-name" data-field="name" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                    </div>
+
+                    {{-- Username --}}
+                    <div class="form-group row mb-3">
+                        {{-- Label --}}
+                        <label for="input-form-edit-personnel-username" class="col-12 col-lg-6 col-form-label"> 
+                            Username
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            <input type="text" class="form-control" id="input-form-edit-personnel-username" name="username" required>
+                        </div>
+                        {{-- Error --}}
+                        <p id="error-form-edit-personnel-username" data-field="username" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                    </div>
+
+                    {{-- Designation --}}
+                    <div class="form-group row mb-3">
+                        {{-- Label --}}
+                        <label for="input-form-edit-personnel-designation" class="col-12 col-lg-6 col-form-label"> 
+                            Designation
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            <select class="form-control" id="input-form-edit-personnel-designation" name="designation" required>
+                                <option id="form-edit-personnel-designation-none" value="" hidden selected>Select Designation ...</option>
+                                <option id="form-edit-personnel-designation-manager" value="manager">Manager</option>
+                                <option id="form-edit-personnel-designation-cashier" value="cashier">Cashier</option>
+                            </select>
+                        </div>
+                        {{-- Error --}}
+                        <p id="error-form-edit-personnel-designation" data-field="designation" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="close-form-edit-personnel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="submit-form-edit-personnel" type="submit" class="btn btn-primary" form="form-edit-personnel">Update Personnel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('app-scripts')
@@ -161,7 +236,7 @@
                 'designation',
             ],
             actions: [
-                // 'edit',
+                'edit',
                 // 'delete',
             ]
         });

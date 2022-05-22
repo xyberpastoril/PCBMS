@@ -46,12 +46,20 @@ class PersonnelController extends Controller
 
     public function editAjax(User $user)
     {
-        //
+        return $user;
     }
 
-    public function updateAjax(UpdatePersonnelRequest $request)
+    public function updateAjax(UpdatePersonnelRequest $request, User $user)
     {
-        //
+        $validated = $request->validated();
+
+        $user->update([
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'designation' => $validated['designation'],
+        ]);
+
+        return 'Personnel successfully updated.';
     }
 
     public function destroyAjax(User $user)
