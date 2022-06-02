@@ -130,7 +130,7 @@
                         </label>
                         {{-- Input --}}
                         <div class="col-12 col-lg-6">
-                            <input type="text" class="form-control" id="input-form-edit-product-unit" name="unit" data-tagify="true" required>
+                            <input type="text" class="form-control" id="input-form-edit-product-unit" name="unit" data-tagify="true">
                         </div>
                         {{-- Error --}}
                         <p id="error-form-edit-product-unit" data-field="unit" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
