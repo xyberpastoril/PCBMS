@@ -144,6 +144,28 @@ Route::group([
                 // HTTP
                 Route::get('/orders', [\App\Http\Controllers\InventoryModule\ConsignOrderController::class, 'index'])->name('index');
             });
+
+            // Units Controller
+            Route::group([
+                'as' => 'unit.',
+            ], function()
+            {
+                // HTTP
+                Route::get('/units', [\App\Http\Controllers\InventoryModule\UnitsController::class, 'index'])->name('index');
+
+                // AJAX
+                Route::group([
+                    'as' => 'ajax.',
+                    'prefix' => 'ajax/units'
+                ], function()
+                {
+                    Route::get('/', [\App\Http\Controllers\InventoryModule\UnitsController::class, 'showRowsAjax'])->name('show-rows');
+                    Route::post('/', [\App\Http\Controllers\InventoryModule\UnitsController::class, 'storeAjax'])->name('store');
+                    Route::get('/{unit}', [\App\Http\Controllers\InventoryModule\UnitsController::class, 'editAjax'])->name('edit');
+                    Route::put('/{unit}', [\App\Http\Controllers\InventoryModule\UnitsController::class, 'updateAjax'])->name('update');
+                    Route::delete('/{unit}', [\App\Http\Controllers\InventoryModule\UnitsController::class, 'destroyAjax'])->name('destroy');
+                });
+            });
         });
 
         /**

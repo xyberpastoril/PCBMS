@@ -26,6 +26,10 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                         Consign Orders
                     </a>
+                    <a class="nav-link" href="{{ url('/units/') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Units
+                    </a>
                     <hr class="mx-3 mb-0">
                     <div class="sb-sidenav-menu-heading">Administration</div>
                     <a class="nav-link" href="{{ url('/reports/') }}">
@@ -36,6 +40,7 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Personnel
                     </a>
+                    
                 @endif
             </div>
         </div>
