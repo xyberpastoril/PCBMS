@@ -47,4 +47,14 @@ class Product extends Model
     {
         return $this->hasMany(ConsignedProduct::class);
     }
+
+    /**
+     * Get the unit that owns the product.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
 }
