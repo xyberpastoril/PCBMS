@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\InventoryModule\Product;
+namespace App\Http\Requests\InventoryModule\Unit;
 
-use App\Actions\DecodeTagifyField;
 use App\Http\Requests\Api\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreProductRequest extends FormRequest
+class StoreUnitRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,14 +26,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'unit' => ['required'],
+            'abbreviation' => ['required'],
         ];
-    }
-
-    public function prepareForValidation()
-    {
-        $this->merge([
-            'unit' => DecodeTagifyField::run([$this->unit]),
-        ]);
     }
 }

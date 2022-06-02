@@ -25,7 +25,7 @@ class Product extends Model
     protected $fillable = [
         'supplier_id',
         'name',
-        'unit',
+        'unit_id',
     ];
 
     /**
@@ -46,5 +46,15 @@ class Product extends Model
     public function consignedProducts()
     {
         return $this->hasMany(ConsignedProduct::class);
+    }
+
+    /**
+     * Get the unit that owns the product.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
     }
 }

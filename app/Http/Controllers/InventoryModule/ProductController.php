@@ -23,8 +23,8 @@ class ProductController extends Controller
         $products = Product::select(
             'products.uuid',
             'products.name',
-            'products.unit',
-        );
+            'units.name as unit',
+        )->leftJoin('units', 'units.id', '=', 'products.unit_id');
 
         return $products->paginate(10);
     }
@@ -51,7 +51,7 @@ class ProductController extends Controller
 
         Product::create([
             'name' => $validated['name'],
-            'unit' => $validated['unit'],
+            'unit_id' => $validated['unit'][0]->id,
         ]);
 
         return 'Product successfully added.';
@@ -68,7 +68,7 @@ class ProductController extends Controller
 
         $product->update([
             'name' => $validated['name'],
-            'unit' => $validated['unit'],
+            'unit_id' => $validated['unit'][0]->id,
         ]);
 
         return 'Product successfully updated.';

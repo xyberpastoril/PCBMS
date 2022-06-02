@@ -47,7 +47,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="form-create-product" data-model="product" class="ajax-submit" method="post" action="{{ url('/ajax/products') }}">
+                <form id="form-create-product" data-model="product" class="ajax-submit-products" method="post" action="{{ url('/ajax/products') }}">
                     @csrf
 
                     {{-- Name --}}
@@ -74,7 +74,7 @@
                         </label>
                         {{-- Input --}}
                         <div class="col-12 col-lg-6">
-                            <input type="text" class="form-control" id="input-form-create-product-unit" name="unit" required>
+                            <input type="text" class="form-control" id="input-form-create-product-unit" name="unit">
                         </div>
                         {{-- Error --}}
                         <p id="error-form-create-product-unit" data-field="unit" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
@@ -102,7 +102,7 @@
                 <div id="modal-spinner-edit-product" style="display:none" class="spinner-border spinner-border-sm text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <form id="form-edit-product" data-model="product" class="ajax-submit" method="post" action="">
+                <form id="form-edit-product" data-model="product" class="ajax-submit-products" method="post" action="">
                     @csrf
                     @method('PUT')
 
@@ -130,7 +130,7 @@
                         </label>
                         {{-- Input --}}
                         <div class="col-12 col-lg-6">
-                            <input type="text" class="form-control" id="input-form-edit-product-unit" name="unit" required>
+                            <input type="text" class="form-control" id="input-form-edit-product-unit" name="unit" data-tagify="true">
                         </div>
                         {{-- Error --}}
                         <p id="error-form-edit-product-unit" data-field="unit" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
@@ -157,7 +157,7 @@
                 <div id="modal-spinner-delete-product" style="display:none" class="spinner-border spinner-border-sm text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <form id="form-delete-product" data-model="product" class="ajax-submit" method="post" action="">
+                <form id="form-delete-product" data-model="product" class="ajax-submit-products" method="post" action="">
                     @csrf
                     @method('DELETE')
                     <p>Are you sure you want to delete <span id="form-delete-product-name" class="text-danger"></span>?</p>
@@ -174,15 +174,17 @@
 @endsection
 
 @push('app-scripts')
-<script src="{{ url('/js/form-ajax-submit.js') }}"></script>
-<script src="{{ url('/js/pagination-ajax.js') }}"></script>
+<script src="{{ url('/js/inventory/products/form-ajax-submit-products.js') }}"></script>
+<script src="{{ url('/js/inventory/products/pagination-ajax-products.js') }}"></script>
+<script src="{{ url('/js/tagify/unit.js') }}"></script>
+<script src="{{ url('/js/inventory/products/products.js') }}"></script>
 <script>
     var productsTable;
 
     $(document).ready(function(){
-        console.log("Creating a PaginationAjax instance.");;
+        console.log("Creating a ProductsPaginationAjax instance.");;
 
-        productTable = new PaginationAjax({
+        productTable = new ProductsPaginationAjax({
             url: '/products',
             ajaxUrl: '/ajax/products',
             modelName: 'product',
@@ -197,7 +199,7 @@
         });
 
         request = productTable.requestData();
-        processRequest(request, productTable);
+        processProductRequest(request, productTable);
     });  
 </script>
 @endpush
