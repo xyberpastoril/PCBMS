@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('uuid')->unique();
             $table->string('name');
-            $table->string('unit');
+            $table->foreignId('unit_id')->constrained();
             $table->timestamp('created_at')->default(now());
         });
     }

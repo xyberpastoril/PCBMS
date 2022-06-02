@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\InventoryModule\Product;
 
+use App\Actions\DecodeTagifyField;
 use App\Http\Requests\Api\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,5 +29,12 @@ class UpdateProductRequest extends FormRequest
             'name' => ['required'],
             'unit' => ['required'],
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'unit' => DecodeTagifyField::run([$this->unit]),
+        ]);
     }
 }

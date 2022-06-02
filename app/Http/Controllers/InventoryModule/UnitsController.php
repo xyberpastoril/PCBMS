@@ -24,6 +24,22 @@ class UnitsController extends Controller
 
         return $units->paginate(10);
     }
+    
+    public function searchTagifyAjax($query)
+    {
+        $units = Unit::select(
+            'units.uuid as value',
+            'units.id',
+            'units.name',
+            'units.abbreviation',
+        )
+        ->where('units.name', 'LIKE', "%{$query}%")
+        ->orWhere('units.abbreviation', 'LIKE', "%{$query}%")
+        ->limit(5)
+        ->get();
+
+        return $units;
+    }
 
     public function storeAjax(StoreUnitRequest $request)
     {
@@ -40,6 +56,11 @@ class UnitsController extends Controller
     public function editAjax(Unit $unit)
     {
         return $unit;
+    }
+
+    public function editAjaxById($id)
+    {
+        return Unit::where('id', $id)->firstOrFail();
     }
 
     public function updateAjax(UpdateUnitRequest $request, Unit $unit)
