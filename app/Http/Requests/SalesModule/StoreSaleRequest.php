@@ -4,7 +4,9 @@ namespace App\Http\Requests\SalesModule;
 
 use App\Actions\DecodeTagifyField;
 use App\Http\Requests\Api\FormRequest;
+use App\Models\ConsignedProduct;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StoreSaleRequest extends FormRequest
 {
@@ -59,5 +61,42 @@ class StoreSaleRequest extends FormRequest
             'products' => $products,
             'quantities' => $quantities,
         ]);
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function($validator){
+            $sub = DB::table('consigned_products')
+                ->select(
+                    'consigned_products.id',
+                    DB::raw('SUM(sales.quantity_sold) as quantity_sold'),
+                    DB::raw('(consigned_products.quantity - SUM(sales.quantity_sold)) as quantity_available'),
+                )
+                ->leftJoin('sales', 'sales.consigned_product_id', '=', 'consigned_products.id')
+                ->groupBy('sales.consigned_product_id');
+
+            $products = $this->get('products');
+            $quantities = $this->get('quantities');
+
+            // exit(var_dump($products));
+
+            for($i = 0; $i < count($products); $i++)
+            {
+                // exit(var_dump($products[$i]->value));
+                $consigned_product = DB::table('consigned_products')
+                    ->leftJoinSub($sub, 'transactions', function($join) {
+                        $join->on('transactions.id', '=', 'consigned_products.id');
+                    })
+                    ->where('consigned_products.id', $products[$i]->id)
+                    ->first();
+
+                if(!$consigned_product) {
+                    $validator->errors()->add('products', "Product ('{$products[$i]->name}') does not exist.");
+                }
+                else if($consigned_product->quantity_sold + $quantities[$i] > $consigned_product->quantity) {
+                    $validator->errors()->add('products', "Quantity of product ('{$products[$i]->name}') is not enough. Stocks remaining: {$consigned_product->quantity_available}.");
+                }
+            }
+        });
     }
 }
