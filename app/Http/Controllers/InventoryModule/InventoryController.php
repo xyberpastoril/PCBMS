@@ -23,9 +23,10 @@ class InventoryController extends Controller
     {
         $consigned_products = ConsignedProduct::select(
             'consigned_products.uuid',
+            'consigned_products.id',
             'products.name',
             'consigned_products.particulars',
-            'products.unit',
+            'units.abbreviation as unit',
             DB::raw('DATE_FORMAT(consign_orders.order_delivered_at, "%Y-%m-%d") as order_delivered_at'),
             'consigned_products.expiration_date',
             'consigned_products.unit_price',
@@ -34,6 +35,7 @@ class InventoryController extends Controller
             DB::raw('(consigned_products.unit_price * consigned_products.quantity) as amount')
         )
         ->leftJoin('products', 'consigned_products.product_id', 'products.id')
+        ->leftJoin('units', 'products.unit_id', 'units.id')
         ->leftJoin('consign_orders', 'consigned_products.consign_order_id', 'consign_orders.id');
 
         return $consigned_products->paginate(10);

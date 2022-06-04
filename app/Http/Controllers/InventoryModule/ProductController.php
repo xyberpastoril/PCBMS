@@ -35,10 +35,11 @@ class ProductController extends Controller
             'products.uuid as value',
             'products.id',
             'products.name',
-            'products.unit',
+            'units.name as unit',
         )
+        ->leftJoin('units', 'units.id', '=', 'products.unit_id')
         ->where('products.name', 'LIKE', "%{$query}%")
-        ->orWhere('products.unit', 'LIKE', "%{$query}%")
+        ->orWhere('units.name', 'LIKE', "%{$query}%")
         ->limit(5)
         ->get();
 
