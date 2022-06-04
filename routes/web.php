@@ -223,6 +223,17 @@ Route::group([
         ], function() 
         {
             // TODO: Add sales routes later when necessary.
+            Route::get('/sales', [\App\Http\Controllers\SalesModule\SalesController::class, 'index'])->name('index');
+            Route::get('/sales/create', [\App\Http\Controllers\SalesModule\SalesController::class, 'create'])->name('create');
+
+            // AJAX
+            Route::group([
+                'as' => 'ajax.',
+                'prefix' => 'ajax/sales'
+            ], function()
+            {
+                Route::post('/', [\App\Http\Controllers\SalesModule\SalesController::class, 'storeAjax'])->name('store');
+            });
         });
     });
 
@@ -238,5 +249,7 @@ Route::group([
         Route::get('/suppliers/{query}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'searchTagifyAjax'])->name('suppliers');
         Route::get('/products/{query}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'searchTagifyAjax'])->name('products');
         Route::get('/units/{query}', [\App\Http\Controllers\InventoryModule\UnitsController::class, 'searchTagifyAjax'])->name('units');
+        Route::get('/consigned-products/{query}', [App\Http\Controllers\InventoryModule\ConsignedProductsController::class, 'searchTagifyAjax'])->name('consigned-products');
+        Route::get('/customers/{query}', [\App\Http\Controllers\SalesModule\CustomerController::class, 'searchTagifyAjax'])->name('customers');
     });
 });
