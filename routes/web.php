@@ -239,5 +239,6 @@ Route::group([
         Route::get('/products/{query}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'searchTagifyAjax'])->name('products');
         Route::get('/units/{query}', [\App\Http\Controllers\InventoryModule\UnitsController::class, 'searchTagifyAjax'])->name('units');
         Route::get('/consigned-products/{query}', [App\Http\Controllers\InventoryModule\ConsignedProductsController::class, 'searchTagifyAjax'])->name('consigned-products');
+        Route::get('/customers/{query}', [\App\Http\Controllers\SalesModule\CustomerController::class, 'searchTagifyAjax'])->name('customers');
     });
 });
