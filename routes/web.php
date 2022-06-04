@@ -223,6 +223,17 @@ Route::group([
         ], function() 
         {
             // TODO: Add sales routes later when necessary.
+            Route::get('/sales', [\App\Http\Controllers\SalesModule\SalesController::class, 'index'])->name('index');
+            Route::get('/sales/create', [\App\Http\Controllers\SalesModule\SalesController::class, 'create'])->name('create');
+
+            // AJAX
+            Route::group([
+                'as' => 'ajax.',
+                'prefix' => 'ajax/sales'
+            ], function()
+            {
+                Route::post('/', [\App\Http\Controllers\SalesModule\SalesController::class, 'storeAjax'])->name('store');
+            });
         });
     });
 
