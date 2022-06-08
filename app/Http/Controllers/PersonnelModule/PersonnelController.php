@@ -37,7 +37,7 @@ class PersonnelController extends Controller
 
         User::create([
             'name' => $validated['name'],
-            'username' => $validated['name'],
+            'username' => $validated['username'],
             'password' => Hash::make($validated['password']),
             'designation' => $validated['designation'],
         ]);
