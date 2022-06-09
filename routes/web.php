@@ -205,6 +205,13 @@ Route::group([
 
             // AJAX
             // TODO: Add reports ajax routes later when necessary.
+            Route::group([
+                'as' => 'ajax.',
+                'prefix' => 'ajax/reports'
+            ], function()
+            {
+                Route::get('/sales', [\App\Http\Controllers\SalesModule\SalesController::class, 'showRowsAjax'])->name('show-rows');
+            });
         });
     });
 
