@@ -237,6 +237,19 @@ Route::group([
         });
     });
 
+    Route::group([
+        
+    ], function()
+    {
+        Route::group([
+            'as' => 'ajax.',
+            'prefix' => 'ajax/customer'
+        ], function()
+        {
+            Route::post('/', [\App\Http\Controllers\SalesModule\CustomerController::class, 'storeAjax'])->name('store');
+        });
+    });
+
     /**
      * AJAX Search
      */

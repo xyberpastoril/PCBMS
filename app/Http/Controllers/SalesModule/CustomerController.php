@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SalesModule;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SalesModule\StoreCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -20,5 +21,14 @@ class CustomerController extends Controller
         ->get();
 
         return $customers;
+    }
+
+    public function storeAjax(StoreCustomerRequest $request)
+    {
+        $customer = Customer::create([
+            'name' => $request->name,
+        ]);
+
+        return $customer;
     }
 }

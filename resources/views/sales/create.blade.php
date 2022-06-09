@@ -28,7 +28,7 @@
                                 {{-- Input --}}
                                 <input type="text" class="form-control sp_customer" id="input-form-sell-products-customer" name="customer">
                                 {{-- Button --}}
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-customer-create">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create-customer">
                                     <span class="icon text-white-50">
                                         <i class="fas fa-plus"></i>
                                     </span>
@@ -92,7 +92,42 @@
 @endsection
 
 @section('modals')
+<!-- New customer Modal -->
+<div class="modal fade" id="modal-create-customer" tabindex="-1" aria-labelledby="modal-label-create-customer" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label_create-customer">New Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-create-customer" class="ajax-submit-customer" method="post" action="{{ url('/ajax/customer') }}">
+                    @csrf
 
+                    {{-- Name --}}
+                    <div class="form-group row mb-3">
+                        {{-- Label --}}
+                        <label for="input-form-create-customer-name" class="col-12 col-lg-6 col-form-label"> 
+                            Name
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            <input type="text" class="form-control" id="input-form-create-customer-name" name="name" required>
+                        </div>
+                        {{-- Error --}}
+                        <p id="error-form-create-customer-name" data-field="name" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="close-form-create-customer" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="submit-form-create-customer" type="submit" class="btn btn-primary" form="form-create-customer">Create Customer</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('app-scripts')
@@ -101,4 +136,5 @@
 <script src="{{ url('/js/sales/tagify-consigned-product.js') }}"></script>
 <script src="{{ url('/js/sales/create-invoice.js') }}"></script>
 <script src="{{ url('/js/sales/form-ajax-submit-sell-products.js') }}"></script>
+<script src="{{ url('/js/sales/form-ajax-submit-customer.js') }}"></script>
 @endpush
