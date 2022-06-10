@@ -144,8 +144,7 @@
         e.preventDefault();
         $('.error').hide();
         $('#iframe-generate-sales-pdf').attr('src', 'about:blank');
-        
-        // disable button
+
         $('#submit-form-generate-sales-report').prop('disabled', true);
 
         var form = $(this);
@@ -175,7 +174,6 @@
         });
 
         request.always(function(){
-            // enable button
             $('#submit-form-generate-sales-report').removeAttr('disabled');
         });
     });
