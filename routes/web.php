@@ -201,7 +201,8 @@ Route::group([
         ], function() 
         {
             // HTTP
-            Route::get('/reports', [\App\Http\Controllers\ReportsModule\ReportsController::class, 'index'])->name('index');
+            Route::get('/reports', [\App\Http\Controllers\ReportsModule\SalesController::class, 'index'])->name('index');
+            Route::get('/reports/sales', [\App\Http\Controllers\ReportsModule\SalesController::class, 'index']);
 
             // AJAX
             // TODO: Add reports ajax routes later when necessary.
