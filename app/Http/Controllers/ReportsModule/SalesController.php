@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ReportsModule;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReportsModule\GenerateSalesReportRequest;
 use App\Http\Requests\SalesModule\StoreSaleRequest;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class SalesController extends Controller
         return view('reports.sales.index');
     }
 
-    public function pdf()
+    public function pdf(GenerateSalesReportRequest $request)
     {
         $pdf = PDF::loadView('reports.sales.pdf');
         return $pdf->stream("sales_report.pdf", array("Attachment" => false));
