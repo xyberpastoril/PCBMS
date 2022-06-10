@@ -158,7 +158,6 @@
         });
 
         request.done(function(response){
-            console.log(response);
             $('#modal-generate-sales-report').modal('hide');
             $('#iframe-generate-sales-pdf').attr('src', `${url}?${form.serialize()}`);
             $('#modal-generate-sales-pdf').modal('show');
