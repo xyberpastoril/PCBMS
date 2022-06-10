@@ -9,12 +9,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class SalesController extends Controller
 {
     public function index()
     {
         return view('reports.sales.index');
+    }
+
+    public function pdf()
+    {
+        $pdf = PDF::loadView('reports.sales.pdf');
+        return $pdf->stream("sales_report.pdf", array("Attachment" => false));
     }
 
     public function showRowsAjax()
