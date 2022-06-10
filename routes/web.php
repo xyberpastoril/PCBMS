@@ -201,10 +201,18 @@ Route::group([
         ], function() 
         {
             // HTTP
-            Route::get('/reports', [\App\Http\Controllers\ReportsModule\ReportsController::class, 'index'])->name('index');
+            Route::get('/reports', [\App\Http\Controllers\ReportsModule\SalesController::class, 'index'])->name('index');
+            Route::get('/reports/sales', [\App\Http\Controllers\ReportsModule\SalesController::class, 'index']);
 
             // AJAX
             // TODO: Add reports ajax routes later when necessary.
+            Route::group([
+                'as' => 'ajax.',
+                'prefix' => 'ajax/reports'
+            ], function()
+            {
+                Route::get('/sales', [\App\Http\Controllers\ReportsModule\SalesController::class, 'showRowsAjax'])->name('show-rows');
+            });
         });
     });
 
