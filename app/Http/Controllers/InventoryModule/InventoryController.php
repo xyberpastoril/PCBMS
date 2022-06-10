@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\InventoryModule\Inventory\ReceiveProductsRequest;
 use App\Models\ConsignOrder;
 use App\Models\ConsignedProduct;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -78,5 +79,76 @@ class InventoryController extends Controller
     }
 
     // TODO: Pay Supplier
+    public function showProductsToPayAjax(Supplier $supplier = null)
+    {
+        // SELECT x.*
+        // FROM (
+        //     select CONCAT(products.name, ' (', consigned_products.particulars, units.abbreviation, ')') as name, 
+        //         `consigned_products`.`id`, 
+        //         `consigned_products`.`quantity`, 
+        //         `p`.`quantity_sold`, 
+        //         `consigned_products`.`quantity_paid`, 
+        //         `consigned_products`.`sale_price`, 
+        //         `consigned_products`.`unit_price`, 
+        //         ((consigned_products.sale_price - consigned_products.unit_price) * p.quantity_sold) as current_profit, 
+        //         ((consigned_products.sale_price - consigned_products.unit_price) * consigned_products.quantity) as supposed_profit 
+        //     from `consigned_products` 
+        //     left join `products` on `consigned_products`.`product_id` = `products`.`id` 
+        //     left join `units` on `products`.`unit_id` = `units`.`id` 
+        //     left join `consign_orders` on `consigned_products`.`consign_order_id` = `consign_orders`.`id` 
+        //     left join ( 
+        //         SELECT (sales.quantity_sold * consigned_products.sale_price) as total_price, 
+        //         sales.quantity_sold, 
+        //         consigned_products.sale_price, 
+        //         consigned_products.id 
+        //         FROM `sales` 
+        //         LEFT JOIN consigned_products ON consigned_products.id = sales.consigned_product_id 
+        //     ) AS p on `p`.`id` = `consigned_products`.`id` 
+        //     group by `consigned_products`.`id`
+        // ) as x
+        // WHERE x.quantity_paid < x.quantity
+
+        $sub_consigned_products = DB::table('consigned_products')
+            ->select(
+                DB::raw("CONCAT(products.name, ' (', consigned_products.particulars, units.abbreviation, ')') as name"),
+                'consigned_products.id',
+                'consigned_products.quantity',
+                DB::raw('IFNULL(p.quantity_sold, 0) as quantity_sold'),
+                DB::raw('IFNULL(consigned_products.quantity_paid, 0) as quantity_paid'),
+                'consigned_products.sale_price',
+                'consigned_products.unit_price',
+                'consign_orders.supplier_id',
+                DB::raw('IFNULL(((consigned_products.sale_price - consigned_products.unit_price) * p.quantity_sold), 0) as current_profit'),
+                DB::raw('((consigned_products.sale_price - consigned_products.unit_price) * consigned_products.quantity) as supposed_profit')
+            )
+            ->leftJoin('products', 'consigned_products.product_id', 'products.id')
+            ->leftJoin('units', 'products.unit_id', 'units.id')
+            ->leftJoin('consign_orders', 'consigned_products.consign_order_id', 'consign_orders.id')
+            ->leftJoin(
+                DB::raw('(
+                        SELECT (sales.quantity_sold * consigned_products.sale_price) as total_price, 
+                            sales.quantity_sold, 
+                            consigned_products.sale_price, 
+                            consigned_products.id
+                        FROM `sales` 
+                        LEFT JOIN consigned_products ON consigned_products.id = sales.consigned_product_id
+                    ) AS p'),
+                'p.id',
+                '=',
+                'consigned_products.id'
+            )
+            ->groupBy('consigned_products.id');
+
+        $consigned_products = DB::table(DB::raw("({$sub_consigned_products->toSql()}) as x"))
+            ->select('x.*')
+            ->whereRaw('x.quantity_paid < x.quantity');           
+
+        if($supplier) {
+            $consigned_products->where('x.supplier_id', $supplier->id);
+        }
+
+        return $consigned_products->get();
+    }
+
     // TODO: Return Expired Products
 }

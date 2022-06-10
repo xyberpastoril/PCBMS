@@ -133,6 +133,8 @@ Route::group([
                 {
                     Route::get('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showRowsAjax'])->name('show-rows');
                     Route::post('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'receiveProductsAjax'])->name('receive-products');
+
+                    Route::get('/pay-supplier/{supplier?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showProductsToPayAjax'])->name('show-products-to-pay');
                 });
             });
 
