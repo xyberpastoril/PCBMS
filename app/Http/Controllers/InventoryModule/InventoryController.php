@@ -151,4 +151,46 @@ class InventoryController extends Controller
     }
 
     // TODO: Return Expired Products
+    public function showExpiredProductsToReturnAjax(Supplier $supplier = null)
+    {
+        $consigned_products = DB::table('consigned_products')
+            ->select(
+                DB::raw("CONCAT(products.name, ' (', consigned_products.particulars, units.abbreviation, ')') as name"),
+                'consigned_products.expiration_date',
+                'consigned_products.id',
+                'consigned_products.quantity',
+                'p.quantity_sold',
+                'consigned_products.sale_price',
+                'consigned_products.unit_price',
+                DB::raw('IFNULL((consigned_products.quantity - p.quantity_sold), quantity) as quantity_to_return'),
+                DB::raw('IFNULL(((consigned_products.sale_price - consigned_products.unit_price) * p.quantity_sold), 0) as current_profit'),
+                DB::raw('((consigned_products.sale_price - consigned_products.unit_price) * consigned_products.quantity) as supposed_profit')
+            )
+            ->leftJoin('products', 'consigned_products.product_id', 'products.id')
+            ->leftJoin('units', 'products.unit_id', 'units.id')
+            ->leftJoin('consign_orders', 'consigned_products.consign_order_id', 'consign_orders.id')
+            ->leftJoin(
+                DB::raw('(
+                        SELECT (sales.quantity_sold * consigned_products.sale_price) as total_price, 
+                            IFNULL(sales.quantity_sold, 0) as quantity_sold, 
+                            consigned_products.sale_price, 
+                            consigned_products.id
+                        FROM `sales` 
+                        LEFT JOIN consigned_products ON consigned_products.id = sales.consigned_product_id
+                    ) AS p'),
+                'p.id',
+                '=',
+                'consigned_products.id'
+            )
+            ->groupBy('consigned_products.id')
+            // where subquery
+            ->havingRaw('quantity_to_return > 0 or quantity_to_return is null')
+            ->whereRaw('DATEDIFF(consigned_products.expiration_date, CURDATE()) < 0');
+
+        if($supplier) {
+            $consigned_products->where('consign_orders.supplier_id', $supplier->id);
+        }
+
+        return $consigned_products->get();
+    }
 }
