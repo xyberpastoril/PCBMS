@@ -210,7 +210,7 @@ Route::group([
                 'prefix' => 'ajax/reports'
             ], function()
             {
-                Route::get('/sales', [\App\Http\Controllers\SalesModule\SalesController::class, 'showRowsAjax'])->name('show-rows');
+                Route::get('/sales', [\App\Http\Controllers\ReportsModule\SalesController::class, 'showRowsAjax'])->name('show-rows');
             });
         });
     });
