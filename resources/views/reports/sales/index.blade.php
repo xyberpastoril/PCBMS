@@ -19,12 +19,11 @@
             <table class="table table-bordered">
                 <thead>
                     <th>
-                        Actions
+                        Invoice ID
                         <div id="table-spinner-sales" style="display:none" class="spinner-border spinner-border-sm text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </th>
-                    <th>Invoice ID</th>
                     <th>Date</th>
                     <th>Customer Name</th>
                     <th>Products Sold</th>

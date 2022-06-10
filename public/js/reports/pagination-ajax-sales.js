@@ -53,10 +53,16 @@ class PaginationAjaxSales {
             // Add the opening tag and actions column of the row.
             inner += `
             <tr>
-                <td>
-                    ${displaySalesActionButtons(row.uuid, modelName, actions)}
-                </td>
                 `
+
+            if(actions.length > 0)
+            {
+                inner += `
+                    <td>
+                        ${displaySalesActionButtons(row.uuid, modelName, actions)}
+                    </td>
+                `;
+            }
 
             var i = 0;
             // Add the values of each column.
