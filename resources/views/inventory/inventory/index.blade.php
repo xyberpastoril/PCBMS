@@ -67,7 +67,7 @@
                         </label>
                         <div class="col-12 col-lg-4">
                             {{-- Input --}}
-                            <input type="text" class="form-control rp_supplier" id="input-form-receive-products-supplier" name="supplier">
+                            <input type="text" class="form-control rp_supplier input-supplier" id="input-form-receive-products-supplier" name="supplier">
                             {{-- Error --}}
                             <p id="error-form-receive-products-supplier" data-field="supplier" class="text-danger error error-rp_supplier col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
@@ -146,6 +146,7 @@
 @push('app-scripts')
 <script src="{{ url('/js/tagify/product.js') }}"></script>
 <script src="{{ url('/js/tagify/supplier.js') }}"></script>
+<script src="{{ url('/js/inventory/inventory/inventory.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/receive-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/form-ajax-submit-receive-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pagination-ajax-received-products.js') }}"></script>
