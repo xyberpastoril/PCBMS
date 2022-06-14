@@ -158,8 +158,6 @@ class InventoryController extends Controller
         for($i = 0; $i < count($request->products); $i++)
         {
             $consigned_product = ConsignedProduct::where('uuid', $request->products[$i])->first();
-
-            // return $consigned_product;
             
             // Get number of sold items
             $item = DB::table('sales')
