@@ -166,7 +166,7 @@
                             {{-- Input --}}
                             <input type="text" class="form-control ps_supplier input-supplier" id="input-form-pay-supplier-supplier" name="supplier">
                             {{-- Error --}}
-                            <p id="error-form-pay-supplier-supplier" data-field="supplier" class="text-danger error error-rp_supplier col-12 mt-1 mb-0" style="display:none"></p>
+                            <p id="error-form-pay-supplier-supplier" data-field="supplier" class="text-danger error error-ps_supplier error-ps_products col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
                     </div>
 

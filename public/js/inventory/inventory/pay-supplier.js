@@ -32,7 +32,7 @@ function createPaySupplierItem(product) {
     var item = `
         <tr>
             <td>
-                <input id="ps_item_${product.uuid}" type="checkbox" class="input-form-pay-supplier-item-checkbox" name="products[]"/>
+                <input id="ps_item_${product.uuid}" type="checkbox" class="input-form-pay-supplier-item-checkbox" name="products[]" value="${product.uuid}"/>
             </td>
             <td>
                 <label for="ps_item_${product.uuid}">${product.name}</label>

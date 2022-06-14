@@ -4,6 +4,7 @@ namespace App\Http\Controllers\InventoryModule;
 
 use App\Actions\DecodeTagifyField;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\InventoryModule\Inventory\PaySupplierRequest;
 use App\Http\Requests\InventoryModule\Inventory\ReceiveProductsRequest;
 use App\Models\ConsignOrder;
 use App\Models\ConsignedProduct;
@@ -150,6 +151,28 @@ class InventoryController extends Controller
         }
 
         return $consigned_products->get();
+    }
+
+    public function paySupplier(PaySupplierRequest $request)
+    {
+        for($i = 0; $i < count($request->products); $i++)
+        {
+            $consigned_product = ConsignedProduct::where('uuid', $request->products[$i])->first();
+
+            // return $consigned_product;
+            
+            // Get number of sold items
+            $item = DB::table('sales')
+                ->select(DB::raw('SUM(quantity_sold) as quantity_sold'))
+                ->where('consigned_product_id', $consigned_product->id)
+                ->groupBy('consigned_product_id')
+                ->first();
+
+            $consigned_product->quantity_paid = $item->quantity_sold;
+            $consigned_product->save();
+        }
+
+        return 'Successfully paid supplier.';
     }
 
     // TODO: Return Expired Products
