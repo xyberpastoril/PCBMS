@@ -110,6 +110,7 @@ class InventoryController extends Controller
 
         $sub_consigned_products = DB::table('consigned_products')
             ->select(
+                'consigned_products.uuid',
                 DB::raw("CONCAT(products.name, ' (', consigned_products.particulars, units.abbreviation, ')') as name"),
                 'consigned_products.id',
                 'consigned_products.quantity',
@@ -119,7 +120,8 @@ class InventoryController extends Controller
                 'consigned_products.unit_price',
                 'consign_orders.supplier_id',
                 DB::raw('IFNULL(((consigned_products.sale_price - consigned_products.unit_price) * p.quantity_sold), 0) as current_profit'),
-                DB::raw('((consigned_products.sale_price - consigned_products.unit_price) * consigned_products.quantity) as supposed_profit')
+                DB::raw('((consigned_products.sale_price - consigned_products.unit_price) * consigned_products.quantity) as supposed_profit'),
+                DB::raw('(IFNULL(p.quantity_sold, 0) - IFNULL(consigned_products.quantity_paid, 0)) * consigned_products.unit_price as amount_to_pay'),
             )
             ->leftJoin('products', 'consigned_products.product_id', 'products.id')
             ->leftJoin('units', 'products.unit_id', 'units.id')
