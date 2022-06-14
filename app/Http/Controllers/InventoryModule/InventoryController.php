@@ -129,17 +129,17 @@ class InventoryController extends Controller
             ->leftJoin(
                 DB::raw('(
                         SELECT (sales.quantity_sold * consigned_products.sale_price) as total_price, 
-                            sales.quantity_sold, 
+                            SUM(sales.quantity_sold) as quantity_sold, 
                             consigned_products.sale_price, 
                             consigned_products.id
                         FROM `sales` 
                         LEFT JOIN consigned_products ON consigned_products.id = sales.consigned_product_id
+                        GROUP BY sales.consigned_product_id
                     ) AS p'),
                 'p.id',
                 '=',
                 'consigned_products.id'
-            )
-            ->groupBy('consigned_products.id');
+                );
 
         $consigned_products = DB::table(DB::raw("({$sub_consigned_products->toSql()}) as x"))
             ->select('x.*')
