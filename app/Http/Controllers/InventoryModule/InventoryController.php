@@ -187,7 +187,7 @@ class InventoryController extends Controller
                 'p.quantity_sold',
                 'consigned_products.sale_price',
                 'consigned_products.unit_price',
-                DB::raw('IFNULL((consigned_products.quantity - p.quantity_sold), quantity) as quantity_to_return'),
+                DB::raw('IFNULL((consigned_products.quantity - p.quantity_sold), quantity) - consigned_products.quantity_paid as quantity_to_return'),
                 DB::raw('IFNULL(((consigned_products.sale_price - consigned_products.unit_price) * p.quantity_sold), 0) as current_profit'),
                 DB::raw('((consigned_products.sale_price - consigned_products.unit_price) * consigned_products.quantity) as supposed_profit')
             )
@@ -197,17 +197,17 @@ class InventoryController extends Controller
             ->leftJoin(
                 DB::raw('(
                         SELECT (sales.quantity_sold * consigned_products.sale_price) as total_price, 
-                            IFNULL(sales.quantity_sold, 0) as quantity_sold, 
+                            IFNULL(SUM(sales.quantity_sold), 0) as quantity_sold, 
                             consigned_products.sale_price, 
                             consigned_products.id
                         FROM `sales` 
                         LEFT JOIN consigned_products ON consigned_products.id = sales.consigned_product_id
+                        GROUP BY sales.consigned_product_id
                     ) AS p'),
                 'p.id',
                 '=',
                 'consigned_products.id'
             )
-            ->groupBy('consigned_products.id')
             // where subquery
             ->havingRaw('quantity_to_return > 0 or quantity_to_return is null')
             ->whereRaw('DATEDIFF(consigned_products.expiration_date, CURDATE()) < 0');
