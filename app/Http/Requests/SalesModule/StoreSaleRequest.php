@@ -70,7 +70,8 @@ class StoreSaleRequest extends FormRequest
                 ->select(
                     'consigned_products.id',
                     DB::raw('SUM(sales.quantity_sold) as quantity_sold'),
-                    DB::raw('(consigned_products.quantity - SUM(sales.quantity_sold)) as quantity_available'),
+                    'consigned_products.quantity_returned',
+                    DB::raw('(consigned_products.quantity - IFNULL(SUM(sales.quantity_sold), 0) - consigned_products.quantity_returned) as quantity_available'),
                 )
                 ->leftJoin('sales', 'sales.consigned_product_id', '=', 'consigned_products.id')
                 ->groupBy('sales.consigned_product_id');
@@ -93,7 +94,11 @@ class StoreSaleRequest extends FormRequest
                 if(!$consigned_product) {
                     $validator->errors()->add('products', "Product ('{$products[$i]->name}') does not exist.");
                 }
-                else if($consigned_product->quantity_sold + $quantities[$i] > $consigned_product->quantity) {
+                // check if consigned product is already passed the expiration date
+                else if($consigned_product->expiration_date < now()->format('Y-m-d')) {
+                    $validator->errors()->add('products', "Product ('{$products[$i]->name}') is already expired.");
+                }
+                else if($consigned_product->quantity_available < $quantities[$i]) {
                     $validator->errors()->add('products', "Quantity of product ('{$products[$i]->name}') is not enough. Stocks remaining: {$consigned_product->quantity_available}.");
                 }
             }

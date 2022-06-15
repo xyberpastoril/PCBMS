@@ -28,13 +28,51 @@ function initTagifySupplier(elm)
 }
 
 function onSupplierItemSelectSuggestion(e) {
-    id = e.detail.tagify.DOM.originalInput.dataset.id;
+    id = e.detail.tagify.DOM.originalInput.id;
     console.log(`Supplier selected : ${id}`);
+    console.log(e);
+
+    if(id == 'input-form-pay-supplier-supplier') {
+        console.log(`Seleced item with UUID: ${e.detail.data.value}`);
+        try {
+            loadProductsToPaySupplier(e.detail.data.value);
+        } catch(err) {
+            console.log(`Error loading products to pay supplier. Please check if "pay_supplier.js" is loaded.`);
+            console.log(err);
+        }
+    }
+    else if(id == 'input-form-return-expired-products-supplier') {
+        console.log(`Seleced item with UUID: ${e.detail.data.value}`);
+        try {
+            loadExpiredProductsToReturn(e.detail.data.value);
+        } catch(err) {
+            console.log(`Error loading products to return expired. Please check if "return-expired.js" is loaded.`);
+            console.log(err);
+        }
+    }
 }
 
 function onSupplierItemRemove(e) {
-    id = e.detail.tagify.DOM.originalInput.dataset.id;
+    id = e.detail.tagify.DOM.originalInput.id;
     console.log(`Supplier removed from selection : ${id}`);
+
+    if(id == 'input-form-pay-supplier-supplier') {
+        try {
+            $('#pay-supplier-grand-total').html(`0.00`);
+            $('#pay-supplier-items').html("");
+        } catch(err) {
+            console.log(`Error running special tasks intended for ${id}. Please check if "pay-supplier.js" is loaded.`);
+            console.log(err);
+        }
+    }
+    else if(id == 'input-form-return-expired-products-supplier') {
+        try {
+            $('#return-expired-products-supplier-items').html("");
+        } catch(err) {
+            console.log(`Error running special tasks intended for ${id}. Please check if "return-expired-products.js" is loaded.`);
+            console.log(err);
+        }
+    }
 }
 
 function onSupplierItemInput(e) {
