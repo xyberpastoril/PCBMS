@@ -187,7 +187,7 @@ class InventoryController extends Controller
                 'p.quantity_sold',
                 'consigned_products.sale_price',
                 'consigned_products.unit_price',
-                DB::raw('IFNULL((consigned_products.quantity - p.quantity_sold), quantity) - consigned_products.quantity_paid as quantity_to_return'),
+                DB::raw('consigned_products.quantity - IFNULL(p.quantity_sold, 0) - consigned_products.quantity_returned as quantity_to_return'),
                 DB::raw('IFNULL(((consigned_products.sale_price - consigned_products.unit_price) * p.quantity_sold), 0) as current_profit'),
                 DB::raw('((consigned_products.sale_price - consigned_products.unit_price) * consigned_products.quantity) as supposed_profit')
             )
