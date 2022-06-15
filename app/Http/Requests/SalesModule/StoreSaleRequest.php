@@ -94,6 +94,10 @@ class StoreSaleRequest extends FormRequest
                 if(!$consigned_product) {
                     $validator->errors()->add('products', "Product ('{$products[$i]->name}') does not exist.");
                 }
+                // check if consigned product is already passed the expiration date
+                else if($consigned_product->expiration_date < now()->format('Y-m-d')) {
+                    $validator->errors()->add('products', "Product ('{$products[$i]->name}') is already expired.");
+                }
                 else if($consigned_product->quantity_available < $quantities[$i]) {
                     $validator->errors()->add('products', "Quantity of product ('{$products[$i]->name}') is not enough. Stocks remaining: {$consigned_product->quantity_available}.");
                 }
