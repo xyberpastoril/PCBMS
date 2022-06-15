@@ -137,7 +137,8 @@ Route::group([
                     Route::get('/pay-supplier/{supplier?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showProductsToPayAjax'])->name('show-products-to-pay');
                     Route::post('/pay-supplier/{supplier?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'paySupplier'])->name('paySupplier');
                     
-                    Route::get('/return-products/{supplier?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showExpiredProductsToReturnAjax'])->name('show-expired-products-to-return');
+                    Route::get('/return-expired-products/{supplier?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showExpiredProductsToReturnAjax'])->name('show-expired-products-to-return');
+                    Route::post('/return-expired-products/{supplier?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'returnExpiredProductsAjax'])->name('return-expired-products');
                 });
             });
 

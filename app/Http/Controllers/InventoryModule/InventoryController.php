@@ -6,6 +6,7 @@ use App\Actions\DecodeTagifyField;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InventoryModule\Inventory\PaySupplierRequest;
 use App\Http\Requests\InventoryModule\Inventory\ReceiveProductsRequest;
+use App\Http\Requests\InventoryModule\Inventory\ReturnExpiredProductRequest;
 use App\Models\ConsignOrder;
 use App\Models\ConsignedProduct;
 use App\Models\Supplier;
@@ -215,5 +216,29 @@ class InventoryController extends Controller
         }
 
         return $consigned_products->get();
+    }
+
+    public function returnExpiredProductsAjax(ReturnExpiredProductRequest $request)
+    {
+        // return $request;
+
+        for($i = 0; $i < count($request->products); $i++)
+        {
+            $consigned_product = ConsignedProduct::where('uuid', $request->products[$i])->first();
+            
+            // Get number of sold items
+            $item = DB::table('sales')
+                ->select(DB::raw('SUM(quantity_sold) as quantity_sold'))
+                ->where('consigned_product_id', $consigned_product->id)
+                ->groupBy('consigned_product_id')
+                ->first();
+
+            // Get number of items to return
+
+            $consigned_product->quantity_returned = $consigned_product->quantity - ((isset($item->quantity_sold) ? $item->quantity_sold : 0));
+            $consigned_product->save();
+        }
+
+        return 'Successfully returned expired products.';
     }
 }
