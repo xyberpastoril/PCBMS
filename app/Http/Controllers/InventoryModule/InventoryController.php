@@ -154,7 +154,7 @@ class InventoryController extends Controller
         return $consigned_products->get();
     }
 
-    public function paySupplier(PaySupplierRequest $request)
+    public function paySupplierAjax(PaySupplierRequest $request)
     {
         for($i = 0; $i < count($request->products); $i++)
         {
