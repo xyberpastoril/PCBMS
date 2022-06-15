@@ -12,7 +12,7 @@
     <div class="btn-group mb-4" role="group">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-receive-products">Receive Products</button>
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-pay-supplier">Pay Suppliers</button>
-        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-expired-products" disabled>Return Expired Products</button>
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-return-expired-products">Return Expired Products</button>
     </div>
 </div>
 
@@ -220,6 +220,57 @@
         </div>
     </div>
 </div>
+
+{{-- Return Expired --}}
+<div class="modal fade" id="modal-return-expired-products" tabindex="-1" aria-labelledby="modal-label-return-expired-products" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label_return-expired-products">Return Expired Products</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-return-expired-products" method="post" action="{{ url('/ajax/inventory/return-expired-products') }}">
+                    @csrf
+
+                    {{-- Supplier / Delivery Date --}}
+                    <div class="form-group row mb-3">
+                        {{-- Supplier --}}
+                        <label for="input-form-return-expired-products-supplier" class="col-12 col-lg-2 col-form-label"> 
+                            Supplier
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        <div class="col-12 col-lg-4">
+                            {{-- Input --}}
+                            <input type="text" class="form-control rep_supplier input-supplier" id="input-form-return-expired-products-supplier" name="supplier">
+                            {{-- Error --}}
+                            <p id="error-form-return-expired-products-supplier" data-field="supplier" class="text-danger error error-rep_supplier error-rep_products col-12 mt-1 mb-0" style="display:none"></p>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <th></th>
+                                <th>Product</th>
+                                <th class="text-end">Expiration Date</th>
+                                <th class="text-end">Quantity Bought</th>
+                                <th class="text-end">Quantity Sold</th>
+                                <th class="text-end">Quantity To Return</th>
+                            </thead>
+                            <tbody id="return-expired-product-items"></tbody>
+                        </table>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="close-form-return-expired-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="submit-form-return-expired-products" type="submit" class="btn btn-primary" form="form-return-expired-products">Return Expired Products</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('app-scripts')
@@ -228,6 +279,7 @@
 <script src="{{ url('/js/inventory/inventory/inventory.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/receive-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pay-supplier.js') }}"></script>
+<script src="{{ url('/js/inventory/inventory/return-expired-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/form-ajax-submit-receive-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pagination-ajax-received-products.js') }}"></script>
 <script>
