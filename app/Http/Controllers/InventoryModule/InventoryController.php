@@ -179,6 +179,7 @@ class InventoryController extends Controller
     {
         $consigned_products = DB::table('consigned_products')
             ->select(
+                'consigned_products.uuid',
                 DB::raw("CONCAT(products.name, ' (', consigned_products.particulars, units.abbreviation, ')') as name"),
                 'consigned_products.expiration_date',
                 'consigned_products.id',
