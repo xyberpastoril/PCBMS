@@ -145,7 +145,7 @@ class InventoryController extends Controller
 
         $consigned_products = DB::table(DB::raw("({$sub_consigned_products->toSql()}) as x"))
             ->select('x.*')
-            ->whereRaw('x.quantity_paid < x.quantity');           
+            ->whereRaw('x.quantity_sold > x.quantity_paid');           
 
         if($supplier) {
             $consigned_products->where('x.supplier_id', $supplier->id);
