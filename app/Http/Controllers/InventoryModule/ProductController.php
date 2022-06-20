@@ -53,6 +53,8 @@ class ProductController extends Controller
         Product::create([
             'name' => $validated['name'],
             'unit_id' => $validated['unit'][0]->id,
+            'expiry_duration' => $validated['expiry_duration'],
+            'expiry_duration_type' => $validated['expiry_duration_type'],
         ]);
 
         return 'Product successfully added.';
@@ -70,6 +72,8 @@ class ProductController extends Controller
         $product->update([
             'name' => $validated['name'],
             'unit_id' => $validated['unit'][0]->id,
+            'expiry_duration' => $validated['expiry_duration'],
+            'expiry_duration_type' => $validated['expiry_duration_type'],
         ]);
 
         return 'Product successfully updated.';
