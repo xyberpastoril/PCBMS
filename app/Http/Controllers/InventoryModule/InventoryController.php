@@ -85,7 +85,7 @@ class InventoryController extends Controller
         // Store array of received products to the database.
         DB::table('consigned_products')->insert($received_products);
 
-        return 'Received Products successfully added.';
+        return $consign_order;
     }
 
     public function barcodePdf(ConsignOrder $consignOrder)

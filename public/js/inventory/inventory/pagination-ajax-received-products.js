@@ -290,6 +290,7 @@ function actionsAddEventListenersReceivedProducts(modelName, ajaxUrl, actions)
                 console.log(`Barcode button clicked for model: ${modelName}`);
                 console.log(e.currentTarget.dataset.id);
 
+                $('#modal-label_generate-barcode-pdf').html("Generate Barcodes");
                 $('#iframe-generate-barcode-pdf').contents().find('body').attr('style', 'background-color:#fff').html("");
                 $(`#modal-generate-barcode-pdf`).modal('show');
                 $('#iframe-generate-barcode-pdf').attr('src', `/inventory/pdf/${e.currentTarget.dataset.id}`);
