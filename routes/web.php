@@ -240,6 +240,7 @@ Route::group([
             // TODO: Add sales routes later when necessary.
             Route::get('/sales', [\App\Http\Controllers\SalesModule\SalesController::class, 'index'])->name('index');
             Route::get('/sales/create', [\App\Http\Controllers\SalesModule\SalesController::class, 'create'])->name('create');
+            Route::get('/sales/pdf/{invoice}', [\App\Http\Controllers\SalesModule\SalesController::class, 'pdf'])->name('pdf');
 
             // AJAX
             Route::group([
