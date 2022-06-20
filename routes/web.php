@@ -132,6 +132,8 @@ Route::group([
                     'prefix' => 'ajax/inventory'
                 ], function()
                 {
+                    Route::get('/order/{consignOrder}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showAjax'])->name('show-ajax');
+
                     Route::get('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showRowsAjax'])->name('show-rows');
                     Route::post('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'receiveProductsAjax'])->name('receive-products');
 

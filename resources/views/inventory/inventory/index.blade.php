@@ -50,7 +50,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="form-receive-products" method="post" data-model="receivedProducts" action="{{ url('/ajax/inventory/receive-products') }}">
+                <form id="form-receive-products" method="post" data-model="ConsignOrders" action="{{ url('/ajax/inventory/receive-products') }}">
                     @csrf
 
                     {{-- Supplier / Delivery Date --}}
@@ -132,6 +132,38 @@
             <div class="modal-footer">
                 <button id="close-form-receive-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button id="submit-form-receive-products" type="submit" class="btn btn-primary" form="form-receive-products">Create Product</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Show Consign Order --}}
+<div class="modal fade" id="modal-show-consign-order" tabindex="-1" aria-labelledby="modal-label-show-consign-order" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label_show-consign-order"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <th>ID</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Quantity Sold</th>
+                            <th class="text-end">Unit Price</th>
+                            <th class="text-end">Sale Price</th>
+                            <th>Expiration Date</th>
+                            <th class="text-end">Amount</th>
+                        </thead>
+                        <tbody id="show-consign-order-items"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="close-form-show-consign-order" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -310,7 +342,7 @@
                 'order_delivered_at',
             ],
             actions: [
-                // 'view',
+                'view',
                 'barcode',
                 // 'edit',
                 // 'delete',

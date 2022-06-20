@@ -182,6 +182,18 @@ function displayActionButtonsReceivedProducts(id, modelName, actions, customActi
             </button>
             `;
         }
+        else if(a == 'view') {
+            inner += `
+            <button 
+                type="button" 
+                class="btn btn-primary btn-view-${modelName}" 
+                data-id="${id}">
+                <span class="icon text-white-50">
+                    <i class="fas fa-eye"></i>
+                </span>
+            </button>
+            `;
+        }
     });
 
     if(customActionsHtml != undefined)
@@ -295,6 +307,57 @@ function actionsAddEventListenersReceivedProducts(modelName, ajaxUrl, actions)
                 $(`#modal-generate-barcode-pdf`).modal('show');
                 $('#iframe-generate-barcode-pdf').attr('src', `/inventory/pdf/${e.currentTarget.dataset.id}`);
 
+            });
+        }
+        else if(a == 'view') {
+            $(`.btn-view-${modelName}`).click(function(e) {
+                $(`.btn-view-${modelName}`).attr('disabled', true);
+
+                console.log(`Barcode button clicked for model: ${modelName}`);
+                console.log(e.currentTarget.dataset.id);
+
+                $('#show-consign-order-items').html("");
+
+                console.log(`${ajaxUrl}/order/${e.currentTarget.dataset.id}`)
+                
+                var request = $.ajax({
+                    url: `/ajax/inventory/order/${e.currentTarget.dataset.id}`,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    method: 'GET',
+                });
+                
+                request.done(function(res, status, jqXHR){
+                    console.log(`GET Request successful to fill in current values in ${modelName} view form.`);
+                    console.log(res);
+                    $('#modal-label_show-consign-order').html("Viewing Consign Order - " + e.currentTarget.dataset.id);
+
+                    $(`#modal-show-consign-order`).modal('show');
+
+                    res.forEach(function(i){
+                        inner = `
+                        <tr>
+                            <td>${i.id}</td>
+                            <td>${i.name}</td>
+                            <td>${i.quantity}</td>
+                            <td>${i.total_quantity_sold}</td>
+                            <td class="text-end">Php ${parseFloat(i.unit_price).toFixed(2)}</td>
+                            <td class="text-end">Php ${parseFloat(i.sale_price).toFixed(2)}</td>
+                            <td>${i.expiration_date}</td>
+                            <td class="text-end">Php ${parseFloat(i.amount).toFixed(2)}</td>
+                        </tr>
+                        `;
+                        $(`#show-consign-order-items`).append(inner);
+                    });                 
+                });
+
+                request.fail(function(jqXHR, status, error) {
+                    console.log(`GET Request failed to fill in current values in ${modelName} view form.`);
+                    generateToast(error, 'bg-danger');
+                });
+
+                request.always(function(){
+                    $(`.btn-view-${modelName}`).removeAttr('disabled');
+                })
             });
         }
     });

@@ -88,6 +88,28 @@ class InventoryController extends Controller
         return $consign_order;
     }
 
+    public function showAjax(ConsignOrder $consignOrder)
+    {
+        return DB::table('consigned_products')
+            ->select(
+                'consigned_products.uuid',
+                'consigned_products.id',
+                DB::raw('CONCAT(products.name, " (", consigned_products.particulars, units.abbreviation, ")") as name'),
+                'consigned_products.unit_price',
+                'consigned_products.sale_price',
+                'consigned_products.quantity',
+                'consigned_products.expiration_date',
+                DB::raw('(consigned_products.unit_price * consigned_products.quantity) as amount'),
+                DB::raw("IFNULL(SUM(quantity_sold), 0) as total_quantity_sold"),
+            )
+            ->leftJoin('products', 'consigned_products.product_id', 'products.id')
+            ->leftJoin('units', 'products.unit_id', 'units.id')
+            ->leftJoin('sales', 'consigned_products.id', 'sales.consigned_product_id')
+            ->where('consigned_products.consign_order_id', $consignOrder->id)
+            ->groupBy('consigned_products.id')
+            ->get();
+    }
+
     public function barcodePdf(ConsignOrder $consignOrder)
     {
         $consignOrder->consignedProducts;
