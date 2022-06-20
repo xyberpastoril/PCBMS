@@ -27,6 +27,7 @@
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </th>
+                    <th>ID</th>
                     <th>Supplier Name</th>
                     <th>Date Delivered</th>
                 </thead>
@@ -338,6 +339,7 @@
             ajaxUrl: '/ajax/inventory/receive-products',
             modelName: 'received-products',
             columns: [
+                'id',
                 'supplier',
                 'order_delivered_at',
             ],
