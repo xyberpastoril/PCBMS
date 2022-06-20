@@ -137,6 +137,25 @@
     </div>
 </div>
 
+{{-- Generate Barcode --}}
+<div class="modal fade" id="modal-generate-barcode-pdf" tabindex="-1" aria-labelledby="modal-label-generate-barcode-pdf" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label_generate-barcode-pdf">Barcodes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="iframe-generate-barcode-pdf" src="" frameborder="0" style="width:100%;height:65vh"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button id="close-form-generate-barcode-pdf" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                {{-- <button id="submit-form-generate-barcode-pdf" type="submit" class="btn btn-primary" form="form-generate-barcode-report">Download Report</button> --}}
+            </div>
+        </div>
+    </div>
+</div>
+
 {{-- Pay Supplier --}}
 <div class="modal fade" id="modal-pay-supplier" tabindex="-1" aria-labelledby="modal-label-pay-supplier" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -291,6 +310,8 @@
                 'order_delivered_at',
             ],
             actions: [
+                // 'view',
+                'barcode',
                 // 'edit',
                 // 'delete',
             ]

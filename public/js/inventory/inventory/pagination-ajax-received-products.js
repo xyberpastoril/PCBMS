@@ -170,6 +170,18 @@ function displayActionButtonsReceivedProducts(id, modelName, actions, customActi
             </button>
             `;
         }
+        else if(a == 'barcode') {
+            inner += `
+            <button 
+                type="button" 
+                class="btn btn-primary btn-barcode-${modelName}" 
+                data-id="${id}">
+                <span class="icon text-white-50">
+                    <i class="fas fa-barcode"></i>
+                </span>
+            </button>
+            `;
+        }
     });
 
     if(customActionsHtml != undefined)
@@ -271,6 +283,17 @@ function actionsAddEventListenersReceivedProducts(modelName, ajaxUrl, actions)
                     $(`#close-form-delete-${modelName}`).click();
                     generateToast(jqXHR.responseJSON.message, 'bg-danger');
                 });
+            });
+        }
+        else if(a == 'barcode') {
+            $(`.btn-barcode-${modelName}`).click(function(e) {
+                console.log(`Barcode button clicked for model: ${modelName}`);
+                console.log(e.currentTarget.dataset.id);
+
+                $('#iframe-generate-barcode-pdf').contents().find('body').attr('style', 'background-color:#fff').html("");
+                $(`#modal-generate-barcode-pdf`).modal('show');
+                $('#iframe-generate-barcode-pdf').attr('src', `/inventory/pdf/${e.currentTarget.dataset.id}`);
+
             });
         }
     });
