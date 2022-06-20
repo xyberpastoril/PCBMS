@@ -27,14 +27,8 @@
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </th>
-                    <th>Product Name</th>
-                    <th>Particulars</th>
-                    <th>Delivered At</th>
-                    <th>Expires At</th>
-                    <th>Unit Price</th>
-                    <th>Sale Price</th>
-                    <th>Quantity</th>
-                    <th>Amount</th>
+                    <th>Supplier Name</th>
+                    <th>Date Delivered</th>
                 </thead>
                 <tbody id="table-content-received-products"></tbody>
             </table>
@@ -293,14 +287,8 @@
             ajaxUrl: '/ajax/inventory/receive-products',
             modelName: 'received-products',
             columns: [
-                'name',
-                'particulars',
+                'supplier',
                 'order_delivered_at',
-                'expiration_date',
-                'unit_price',
-                'sale_price',
-                'quantity',
-                'amount',
             ],
             actions: [
                 // 'edit',
