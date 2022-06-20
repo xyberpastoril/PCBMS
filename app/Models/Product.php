@@ -26,6 +26,8 @@ class Product extends Model
         'supplier_id',
         'name',
         'unit_id',
+        'expiry_duration',
+        'expiry_duration_type',
     ];
 
     /**

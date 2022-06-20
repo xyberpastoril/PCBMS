@@ -18,6 +18,13 @@ return new class extends Migration
             $table->string('uuid')->unique();
             $table->string('name');
             $table->foreignId('unit_id')->constrained();
+            $table->integer('expiry_duration');
+            $table->enum('expiry_duration_type', [
+                'day',
+                'week',
+                'month',
+                'year',
+            ]);
             $table->timestamp('created_at')->default(now());
         });
     }
