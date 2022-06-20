@@ -80,6 +80,19 @@ class InventoryController extends Controller
         return 'Received Products successfully added.';
     }
 
+    public function barcodePdf(ConsignOrder $consignOrder)
+    {
+        $consignOrder->consignedProducts;
+        for($i = 0; $i < count($consignOrder->consignedProducts); $i++)
+            $consignOrder->consignedProducts[$i]->product->unit;
+
+        $pdf = \PDF::loadView('inventory.consign-order.pdf', [
+            'consigned_products' => $consignOrder->consignedProducts,
+        ]);
+
+        return $pdf->stream("order-barcodes-{$consignOrder->id}.pdf", array("Attachment" => false));
+    }
+
     // TODO: Pay Supplier
     public function showProductsToPayAjax(Supplier $supplier = null)
     {
