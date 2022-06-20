@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ReportsModule;
 
 use App\Actions\GenerateSaleRows;
+use App\Actions\GetProductSoldCount;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReportsModule\GenerateSalesReportRequest;
 use App\Http\Requests\SalesModule\StoreSaleRequest;
@@ -26,6 +27,7 @@ class SalesController extends Controller
             'date_from' => $request->date_from,
             'date_to' => $request->date_to,
             'invoices' => GenerateSaleRows::run($request->date_from, $request->date_to),
+            'products' => GetProductSoldCount::run($request->date_from, $request->date_to),
         ]);
         return $pdf->stream("sales_report.pdf", array("Attachment" => false));
     }
