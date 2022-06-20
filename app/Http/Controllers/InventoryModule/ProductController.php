@@ -36,6 +36,8 @@ class ProductController extends Controller
             'products.id',
             'products.name',
             'units.name as unit',
+            'products.expiry_duration',
+            'products.expiry_duration_type',
         )
         ->leftJoin('units', 'units.id', '=', 'products.unit_id')
         ->where('products.name', 'LIKE', "%{$query}%")
