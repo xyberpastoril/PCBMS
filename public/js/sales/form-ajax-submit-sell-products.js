@@ -33,7 +33,9 @@ $("#form-sell-products").submit(function(e){
         console.log(`Request for ${e.target.id} has successfully been made.`);
         console.log(res);
 
-        generateToast(res, 'bg-success');
+        // generateToast(`Successfully created an invoice.`, 'bg-success');
+        $('#iframe-generate-receipt-pdf').attr('src', `/sales/pdf/${res.uuid}`);
+        $(`#modal-generate-receipt-pdf`).modal('show');
 
         // Cleanup the form.
         $(`#${e.target.id}`)[0].reset();

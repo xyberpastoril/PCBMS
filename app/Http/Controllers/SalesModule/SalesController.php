@@ -46,7 +46,9 @@ class SalesController extends Controller
 
         DB::table('sales')->insert($sales);
 
-        return 'Successfully created an invoice for ' . (isset($invoice->customer->name) ? $invoice->customer->name . '.' : 'a customer.');
+        // return 'Successfully created an invoice for ' . (isset($invoice->customer->name) ? $invoice->customer->name . '.' : 'a customer.');
+        return $invoice;
+    }
 
     public function pdf(Invoice $invoice)
     {
