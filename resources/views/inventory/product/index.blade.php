@@ -80,6 +80,30 @@
                         <p id="error-form-create-product-unit" data-field="unit" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
                     </div>
 
+                    {{-- Expiry Duration --}}
+                    <div class="form-group row mb-3">
+                        {{-- Label --}}
+                        <label for="input-form-create-product-unit" class="col-12 col-lg-6 col-form-label"> 
+                            Expiry Duration
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            {{-- Input Group where Input is Numeric and Select for Type --}}
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="input-form-create-product-expiry-duration" name="expiry_duration" required value="1" min="1">
+                                <select class="form-control form-select" id="input-form-create-product-expiry-duration-type" name="expiry_duration_type" required>
+                                    <option value="day" selected>Days</option>
+                                    <option value="week">Weeks</option>
+                                    <option value="month">Months</option>
+                                    <option value="year">Years</option>
+                                </select>
+                            </div>
+                        </div>
+                        {{-- Error --}}
+                        <p id="error-form-create-product-expiry-duration" data-field="expiry-duration" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                    </div>
+
                 </form>
             </div>
             <div class="modal-footer">
@@ -134,6 +158,32 @@
                         </div>
                         {{-- Error --}}
                         <p id="error-form-edit-product-unit" data-field="unit" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
+                    </div>
+
+                    {{-- Expiry Duration --}}
+                    <div class="form-group row mb-3">
+                        {{-- Label --}}
+                        <label for="input-form-edit-product-unit" class="col-12 col-lg-6 col-form-label"> 
+                            Expiry Duration
+                            <span class="text-danger ml-1">*</span>
+                        </label>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            {{-- Input Group where Input is Numeric and Select for Type --}}
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="input-form-edit-product-expiry_duration" name="expiry_duration" required min="1">
+                                <div class="input-group-append">
+                                    <select class="form-control form-select" id="input-form-edit-product-expiry_duration_type" name="expiry_duration_type" required>
+                                        <option id="form-edit-product-option-day" value="day">Days</option>
+                                        <option id="form-edit-product-option-week" value="week">Weeks</option>
+                                        <option id="form-edit-product-option-month" value="month">Months</option>
+                                        <option id="form-edit-product-option-year" value="year">Years</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Error --}}
+                        <p id="error-form-edit-product-expiry-duration" data-field="expiry-duration" class="text-danger col-12 mt-1 mb-0" style="display:none"></p>
                     </div>
                 </form>
             </div>

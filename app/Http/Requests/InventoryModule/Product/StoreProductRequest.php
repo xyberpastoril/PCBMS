@@ -28,6 +28,8 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => ['required'],
             'unit' => ['required'],
+            'expiry_duration' => ['required', 'numeric', 'min:1'],
+            'expiry_duration_type' => ['required', 'in:day,week,month,year'],
         ];
     }
 

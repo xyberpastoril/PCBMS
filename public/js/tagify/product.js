@@ -30,10 +30,31 @@ function initTagifyProduct(elm)
 function onProductItemSelectSuggestion(e) {
     id = e.detail.tagify.DOM.originalInput.dataset.id;
     console.log(`Product selected : ${id}`);
+    
+    expiry_duration = e.detail.data.expiry_duration;
+    expiry_duration_type = e.detail.data.expiry_duration_type;
+
+    if(expiry_duration_type == 'week') {
+        expiry_duration = expiry_duration * 7;
+    }
+    else if(expiry_duration_type == 'month') {
+        expiry_duration = expiry_duration * 30;
+    }
+    else if(expiry_duration_type == 'year') {
+        expiry_duration = expiry_duration * 365;
+    }
+
 
     if(e.detail.tagify.DOM.originalInput.dataset.rp != undefined) {
+        // Set date to today, then add the expiry duration.
+        var date = new Date();
+        var expiry_date = new Date(date.setDate(date.getDate() + expiry_duration));
+
+        // Format expiry date to YYYY-MM-DD
+        var expiry_date_formatted = expiry_date.getFullYear() + '-' + ('0' + (expiry_date.getMonth() + 1)).slice(-2) + '-' + ('0' + expiry_date.getDate()).slice(-2);
+
         $(`#rp_particulars_${id}`).removeAttr('disabled');
-        $(`#rp_expiration_dates_${id}`).removeAttr('disabled');
+        $(`#rp_expiration_dates_${id}`).removeAttr('disabled').val(expiry_date_formatted);
         $(`#rp_unit_prices_${id}`).removeAttr('disabled');
         $(`#rp_sale_prices_${id}`).removeAttr('disabled');
         $(`#rp_quantities_${id}`).removeAttr('disabled');
@@ -46,7 +67,7 @@ function onProductItemRemove(e) {
 
     if(e.detail.tagify.DOM.originalInput.dataset.rp != undefined) {
         $(`#rp_particulars_${id}`).attr('disabled', true);
-        $(`#rp_expiration_dates_${id}`).attr('disabled', true);
+        $(`#rp_expiration_dates_${id}`).attr('disabled', true).val("");
         $(`#rp_unit_prices_${id}`).attr('disabled', true);
         $(`#rp_sale_prices_${id}`).attr('disabled', true);
         $(`#rp_quantities_${id}`).attr('disabled', true);

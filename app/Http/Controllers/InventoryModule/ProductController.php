@@ -36,6 +36,8 @@ class ProductController extends Controller
             'products.id',
             'products.name',
             'units.name as unit',
+            'products.expiry_duration',
+            'products.expiry_duration_type',
         )
         ->leftJoin('units', 'units.id', '=', 'products.unit_id')
         ->where('products.name', 'LIKE', "%{$query}%")
@@ -53,6 +55,8 @@ class ProductController extends Controller
         Product::create([
             'name' => $validated['name'],
             'unit_id' => $validated['unit'][0]->id,
+            'expiry_duration' => $validated['expiry_duration'],
+            'expiry_duration_type' => $validated['expiry_duration_type'],
         ]);
 
         return 'Product successfully added.';
@@ -70,6 +74,8 @@ class ProductController extends Controller
         $product->update([
             'name' => $validated['name'],
             'unit_id' => $validated['unit'][0]->id,
+            'expiry_duration' => $validated['expiry_duration'],
+            'expiry_duration_type' => $validated['expiry_duration_type'],
         ]);
 
         return 'Product successfully updated.';

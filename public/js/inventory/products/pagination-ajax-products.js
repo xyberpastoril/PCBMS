@@ -252,7 +252,7 @@ function productActionsAddEventListeners(modelName, ajaxUrl, actions)
                         console.log(options);
                         options.forEach(function(o){
                             if(o.value == res[s.name]) {
-                                $(`#${o.id}`).attr("selected", true);
+                                $(`#${s.id} #form-edit-${modelName}-option-${o.value}`).attr("selected", true);
                             }
                         });
                     });
