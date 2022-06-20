@@ -47,5 +47,18 @@ class SalesController extends Controller
         DB::table('sales')->insert($sales);
 
         return 'Successfully created an invoice for ' . (isset($invoice->customer->name) ? $invoice->customer->name . '.' : 'a customer.');
+
+    public function pdf(Invoice $invoice)
+    {
+        $invoice->sales;
+        $invoice->customer;
+        for($i = 0; $i < count($invoice->sales); $i++) {
+            $invoice->sales[$i]->consignedProduct->product->unit;
+        }
+
+        $pdf = \PDF::loadView('sales.pdf', [
+            'invoice' => $invoice,
+        ]);
+        return $pdf->stream("receipt_" . $invoice->id . ".pdf", array("Attachment" => false));
     }
 }
