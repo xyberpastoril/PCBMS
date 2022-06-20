@@ -54,7 +54,7 @@ class ReceivedProductsPaginationAjax {
             inner += `
             <tr>
                 <td>
-                    ${displayActionButtonsReceivedProducts(row.uuid, modelName, actions)}
+                    ${displayActionButtonsReceivedProducts(row.id, row.uuid, modelName, actions)}
                 </td>
                 `
 
@@ -137,7 +137,7 @@ function processRequestReceivedProducts(request, table)
     });
 }
 
-function displayActionButtonsReceivedProducts(id, modelName, actions, customActionsHtml = undefined)
+function displayActionButtonsReceivedProducts(id, uuid, modelName, actions, customActionsHtml = undefined)
 {
     var inner = '';
 
@@ -147,7 +147,7 @@ function displayActionButtonsReceivedProducts(id, modelName, actions, customActi
             <button 
                 type="button" 
                 class="btn btn-primary btn-edit-${modelName}" 
-                data-id="${id}"
+                data-id="${id}" data-uuid="${uuid}"
                 data-bs-toggle="modal"
                 data-bs-target="#modal-edit-${modelName}">
                 <span class="icon text-white-50">
@@ -161,7 +161,7 @@ function displayActionButtonsReceivedProducts(id, modelName, actions, customActi
             <button 
                 type="button" 
                 class="btn btn-danger btn-delete-${modelName}" 
-                data-id="${id}"
+                data-id="${id}" data-uuid="${uuid}"
                 data-bs-toggle="modal"
                 data-bs-target="#modal-delete-${modelName}">
                 <span class="icon text-white-50">
@@ -175,7 +175,7 @@ function displayActionButtonsReceivedProducts(id, modelName, actions, customActi
             <button 
                 type="button" 
                 class="btn btn-primary btn-barcode-${modelName}" 
-                data-id="${id}">
+                data-id="${id}" data-uuid="${uuid}">
                 <span class="icon text-white-50">
                     <i class="fas fa-barcode"></i>
                 </span>
@@ -187,7 +187,7 @@ function displayActionButtonsReceivedProducts(id, modelName, actions, customActi
             <button 
                 type="button" 
                 class="btn btn-primary btn-view-${modelName}" 
-                data-id="${id}">
+                data-id="${id}" data-uuid="${uuid}">
                 <span class="icon text-white-50">
                     <i class="fas fa-eye"></i>
                 </span>
@@ -220,7 +220,7 @@ function actionsAddEventListenersReceivedProducts(modelName, ajaxUrl, actions)
                 $(`#submit-form-edit-${modelName}`).attr('disabled', true);
 
                 var request = $.ajax({
-                    url: `${ajaxUrl}/${e.currentTarget.dataset.id}`,
+                    url: `${ajaxUrl}/${e.currentTarget.dataset.uuid}`,
                     headers: { 'X-Requested-With': 'XMLHttpRequest' },
                     method: 'GET',
                 });
@@ -269,7 +269,7 @@ function actionsAddEventListenersReceivedProducts(modelName, ajaxUrl, actions)
                 $(`#submit-form-delete-${modelName}`).attr('disabled', true);
 
                 var request = $.ajax({
-                    url: `${ajaxUrl}/${e.currentTarget.dataset.id}`,
+                    url: `${ajaxUrl}/${e.currentTarget.dataset.uuid}`,
                     headers: { 'X-Requested-With': 'XMLHttpRequest' },
                     method: 'GET',
                 });
@@ -300,12 +300,12 @@ function actionsAddEventListenersReceivedProducts(modelName, ajaxUrl, actions)
         else if(a == 'barcode') {
             $(`.btn-barcode-${modelName}`).click(function(e) {
                 console.log(`Barcode button clicked for model: ${modelName}`);
-                console.log(e.currentTarget.dataset.id);
+                console.log(e.currentTarget.dataset.uuid);
 
-                $('#modal-label_generate-barcode-pdf').html("Generate Barcodes");
+                $('#modal-label_generate-barcode-pdf').html("Generate Barcodes - " + e.currentTarget.dataset.id);
                 $('#iframe-generate-barcode-pdf').contents().find('body').attr('style', 'background-color:#fff').html("");
                 $(`#modal-generate-barcode-pdf`).modal('show');
-                $('#iframe-generate-barcode-pdf').attr('src', `/inventory/pdf/${e.currentTarget.dataset.id}`);
+                $('#iframe-generate-barcode-pdf').attr('src', `/inventory/pdf/${e.currentTarget.dataset.uuid}`);
 
             });
         }
@@ -314,14 +314,14 @@ function actionsAddEventListenersReceivedProducts(modelName, ajaxUrl, actions)
                 $(`.btn-view-${modelName}`).attr('disabled', true);
 
                 console.log(`Barcode button clicked for model: ${modelName}`);
-                console.log(e.currentTarget.dataset.id);
+                console.log(e.currentTarget.dataset.uuid);
 
                 $('#show-consign-order-items').html("");
 
-                console.log(`${ajaxUrl}/order/${e.currentTarget.dataset.id}`)
+                console.log(`${ajaxUrl}/order/${e.currentTarget.dataset.uuid}`)
                 
                 var request = $.ajax({
-                    url: `/ajax/inventory/order/${e.currentTarget.dataset.id}`,
+                    url: `/ajax/inventory/order/${e.currentTarget.dataset.uuid}`,
                     headers: { 'X-Requested-With': 'XMLHttpRequest' },
                     method: 'GET',
                 });
