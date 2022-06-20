@@ -124,6 +124,7 @@ Route::group([
             {
                 // HTTP
                 Route::get('/inventory', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'index'])->name('index');
+                Route::get('/inventory/pdf/{consignOrder}', [App\Http\Controllers\InventoryModule\InventoryController::class, 'barcodePdf'])->name('barcode-pdf');
 
                 // AJAX
                 Route::group([

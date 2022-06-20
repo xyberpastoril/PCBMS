@@ -27,14 +27,8 @@
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </th>
-                    <th>Product Name</th>
-                    <th>Particulars</th>
-                    <th>Delivered At</th>
-                    <th>Expires At</th>
-                    <th>Unit Price</th>
-                    <th>Sale Price</th>
-                    <th>Quantity</th>
-                    <th>Amount</th>
+                    <th>Supplier Name</th>
+                    <th>Date Delivered</th>
                 </thead>
                 <tbody id="table-content-received-products"></tbody>
             </table>
@@ -138,6 +132,25 @@
             <div class="modal-footer">
                 <button id="close-form-receive-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button id="submit-form-receive-products" type="submit" class="btn btn-primary" form="form-receive-products">Create Product</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Generate Barcode --}}
+<div class="modal fade" id="modal-generate-barcode-pdf" tabindex="-1" aria-labelledby="modal-label-generate-barcode-pdf" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label_generate-barcode-pdf">Barcodes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="iframe-generate-barcode-pdf" src="" frameborder="0" style="width:100%;height:65vh"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button id="close-form-generate-barcode-pdf" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                {{-- <button id="submit-form-generate-barcode-pdf" type="submit" class="btn btn-primary" form="form-generate-barcode-report">Download Report</button> --}}
             </div>
         </div>
     </div>
@@ -293,16 +306,12 @@
             ajaxUrl: '/ajax/inventory/receive-products',
             modelName: 'received-products',
             columns: [
-                'name',
-                'particulars',
+                'supplier',
                 'order_delivered_at',
-                'expiration_date',
-                'unit_price',
-                'sale_price',
-                'quantity',
-                'amount',
             ],
             actions: [
+                // 'view',
+                'barcode',
                 // 'edit',
                 // 'delete',
             ]

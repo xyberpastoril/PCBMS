@@ -24,24 +24,32 @@ class InventoryController extends Controller
 
     public function showRowsAjax()
     {
-        $consigned_products = ConsignedProduct::select(
-            'consigned_products.uuid',
-            'consigned_products.id',
-            'products.name',
-            'consigned_products.particulars',
-            'units.abbreviation as unit',
-            DB::raw('DATE_FORMAT(consign_orders.order_delivered_at, "%Y-%m-%d") as order_delivered_at'),
-            'consigned_products.expiration_date',
-            'consigned_products.unit_price',
-            'consigned_products.sale_price',
-            'consigned_products.quantity',
-            DB::raw('(consigned_products.unit_price * consigned_products.quantity) as amount')
-        )
-        ->leftJoin('products', 'consigned_products.product_id', 'products.id')
-        ->leftJoin('units', 'products.unit_id', 'units.id')
-        ->leftJoin('consign_orders', 'consigned_products.consign_order_id', 'consign_orders.id');
+        // $consigned_products = ConsignedProduct::select(
+        //     'consigned_products.uuid',
+        //     'consigned_products.id',
+        //     'products.name',
+        //     'consigned_products.particulars',
+        //     'units.abbreviation as unit',
+        //     DB::raw('DATE_FORMAT(consign_orders.order_delivered_at, "%Y-%m-%d") as order_delivered_at'),
+        //     'consigned_products.expiration_date',
+        //     'consigned_products.unit_price',
+        //     'consigned_products.sale_price',
+        //     'consigned_products.quantity',
+        //     DB::raw('(consigned_products.unit_price * consigned_products.quantity) as amount')
+        // )
+        // ->leftJoin('products', 'consigned_products.product_id', 'products.id')
+        // ->leftJoin('units', 'products.unit_id', 'units.id')
+        // ->leftJoin('consign_orders', 'consigned_products.consign_order_id', 'consign_orders.id');
 
-        return $consigned_products->paginate(10);
+        $consign_orders = ConsignOrder::select(
+            'consign_orders.uuid',
+            'consign_orders.id',
+            'suppliers.name as supplier',
+            DB::raw('DATE_FORMAT(consign_orders.order_delivered_at, "%Y-%m-%d") as order_delivered_at'),
+        )
+        ->leftJoin('suppliers', 'consign_orders.supplier_id', 'suppliers.id');
+
+        return $consign_orders->paginate(10);
     }
 
     public function receiveProductsAjax(ReceiveProductsRequest $request)
@@ -77,7 +85,20 @@ class InventoryController extends Controller
         // Store array of received products to the database.
         DB::table('consigned_products')->insert($received_products);
 
-        return 'Received Products successfully added.';
+        return $consign_order;
+    }
+
+    public function barcodePdf(ConsignOrder $consignOrder)
+    {
+        $consignOrder->consignedProducts;
+        for($i = 0; $i < count($consignOrder->consignedProducts); $i++)
+            $consignOrder->consignedProducts[$i]->product->unit;
+
+        $pdf = \PDF::loadView('inventory.consign-order.pdf', [
+            'consigned_products' => $consignOrder->consignedProducts,
+        ]);
+
+        return $pdf->stream("order-barcodes-{$consignOrder->id}.pdf", array("Attachment" => false));
     }
 
     // TODO: Pay Supplier

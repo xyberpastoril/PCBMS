@@ -35,7 +35,16 @@ $("#form-receive-products").submit(function(e){
         console.log(res);
 
         closeButtonElement.click();
-        generateToast(res, 'bg-success');
+        // generateToast('Received Products successfully added.', 'bg-success');
+
+        try {
+            $('#modal-label_generate-barcode-pdf').html("Successfully received products. Displaying barcodes.");
+            $('#iframe-generate-barcode-pdf').contents().find('body').attr('style', 'background-color:#fff').html("");
+            $(`#modal-generate-barcode-pdf`).modal('show');
+            $('#iframe-generate-barcode-pdf').attr('src', `/inventory/pdf/${res.uuid}`);
+        } catch(err) {
+            generateToast('Received Products successfully added, but failed to display barcode pdf', 'bg-success');
+        }
 
         console.log("TEST");
 
