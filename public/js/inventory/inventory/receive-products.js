@@ -52,7 +52,11 @@ function createReceivedProductEntry(item = undefined)
             <p class="text-danger error error-rp_products" style="display:none"></p>
         </td>
         <td>
-            <input data-id="${received_products_count}" id="rp_particulars_${received_products_count}" type="text" class="rp_particulars form-control form-control-sm" name="particulars[]" placeholder="Enter Particulars" disabled required>
+            <!-- input group -->
+            <div class="input-group input-group-sm">
+                <input data-id="${received_products_count}" id="rp_particulars_${received_products_count}" type="text" class="rp_particulars form-control form-control-sm text-end" name="particulars[]" placeholder="Enter Particulars" disabled required>
+                <span class="input-group-text" id="rp_unit_${received_products_count}"></span>
+            </div>
             <p class="text-danger error error-rp_particulars" style="display:none"></p>
         </td>
         <td>
