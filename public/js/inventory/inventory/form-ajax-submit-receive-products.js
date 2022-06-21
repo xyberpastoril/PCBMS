@@ -46,6 +46,12 @@ $("#form-receive-products").submit(function(e){
             generateToast('Received Products successfully added, but failed to display barcode pdf', 'bg-success');
         }
 
+        $('#rp_body_1').show();
+        $('#rp_body_2').hide();
+        $('#rp_footer_1').attr('style', 'display:flex');
+        $('#rp_footer_2').attr('style', 'display:none');
+        $('#rp_modal_size').attr('class', 'modal-dialog');
+
         console.log("TEST");
 
         if(e.target.dataset.model != undefined)

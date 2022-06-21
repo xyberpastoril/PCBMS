@@ -10,7 +10,7 @@
 
 <div class="tab-pane fade show active" id="inventory" role="tabpanel" aria-labelledby="inventory-tab">
     <div class="btn-group mb-4" role="group">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-receive-products">Receive Products</button>
+        <button id="rp_modal_open" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-receive-products">Receive Products</button>
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-pay-supplier">Pay Suppliers</button>
         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-return-expired-products">Return Expired Products</button>
     </div>
@@ -44,61 +44,52 @@
 @section('modals')
 {{-- Receive Products --}}
 <div class="modal fade" id="modal-receive-products" tabindex="-1" aria-labelledby="modal-label-receive-products" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div id="rp_modal_size" class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal-label_receive-products">Receive Products</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="form-receive-products" data-model="receive-products" method="post" data-model="ConsignOrders" action="{{ url('/ajax/inventory/receive-products') }}">
-                    @csrf
-
+            <form id="form-receive-products" data-model="receive-products" method="post" data-model="ConsignOrders" action="{{ url('/ajax/inventory/receive-products') }}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-label_receive-products">Receive Products</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="rp_body_1" class="modal-body" style="display:block">
+                    <h5 class="mb-3">Enter Consign Order Details</h5>
                     {{-- Supplier / Delivery Date --}}
                     <div class="form-group row mb-3">
-                        {{-- Supplier --}}
-                        <label for="input-form-receive-products-supplier" class="col-12 col-lg-2 col-form-label"> 
+                        {{-- Label --}}
+                        <label for="input-form-receive-products-supplier" class="col-12 col-lg-6 col-form-label"> 
                             Supplier
                             <span class="text-danger ml-1">*</span>
                         </label>
-                        <div class="col-12 col-lg-4">
-                            {{-- Input --}}
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
                             <input type="text" class="form-control rp_supplier input-supplier" id="input-form-receive-products-supplier" name="supplier">
-                            {{-- Error --}}
-                            <p id="error-form-receive-products-supplier" data-field="supplier" class="text-danger error error-rp_supplier col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
+                        {{-- Error --}}
+                        <p id="error-form-receive-products-supplier" data-field="supplier" class="text-danger error error-rp_supplier col-12 mt-1 mb-0" style="display:none"></p>
+                    </div>
 
-                        {{-- Delivery Date --}}
-                        <label for="input-form-receive-products-date" class="col-12 col-lg-2 col-form-label"> 
+                    {{-- Delivery Date --}}
+                    <div class="form-group row mb-3">
+                        {{-- Label --}}
+                        <label for="input-form-receive-products-date" class="col-12 col-lg-6 col-form-label"> 
                             Delivery Date
                             <span class="text-danger ml-1">*</span>
                         </label>
-                        <div class="col-12 col-lg-4">
-                            {{-- Input --}}
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
                             <input type="date" class="form-control rp_date" id="input-form-receive-products-date" name="date" value="{{ now()->format('Y-m-d') }}">
-                            {{-- Error --}}
-                            <p id="error-form-receive-products-date" data-field="date" class="text-danger error error-rp_date col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
+                        {{-- Error --}}
+                        <p id="error-form-receive-products-date" data-field="date" class="text-danger error error-rp_date col-12 mt-1 mb-0" style="display:none"></p>
                     </div>
-
-                    {{-- N/A / Consign Order --}}
-                    <div class="form-group row mb-3">
-                        {{-- Input N/A --}}
-                        <div class="col-12 col-lg-2"></div>
-                        <div class="col-12 col-lg-4"></div>
-
-                        {{-- Label --}}
-                        <label for="input-form-receive-products-consign_order" class="col-12 col-lg-2 col-form-label"> 
-                            Consign Order
-                        </label>
-                        <div class="col-12 col-lg-4">
-                            {{-- Input --}}
-                            <input type="text" class="form-control rp_consign_order" id="input-form-receive-products-consign_order" name="consign_order" disabled placeholder="To be added later">
-                            {{-- Error --}}
-                            <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger error error-rp_consign_order col-12 mt-1 mb-0" style="display:none"></p>
-                        </div>
-                    </div>
-
+                </div>
+                <div id="rp_body_2" class="modal-body" style="display:none">
+                    <h5 class="mb-3">Encode Received Products</h5>
+                    <p>Supplier: <strong id="rp_supplier_text"></strong></p>
+                    <p>Date: <strong id="rp_date_text"></strong></p>
+                    <p>Possible Consign Order #: <strong id="rp_order_text"></strong></p>
+                    {{-- <p>Possible Consign Order #: <strong id="rp_consign_order_id"></strong></p> --}}
                     <div class="table-responsive">
                         <table class="table table-sm table-bordered">
                             <thead>
@@ -127,13 +118,16 @@
                             </tfoot>
                         </table>
                     </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button id="close-form-receive-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="submit-form-receive-products" type="submit" class="btn btn-primary" form="form-receive-products">Receive Products</button>
-            </div>
+                </div>
+                <div id="rp_footer_1" class="modal-footer" style="display:flex">
+                    <button id="close-form-receive-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="next-form-receive-products" type="button" class="btn btn-primary">Next</button>
+                </div>
+                <div id="rp_footer_2" class="modal-footer" style="display:none">
+                    <button id="back-form-receive-products" type="button" class="btn btn-secondary">Back</button>
+                    <button id="submit-form-receive-products" type="submit" class="btn btn-success" form="form-receive-products">Receive Products</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
