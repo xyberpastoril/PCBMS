@@ -24,8 +24,17 @@ $(document).on('click', '.rp_item_delete', function(event) {
     if(received_products.length < 1) createReceivedProductEntry();
 });
 
-// TODO: Create event to adjust sales price when unit price is changed.
-// TODO: There should be a checkmark whether to allow this or not.
+$(document).on('change', '.rp_unit_prices', function(event) {
+    var id = $(this)[0].dataset.id;
+    var unit_price = $(this).val();
+    console.log(id);
+    var sale_price = $(this).val() * 1.10;
+
+    if($(`#rp_sale_prices_${id}`).val() == "")
+    {
+        $(`#rp_sale_prices_${id}`).val(parseFloat(sale_price).toFixed(2));
+    }
+});
 
 /**
  * Auxilary Functions
