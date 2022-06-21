@@ -133,6 +133,7 @@ Route::group([
                 ], function()
                 {
                     Route::get('/order/{consignOrder}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showAjax'])->name('show-ajax');
+                    Route::get('/count/orders', function(){ return \App\Models\ConsignOrder::count(); })->name('count-order');
 
                     Route::get('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showRowsAjax'])->name('show-rows');
                     Route::post('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'receiveProductsAjax'])->name('receive-products');

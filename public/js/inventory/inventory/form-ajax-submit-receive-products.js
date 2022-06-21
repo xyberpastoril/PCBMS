@@ -38,13 +38,19 @@ $("#form-receive-products").submit(function(e){
         // generateToast('Received Products successfully added.', 'bg-success');
 
         try {
-            $('#modal-label_generate-barcode-pdf').html("Successfully received products. Displaying barcodes.");
+            $('#modal-label_generate-barcode-pdf').html(`Successfully received products with consign order # ${res.id}. Displaying barcodes.`);
             $('#iframe-generate-barcode-pdf').contents().find('body').attr('style', 'background-color:#fff').html("");
             $(`#modal-generate-barcode-pdf`).modal('show');
             $('#iframe-generate-barcode-pdf').attr('src', `/inventory/pdf/${res.uuid}`);
         } catch(err) {
             generateToast('Received Products successfully added, but failed to display barcode pdf', 'bg-success');
         }
+
+        $('#rp_body_1').show();
+        $('#rp_body_2').hide();
+        $('#rp_footer_1').attr('style', 'display:flex');
+        $('#rp_footer_2').attr('style', 'display:none');
+        $('#rp_modal_size').attr('class', 'modal-dialog');
 
         console.log("TEST");
 

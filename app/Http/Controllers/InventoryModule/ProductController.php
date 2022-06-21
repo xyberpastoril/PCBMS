@@ -36,6 +36,7 @@ class ProductController extends Controller
             'products.id',
             'products.name',
             'units.name as unit',
+            'units.abbreviation as unit_abbreviation',
             'products.expiry_duration',
             'products.expiry_duration_type',
         )

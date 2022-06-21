@@ -54,6 +54,7 @@ function onProductItemSelectSuggestion(e) {
         var expiry_date_formatted = expiry_date.getFullYear() + '-' + ('0' + (expiry_date.getMonth() + 1)).slice(-2) + '-' + ('0' + expiry_date.getDate()).slice(-2);
 
         $(`#rp_particulars_${id}`).removeAttr('disabled');
+        $(`#rp_unit_${id}`).html(e.detail.data.unit_abbreviation);
         $(`#rp_expiration_dates_${id}`).removeAttr('disabled').val(expiry_date_formatted);
         $(`#rp_unit_prices_${id}`).removeAttr('disabled');
         $(`#rp_sale_prices_${id}`).removeAttr('disabled');
@@ -67,6 +68,7 @@ function onProductItemRemove(e) {
 
     if(e.detail.tagify.DOM.originalInput.dataset.rp != undefined) {
         $(`#rp_particulars_${id}`).attr('disabled', true);
+        $(`#rp_unit_${id}`).html('');
         $(`#rp_expiration_dates_${id}`).attr('disabled', true).val("");
         $(`#rp_unit_prices_${id}`).attr('disabled', true);
         $(`#rp_sale_prices_${id}`).attr('disabled', true);
