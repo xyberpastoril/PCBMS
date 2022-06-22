@@ -21,8 +21,6 @@ class SalesController extends Controller
     {
         $validated = $request->validated();
 
-        // return $validated['customer'][0]->id;
-
         // Create an invoice
         $invoice = Invoice::create([
             'customer_id' => isset($validated['customer'][0]->id) ? $validated['customer'][0]->id : null,
@@ -31,8 +29,6 @@ class SalesController extends Controller
         ]);
 
         $invoice->customer;
-
-        // return $invoice;
 
         // Create sales
         for($i = 0; $i < count($validated['products']); $i++) {
@@ -46,7 +42,6 @@ class SalesController extends Controller
 
         DB::table('sales')->insert($sales);
 
-        // return 'Successfully created an invoice for ' . (isset($invoice->customer->name) ? $invoice->customer->name . '.' : 'a customer.');
         return $invoice;
     }
 
