@@ -69,28 +69,26 @@ class StoreSaleRequest extends FormRequest
             $sub = DB::table('consigned_products')
                 ->select(
                     'consigned_products.id',
-                    DB::raw('SUM(sales.quantity_sold) as quantity_sold'),
+                    DB::raw('IFNULL(SUM(sales.quantity_sold), 0) as quantity_sold'),
                     'consigned_products.quantity_returned',
                     DB::raw('(consigned_products.quantity - IFNULL(SUM(sales.quantity_sold), 0) - consigned_products.quantity_returned) as quantity_available'),
                 )
                 ->leftJoin('sales', 'sales.consigned_product_id', '=', 'consigned_products.id')
-                ->groupBy('sales.consigned_product_id');
+                ->groupBy('consigned_products.id');
 
             $products = $this->get('products');
             $quantities = $this->get('quantities');
-
-            // exit(var_dump($products));
 
             for($i = 0; $i < count($products); $i++)
             {
                 // exit(var_dump($products[$i]->value));
                 $consigned_product = DB::table('consigned_products')
-                    ->leftJoinSub($sub, 'transactions', function($join) {
-                        $join->on('transactions.id', '=', 'consigned_products.id');
-                    })
-                    ->where('consigned_products.id', $products[$i]->id)
-                    ->first();
-
+                ->leftJoinSub($sub, 'transactions', function($join) {
+                    $join->on('transactions.id', '=', 'consigned_products.id');
+                })
+                ->where('consigned_products.id', $products[$i]->id)
+                ->first();
+                
                 if(!$consigned_product) {
                     $validator->errors()->add('products', "Product ('{$products[$i]->name}') does not exist.");
                 }
