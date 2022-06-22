@@ -8,20 +8,20 @@
     <li class="breadcrumb-item active">Create Invoice</li>
 </ol>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="card col-12 col-xl-10 col-xxl-8">
-            <div class="card-body">
-                <form id="form-sell-products" data-model="sell-products" class="ajax-submit" method="post" action="{{ url('/ajax/sales') }}">
-                    @csrf
+<form id="form-sell-products" data-model="sell-products" class="ajax-submit" method="post" action="{{ url('/ajax/sales') }}">
+    @csrf
+    <div class="container-fluid">
+        <div class="row">
+            <div id="step1" class="card col-12 col-lg-6 col-xl-5 col-xxl-4" style="display:block">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">1/2: Enter the Customer Details and Date</h5>
                     {{-- customer / Delivery Date --}}
                     <div class="form-group row mb-3">
                         {{-- customer --}}
-                        <label for="input-form-sell-products-customer" class="col-12 col-lg-2 col-form-label"> 
+                        <label for="input-form-sell-products-customer" class="col-12 col-lg-4 col-form-label"> 
                             Customer
-                            <span class="text-danger ml-1">*</span>
                         </label>
-                        <div class="col-12 col-lg-4">
+                        <div class="col-12 col-lg-8">
                             {{-- Input --}}
                             {{-- Create an input group with a input field then appended with a button --}}
                             <div class="input-group">
@@ -37,19 +37,30 @@
                             {{-- Error --}}
                             <p class="text-danger error error-sp_customer col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
-        
+                    </div>
+
+                    <div class="form-group row mb-3">
                         {{-- Delivery Date --}}
-                        <label for="input-form-sell-products-date" class="col-12 col-lg-2 col-form-label"> 
+                        <label for="input-form-sell-products-date" class="col-12 col-lg-4 col-form-label"> 
                             Date
                             <span class="text-danger ml-1">*</span>
                         </label>
-                        <div class="col-12 col-lg-4">
+                        <div class="col-12 col-lg-8">
                             {{-- Input --}}
-                            <input type="date" class="form-control sp_date" id="input-form-sell-products-date" name="date" value="{{ now()->format('Y-m-d') }}">
+                            <input type="date" class="form-control sp_date" id="input-form-sell-products-date" name="date" value="{{ now()->format('Y-m-d') }}" readonly>
                             {{-- Error --}}
                             <p class="text-danger error error-sp_date col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
                     </div>
+
+                    <button id="step1-next" type="button" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+
+            <div id="step2" class="card col-12 col-xl-10 col-xxl-8" style="display:none">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">2/2: Encode Purchased Items</h5>
+                    <h6 id="step2-customer-name-text" class="card-subtitle mb-2 text-muted"></h6>
                     <div class="table-responsive mb-4">
                         <table class="table table-sm table-bordered">
                             <thead>
@@ -82,12 +93,13 @@
                             </tfoot>
                         </table>
                     </div>
-                    <button id="submit-form-sell-products" type="submit" class="btn btn-primary" form="form-sell-products">Checkout</button>
-                </form>
+                    <button id="submit-form-sell-products" type="submit" class="btn btn-primary" form="form-sell-products">Store Sales</button>
+                    <a id="step2-back" type="button" href="javascript:void(0)" class="btn">Back to Customer</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 
 @endsection
 

@@ -1,3 +1,14 @@
+// Events related to wizard steps.
+$(document).on('click', '#step1-next', function(e){
+    $('#step1').hide();
+    $('#step2').show();
+});
+
+$(document).on('click', '#step2-back', function(e){
+    $('#step2').hide();
+    $('#step1').show();
+});
+
 /**
  * customers Tagify
  */

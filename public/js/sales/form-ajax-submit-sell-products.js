@@ -42,6 +42,8 @@ $("#form-sell-products").submit(function(e){
         $(`#sold-product-items`).html("");
         createSoldProductEntry();   
         displayGrandTotal();
+        $('#step1').show();
+        $('#step2').hide();
     });
 
     // If request has errors (e.g. validation errors).
