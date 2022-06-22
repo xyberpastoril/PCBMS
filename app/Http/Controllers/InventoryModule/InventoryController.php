@@ -52,6 +52,31 @@ class InventoryController extends Controller
         return $consign_orders->paginate(10);
     }
 
+    public function showInventoryRowsAjax()
+    {
+        $consigned_products = ConsignedProduct::select(
+            'consigned_products.uuid',
+            'consigned_products.id',
+            DB::raw('CONCAT(products.name, " (", consigned_products.particulars, units.abbreviation, ")") as name'),
+            DB::raw('DATE_FORMAT(consign_orders.order_delivered_at, "%Y-%m-%d") as order_delivered_at'),
+            'consigned_products.expiration_date',
+            'consigned_products.unit_price',
+            'consigned_products.sale_price',
+            'consigned_products.quantity',
+            DB::raw('(consigned_products.unit_price * consigned_products.quantity) as inventory_value'),
+            DB::raw('IFNULL(SUM(sales.quantity_sold), 0) as quantity_sold'),
+        )
+        ->leftJoin('products', 'consigned_products.product_id', 'products.id')
+        ->leftJoin('units', 'products.unit_id', 'units.id')
+        ->leftJoin('consign_orders', 'consigned_products.consign_order_id', 'consign_orders.id')
+        ->leftJoin('sales', 'consigned_products.id', 'sales.consigned_product_id')
+        ->where('consigned_products.expiration_date', '>=', date('Y-m-d'))
+        ->orWhere('sales.quantity_sold', '!=', 'consigned_products.quantity')
+        ->groupBy('consigned_products.id');
+
+        return $consigned_products->paginate(10);
+    }
+
     public function receiveProductsAjax(ReceiveProductsRequest $request)
     {
         $supplier = DecodeTagifyField::run($request->supplier);
