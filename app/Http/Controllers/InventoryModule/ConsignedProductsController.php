@@ -23,7 +23,7 @@ class ConsignedProductsController extends Controller
         $units = ConsignedProduct::select(
             'consigned_products.uuid as value',
             'consigned_products.id',
-            DB::raw("CONCAT(products.name, ' (', consigned_products.particulars, units.abbreviation, ')') as name"),
+            DB::raw("CONCAT(consigned_products.id, ' - ', products.name, ' (', consigned_products.particulars, units.abbreviation, ')') as name"),
             'consigned_products.sale_price',
         )
         ->leftJoinSub($sub, 'transactions', function($join) {
