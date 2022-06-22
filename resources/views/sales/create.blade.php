@@ -14,7 +14,7 @@
         <div class="row">
             <div id="step1" class="card col-12 col-lg-6 col-xl-5 col-xxl-4" style="display:block">
                 <div class="card-body">
-                    <h5 class="card-title mb-4">1/2: Enter the Customer Details and Date</h5>
+                    <h5 class="card-title mb-4">1/2: Enter the Customer Details</h5>
                     {{-- customer / Delivery Date --}}
                     <div class="form-group row mb-3">
                         {{-- customer --}}
