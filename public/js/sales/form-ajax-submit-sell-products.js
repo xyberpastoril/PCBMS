@@ -44,6 +44,10 @@ $("#form-sell-products").submit(function(e){
         displayGrandTotal();
         $('#step1').show();
         $('#step2').hide();
+
+        var invoices_made = parseInt($('#invoices_made').html());
+        console.log(invoices_made);
+        $('#invoices_made').html(invoices_made + 1);
     });
 
     // If request has errors (e.g. validation errors).
