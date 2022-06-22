@@ -8,13 +8,19 @@
     <li class="breadcrumb-item active">Inventory</li>
 </ol>
 
-<div class="tab-pane fade show active" id="inventory" role="tabpanel" aria-labelledby="inventory-tab">
-    <div class="btn-group mb-4" role="group">
-        <button id="rp_modal_open" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-receive-products">Receive Products</button>
+
+<div class="btn-toolbar mb-4" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group me-2" role="group">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-consigned-products">Check Current Inventory</button>
+    </div>
+
+    <div class="btn-group" role="group">
+        <button id="rp_modal_open" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-receive-products">Receive Products</button>
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-pay-supplier">Pay Suppliers</button>
         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-return-expired-products">Return Expired Products</button>
     </div>
 </div>
+
 
 <div class="card">
     <div class="card-body">
@@ -42,6 +48,46 @@
 @endsection
 
 @section('modals')
+{{-- Current Inventory --}}
+<div class="modal fade" id="modal-consigned-products" tabindex="-1" aria-labelledby="modal-label-consigned-products" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label_consigned-products">Current Inventory</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-resposive mb-4">
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>
+                                ID
+                                <div id="table-spinner-consigned-products" style="display:none" class="spinner-border spinner-border-sm text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </th>
+                            <th>Name</th>
+                            <th>Delivered At</th>
+                            <th>Quantity</th>
+                            <th>Quantity Sold</th>
+                            <th>Expiration Date</th>
+                            <th>Unit Price</th>
+                            <th>Sale Price</th>
+                            <th>Inventory Value</th>
+                        </thead>
+                        <tbody id="table-content-consigned-products"></tbody>
+                    </table>
+                </div>
+        
+                <div id="table-links-consigned-products" class="btn-group mb-4" role="group"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="close-form-consigned-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{-- Receive Products --}}
 <div class="modal fade" id="modal-receive-products" tabindex="-1" aria-labelledby="modal-label-receive-products" aria-hidden="true">
     <div id="rp_modal_size" class="modal-dialog">
@@ -148,10 +194,10 @@
                             <th>Product</th>
                             <th>Quantity</th>
                             <th>Quantity Sold</th>
+                            <th>Expiration Date</th>
                             <th class="text-end">Unit Price</th>
                             <th class="text-end">Sale Price</th>
-                            <th>Expiration Date</th>
-                            <th class="text-end">Amount</th>
+                            <th class="text-end">Inventory Value</th>
                         </thead>
                         <tbody id="show-consign-order-items"></tbody>
                     </table>
@@ -322,6 +368,7 @@
 <script src="{{ url('/js/inventory/inventory/return-expired-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/form-ajax-submit-receive-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pagination-ajax-received-products.js') }}"></script>
+<script src="{{ url('/js/inventory/inventory/pagination-ajax-consigned-products.js') }}"></script>
 <script>
     var receivedProductsTable;
 
@@ -347,6 +394,29 @@
 
         request = receivedProductsTable.requestData();
         processRequestReceivedProducts(request, receivedProductsTable);
+
+        console.log("Creating a PaginationAjax instance.");;
+
+        consignedProducts = new ConsignedProductsPaginationAjax({
+            url: '/',
+            ajaxUrl: '/ajax/inventory/consigned-products',
+            modelName: 'consigned-products',
+            columns: [
+                'id',
+                'name',
+                'order_delivered_at',
+                'quantity',
+                'quantity_sold',
+                'expiration_date',
+                'unit_price',
+                'sale_price',
+                'inventory_value',
+            ],
+            actions: []
+        });
+
+        request2 = consignedProducts.requestData();
+        processRequestConsignedProducts(request2, consignedProducts);
     });  
 </script>
 @endpush
