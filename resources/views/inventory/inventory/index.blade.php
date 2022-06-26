@@ -233,7 +233,7 @@
 <div class="modal fade" id="modal-pay-supplier" tabindex="-1" aria-labelledby="modal-label-pay-supplier" aria-hidden="true">
     <div id="ps_modal_size" class="modal-dialog">
         <div class="modal-content">
-            <form id="form-pay-supplier" method="post" action="{{ url('/ajax/inventory/pay-supplier') }}">
+            <form id="form-pay-supplier" class="ajax-submit" method="post" action="{{ url('/ajax/inventory/pay-supplier') }}">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal-label_pay-supplier">Pay Supplier</h5>
@@ -300,6 +300,7 @@
                             </tfoot>
                         </table>
                     </div>
+                    <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger error error-ps_products col-12 mt-1 mb-0" style="display:none"></p>
                 </div>
                 <div id="ps_footer_1" class="modal-footer" style="display:flex">
                     <button id="close-form-pay-supplier" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -317,7 +318,7 @@
 {{-- Return Expired --}}
 <div class="modal fade" id="modal-return-expired-products" tabindex="-1" aria-labelledby="modal-label-return-expired-products" aria-hidden="true">
     <div id="rep_modal_size" class="modal-dialog">
-        <form id="form-return-expired-products" method="post" action="{{ url('/ajax/inventory/return-expired-products') }}">
+        <form id="form-return-expired-products" class="ajax-submit" method="post" action="{{ url('/ajax/inventory/return-expired-products') }}">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -360,6 +361,7 @@
                             <tbody id="return-expired-product-items"></tbody>
                         </table>
                     </div>
+                    <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger error error-rep_products col-12 mt-1 mb-0" style="display:none"></p>
                 </div>
                 <div id="rep_footer_1" class="modal-footer" style="display:flex">
                     <button id="close-form-return-expired-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -384,6 +386,7 @@
 <script src="{{ url('/js/inventory/inventory/pay-supplier.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/return-expired-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/form-ajax-submit-receive-products.js') }}"></script>
+<script src="{{ url('/js/inventory/inventory/form-ajax-submit-pay-supplier.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pagination-ajax-received-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pagination-ajax-consigned-products.js') }}"></script>
 <script>

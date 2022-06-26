@@ -31,8 +31,6 @@ $(document).on('click', '#back-form-pay-supplier', function(e){
     $('#ps_modal_size').attr('class', 'modal-dialog');
 });
 
-
-
 var _paySupplierItems = $('#pay-supplier-items');
 
 function loadProductsToPaySupplier(consign_order_id) {
