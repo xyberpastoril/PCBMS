@@ -1,3 +1,38 @@
+$(document).on('click', '#next-form-pay-supplier', function(e){
+    console.log("Next form button clicked.");
+    console.log(elm_consign_order_tagify[0]);
+    error_count = 0;
+
+    $(".error-ps_consign_order").hide();
+
+    if(elm_consign_order_tagify[0].value.length == 0)
+    {
+        console.log("Consign Order is empty.");
+        $(".error-ps_consign_order").show().text("Consign Order is required.");
+        error_count++;
+    }
+
+    if(error_count == 0)
+    {
+        $('#ps_body_1').hide();
+        $('#ps_body_2').show();
+        $('#ps_footer_1').attr('style', 'display:none');
+        $('#ps_footer_2').attr('style', 'display:flex');
+        $('#ps_modal_size').attr('class', 'modal-dialog modal-xl')
+        $('#ps_consign-order_text').html(elm_consign_order_tagify[0].value[0].label);
+    }
+});
+
+$(document).on('click', '#back-form-pay-supplier', function(e){
+    $('#ps_body_1').show();
+    $('#ps_body_2').hide();
+    $('#ps_footer_1').attr('style', 'display:flex');
+    $('#ps_footer_2').attr('style', 'display:none');
+    $('#ps_modal_size').attr('class', 'modal-dialog');
+});
+
+
+
 var _paySupplierItems = $('#pay-supplier-items');
 
 function loadProductsToPaySupplier(consign_order_id) {

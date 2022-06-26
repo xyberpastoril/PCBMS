@@ -25,7 +25,7 @@ class PaySupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            'supplier' => ['required'],
+            'consign_order' => ['required'],
             'products' => ['required', 'array'],
         ];
     }

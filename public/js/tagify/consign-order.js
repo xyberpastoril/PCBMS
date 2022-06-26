@@ -37,7 +37,7 @@ function onConsignOrderItemSelectSuggestion(e) {
         if(action == 'pay-supplier') {
             loadProductsToPaySupplier(id);
         }
-        else if(action == 'return-products') {
+        else if(action == 'return-expired-products') {
             loadExpiredProductsToReturn(id);
         }
     }
