@@ -1,6 +1,41 @@
+$(document).on('click', '#next-form-return-expired-products', function(e){
+    console.log("Next form button clicked.");
+    console.log(elm_consign_order_tagify[1]);
+    error_count = 0;
+
+    $(".error-rep_consign_order").hide();
+
+    if(elm_consign_order_tagify[1].value.length == 0)
+    {
+        console.log("Consign Order is empty.");
+        $(".error-rep_consign_order").show().text("Consign Order is required.");
+        error_count++;
+    }
+
+    if(error_count == 0)
+    {
+        $('#rep_body_1').hide();
+        $('#rep_body_2').show();
+        $('#rep_footer_1').attr('style', 'display:none');
+        $('#rep_footer_2').attr('style', 'display:flex');
+        $('#rep_modal_size').attr('class', 'modal-dialog modal-xl')
+        $('#rep_consign-order_text').html(elm_consign_order_tagify[1].value[0].label);
+    }
+});
+
+$(document).on('click', '#back-form-return-expired-products', function(e){
+    $('#rep_body_1').show();
+    $('#rep_body_2').hide();
+    $('#rep_footer_1').attr('style', 'display:flex');
+    $('#rep_footer_2').attr('style', 'display:none');
+    $('#rep_modal_size').attr('class', 'modal-dialog');
+});
+
+
+
 var _returnExpiredProductItems = $('#return-expired-product-items');
 
-function loadExpiredProductsToReturn(supplier_uuid) {
+function loadExpiredProductsToReturn(consign_order_id) {
     console.log(`Loading products to pay supplier.`);
 
     $('#submit-form-return-expired-products').attr('disabled', true);
@@ -10,7 +45,7 @@ function loadExpiredProductsToReturn(supplier_uuid) {
 
     // Load the products.
     var request = $.ajax({
-        url: `/ajax/inventory/return-expired-products/${supplier_uuid}`,
+        url: `/ajax/inventory/return-expired-products/${consign_order_id}`,
         method: "GET",
         dataType: "json",
     });

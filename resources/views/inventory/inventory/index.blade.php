@@ -231,30 +231,34 @@
 
 {{-- Pay Supplier --}}
 <div class="modal fade" id="modal-pay-supplier" tabindex="-1" aria-labelledby="modal-label-pay-supplier" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div id="ps_modal_size" class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal-label_pay-supplier">Pay Supplier</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="form-pay-supplier" method="post" action="{{ url('/ajax/inventory/pay-supplier') }}">
-                    @csrf
-
+            <form id="form-pay-supplier" class="ajax-submit" method="post" action="{{ url('/ajax/inventory/pay-supplier') }}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-label_pay-supplier">Pay Supplier</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="ps_body_1" class="modal-body" style="display:block">
+                    <h5 class="mb-3">Encode Consign Order</h5>
                     {{-- Supplier / Delivery Date --}}
                     <div class="form-group row mb-3">
-                        {{-- Supplier --}}
-                        <label for="input-form-pay-supplier-supplier" class="col-12 col-lg-2 col-form-label"> 
-                            Supplier
+                        {{-- Label --}}
+                        <label for="input-form-pay-supplier-consign_order" class="col-12 col-lg-6 col-form-label"> 
+                            Consign Order
                             <span class="text-danger ml-1">*</span>
                         </label>
-                        <div class="col-12 col-lg-4">
-                            {{-- Input --}}
-                            <input type="text" class="form-control ps_supplier input-supplier" id="input-form-pay-supplier-supplier" name="supplier">
-                            {{-- Error --}}
-                            <p id="error-form-pay-supplier-supplier" data-field="supplier" class="text-danger error error-ps_supplier error-ps_products col-12 mt-1 mb-0" style="display:none"></p>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            <input type="text" class="form-control ps_consign_order input-consign_order" id="input-form-pay-supplier-consign_order" data-action="pay-supplier" name="consign_order">
                         </div>
+                        {{-- Error --}}
+                        <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger error error-ps_consign_order col-12 mt-1 mb-0" style="display:none"></p>
                     </div>
+                </div>
+                <div id="ps_body_2" class="modal-body" style="display:none">
+                    <h5 class="mb-3">Select Products to Pay</h5>
+                    <p>Consign Order: <strong id="ps_consign-order_text" ></strong></p>
 
                     <div class="table-responsive">
                         <table class="table table-sm table-bordered">
@@ -296,43 +300,53 @@
                             </tfoot>
                         </table>
                     </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button id="close-form-pay-supplier" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="submit-form-pay-supplier" type="submit" class="btn btn-primary" form="form-pay-supplier">Pay Supplier</button>
-            </div>
+                    <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger error error-ps_products col-12 mt-1 mb-0" style="display:none"></p>
+                </div>
+                <div id="ps_footer_1" class="modal-footer" style="display:flex">
+                    <button id="close-form-pay-supplier" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="next-form-pay-supplier" type="button" class="btn btn-primary">Next</button>
+                </div>
+                <div id="ps_footer_2" class="modal-footer" style="display:none">
+                    <button id="back-form-pay-supplier" type="button" class="btn btn-secondary">Back</button>
+                    <button id="submit-form-pay-supplier" type="submit" class="btn btn-primary" form="form-pay-supplier">Pay Supplier</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 {{-- Return Expired --}}
 <div class="modal fade" id="modal-return-expired-products" tabindex="-1" aria-labelledby="modal-label-return-expired-products" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal-label_return-expired-products">Return Expired Products</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="form-return-expired-products" method="post" action="{{ url('/ajax/inventory/return-expired-products') }}">
-                    @csrf
+    <div id="rep_modal_size" class="modal-dialog">
+        <form id="form-return-expired-products" class="ajax-submit" method="post" action="{{ url('/ajax/inventory/return-expired-products') }}">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-label_return-expired-products">Return Expired Products</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="rep_body_1" class="modal-body" style="display:block">
 
+                    <h5 class="mb-3">Encode Consign Order</h5>
                     {{-- Supplier / Delivery Date --}}
                     <div class="form-group row mb-3">
-                        {{-- Supplier --}}
-                        <label for="input-form-return-expired-products-supplier" class="col-12 col-lg-2 col-form-label"> 
-                            Supplier
+                        {{-- Label --}}
+                        <label for="input-form-return-expired-products-consign_order" class="col-12 col-lg-6 col-form-label"> 
+                            Consign Order
                             <span class="text-danger ml-1">*</span>
                         </label>
-                        <div class="col-12 col-lg-4">
-                            {{-- Input --}}
-                            <input type="text" class="form-control rep_supplier input-supplier" id="input-form-return-expired-products-supplier" name="supplier">
-                            {{-- Error --}}
-                            <p id="error-form-return-expired-products-supplier" data-field="supplier" class="text-danger error error-rep_supplier error-rep_products col-12 mt-1 mb-0" style="display:none"></p>
+                        {{-- Input --}}
+                        <div class="col-12 col-lg-6">
+                            <input type="text" class="form-control ps_consign_order input-consign_order" id="input-form-return-expired-products-consign_order" data-action="return-expired-products" name="consign_order">
                         </div>
+                        {{-- Error --}}
+                        <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger error error-rep_consign_order col-12 mt-1 mb-0" style="display:none"></p>
                     </div>
+
+                </div>
+                <div id="rep_body_2" class="modal-body" style="display:none">
+                    <h5 class="mb-3">Select Expired Products to Return</h5>
+                    <p>Consign Order: <strong id="rep_consign-order_text"></strong></p>
 
                     <div class="table-responsive">
                         <table class="table table-sm table-bordered">
@@ -347,14 +361,18 @@
                             <tbody id="return-expired-product-items"></tbody>
                         </table>
                     </div>
-
-                </form>
+                    <p id="error-form-receive-products-consign_order" data-field="consign_order" class="text-danger error error-rep_products col-12 mt-1 mb-0" style="display:none"></p>
+                </div>
+                <div id="rep_footer_1" class="modal-footer" style="display:flex">
+                    <button id="close-form-return-expired-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="next-form-return-expired-products" type="button" class="btn btn-primary">Next</button>
+                </div>
+                <div id="rep_footer_2" class="modal-footer" style="display:none">
+                    <button id="back-form-return-expired-products" type="button" class="btn btn-secondary">Back</button>
+                    <button id="submit-form-return-expired-products" type="submit" class="btn btn-primary" form="form-return-expired-products">Return Expired Products</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button id="close-form-return-expired-products" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="submit-form-return-expired-products" type="submit" class="btn btn-primary" form="form-return-expired-products">Return Expired Products</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 @endsection
@@ -362,11 +380,13 @@
 @push('app-scripts')
 <script src="{{ url('/js/tagify/product.js') }}"></script>
 <script src="{{ url('/js/tagify/supplier.js') }}"></script>
+<script src="{{ url('/js/tagify/consign-order.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/inventory.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/receive-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pay-supplier.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/return-expired-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/form-ajax-submit-receive-products.js') }}"></script>
+<script src="{{ url('/js/inventory/inventory/form-ajax-submit-pay-supplier.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pagination-ajax-received-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pagination-ajax-consigned-products.js') }}"></script>
 <script>

@@ -140,11 +140,11 @@ Route::group([
                     Route::get('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showRowsAjax'])->name('show-rows');
                     Route::post('/receive-products', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'receiveProductsAjax'])->name('receive-products');
 
-                    Route::get('/pay-supplier/{supplier?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showProductsToPayAjax'])->name('show-products-to-pay');
-                    Route::post('/pay-supplier/{supplier?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'paySupplierAjax'])->name('pay-supplier');
+                    Route::get('/pay-supplier/{consign_order?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showProductsToPayAjax'])->name('show-products-to-pay');
+                    Route::post('/pay-supplier/{consign_order?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'paySupplierAjax'])->name('pay-supplier');
 
-                    Route::get('/return-expired-products/{supplier?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showExpiredProductsToReturnAjax'])->name('show-expired-products-to-return');
-                    Route::post('/return-expired-products/{supplier?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'returnExpiredProductsAjax'])->name('return-expired-products');
+                    Route::get('/return-expired-products/{consign_order?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'showExpiredProductsToReturnAjax'])->name('show-expired-products-to-return');
+                    Route::post('/return-expired-products/{consign_order?}', [\App\Http\Controllers\InventoryModule\InventoryController::class, 'returnExpiredProductsAjax'])->name('return-expired-products');
                 });
             });
 
@@ -282,6 +282,7 @@ Route::group([
     {
         // AJAX
         Route::get('/suppliers/{query}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'searchTagifyAjax'])->name('suppliers');
+        Route::get('/consign-orders/{query?}', [\App\Http\Controllers\InventoryModule\ConsignOrderController::class, 'searchTagifyAjax'])->name('consign-orders');
         Route::get('/products/{query}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'searchTagifyAjax'])->name('products');
         Route::get('/units/{query}', [\App\Http\Controllers\InventoryModule\UnitsController::class, 'searchTagifyAjax'])->name('units');
         Route::get('/consigned-products/{query}', [App\Http\Controllers\InventoryModule\ConsignedProductsController::class, 'searchTagifyAjax'])->name('consigned-products');

@@ -149,7 +149,7 @@ class InventoryController extends Controller
     }
 
     // TODO: Pay Supplier
-    public function showProductsToPayAjax(Supplier $supplier = null)
+    public function showProductsToPayAjax(ConsignOrder $consign_order = null)
     {
         // SELECT x.*
         // FROM (
@@ -180,6 +180,7 @@ class InventoryController extends Controller
 
         $sub_consigned_products = DB::table('consigned_products')
             ->select(
+                'consign_orders.id as consign_order_id',
                 'consigned_products.uuid',
                 DB::raw("CONCAT(products.name, ' (', consigned_products.particulars, units.abbreviation, ')') as name"),
                 'consigned_products.id',
@@ -215,8 +216,8 @@ class InventoryController extends Controller
             ->select('x.*')
             ->whereRaw('x.quantity_sold > x.quantity_paid');           
 
-        if($supplier) {
-            $consigned_products->where('x.supplier_id', $supplier->id);
+        if($consign_order) {
+            $consigned_products->where('x.consign_order_id', $consign_order->id);
         }
 
         return $consigned_products->get();
@@ -243,10 +244,11 @@ class InventoryController extends Controller
     }
 
     // TODO: Return Expired Products
-    public function showExpiredProductsToReturnAjax(Supplier $supplier = null)
+    public function showExpiredProductsToReturnAjax(ConsignOrder $consign_order = null)
     {
         $consigned_products = DB::table('consigned_products')
             ->select(
+                'consign_orders.id as consign_order_id',
                 'consigned_products.uuid',
                 DB::raw("CONCAT(products.name, ' (', consigned_products.particulars, units.abbreviation, ')') as name"),
                 'consigned_products.expiration_date',
@@ -280,8 +282,8 @@ class InventoryController extends Controller
             ->havingRaw('quantity_to_return > 0 or quantity_to_return is null')
             ->whereRaw('DATEDIFF(consigned_products.expiration_date, CURDATE()) < 0');
 
-        if($supplier) {
-            $consigned_products->where('consign_orders.supplier_id', $supplier->id);
+        if($consign_order) {
+            $consigned_products->where('consign_order_id', $consign_order->id);
         }
 
         return $consigned_products->get();
