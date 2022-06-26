@@ -1,6 +1,6 @@
 var _paySupplierItems = $('#pay-supplier-items');
 
-function loadProductsToPaySupplier(supplier_uuid) {
+function loadProductsToPaySupplier(consign_order_id) {
     console.log(`Loading products to pay supplier.`);
     $('#pay-supplier-grand-total').html(`0.00`);
 
@@ -11,9 +11,9 @@ function loadProductsToPaySupplier(supplier_uuid) {
 
     // Load the products.
     var request = $.ajax({
-        url: `/ajax/inventory/pay-supplier/${supplier_uuid}`,
+        url: `/ajax/inventory/pay-supplier/${consign_order_id}`,
         method: "GET",
-        dataType: "json",
+        dataType: "json", 
     });
 
     request.done(function(data) {

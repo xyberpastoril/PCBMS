@@ -1,6 +1,6 @@
 var _returnExpiredProductItems = $('#return-expired-product-items');
 
-function loadExpiredProductsToReturn(supplier_uuid) {
+function loadExpiredProductsToReturn(consign_order_id) {
     console.log(`Loading products to pay supplier.`);
 
     $('#submit-form-return-expired-products').attr('disabled', true);
@@ -10,7 +10,7 @@ function loadExpiredProductsToReturn(supplier_uuid) {
 
     // Load the products.
     var request = $.ajax({
-        url: `/ajax/inventory/return-expired-products/${supplier_uuid}`,
+        url: `/ajax/inventory/return-expired-products/${consign_order_id}`,
         method: "GET",
         dataType: "json",
     });
