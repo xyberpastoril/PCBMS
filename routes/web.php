@@ -282,6 +282,7 @@ Route::group([
     {
         // AJAX
         Route::get('/suppliers/{query}', [\App\Http\Controllers\InventoryModule\SupplierController::class, 'searchTagifyAjax'])->name('suppliers');
+        Route::get('/consign-orders/{query?}', [\App\Http\Controllers\InventoryModule\ConsignOrderController::class, 'searchTagifyAjax'])->name('consign-orders');
         Route::get('/products/{query}', [\App\Http\Controllers\InventoryModule\ProductController::class, 'searchTagifyAjax'])->name('products');
         Route::get('/units/{query}', [\App\Http\Controllers\InventoryModule\UnitsController::class, 'searchTagifyAjax'])->name('units');
         Route::get('/consigned-products/{query}', [App\Http\Controllers\InventoryModule\ConsignedProductsController::class, 'searchTagifyAjax'])->name('consigned-products');

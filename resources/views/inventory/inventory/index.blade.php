@@ -245,12 +245,12 @@
                     <div class="form-group row mb-3">
                         {{-- Supplier --}}
                         <label for="input-form-pay-supplier-supplier" class="col-12 col-lg-2 col-form-label"> 
-                            Supplier
+                            Consign Order
                             <span class="text-danger ml-1">*</span>
                         </label>
                         <div class="col-12 col-lg-4">
                             {{-- Input --}}
-                            <input type="text" class="form-control ps_supplier input-supplier" id="input-form-pay-supplier-supplier" name="supplier">
+                            <input type="text" class="form-control ps_supplier input-consign_order" data-action="pay-supplier" id="input-form-pay-supplier-supplier" name="supplier">
                             {{-- Error --}}
                             <p id="error-form-pay-supplier-supplier" data-field="supplier" class="text-danger error error-ps_supplier error-ps_products col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
@@ -323,12 +323,12 @@
                     <div class="form-group row mb-3">
                         {{-- Supplier --}}
                         <label for="input-form-return-expired-products-supplier" class="col-12 col-lg-2 col-form-label"> 
-                            Supplier
+                            Consign Order
                             <span class="text-danger ml-1">*</span>
                         </label>
                         <div class="col-12 col-lg-4">
                             {{-- Input --}}
-                            <input type="text" class="form-control rep_supplier input-supplier" id="input-form-return-expired-products-supplier" name="supplier">
+                            <input type="text" class="form-control rep_supplier input-consign_order" data-action="return-products" id="input-form-return-expired-products-supplier" name="supplier">
                             {{-- Error --}}
                             <p id="error-form-return-expired-products-supplier" data-field="supplier" class="text-danger error error-rep_supplier error-rep_products col-12 mt-1 mb-0" style="display:none"></p>
                         </div>
@@ -362,6 +362,7 @@
 @push('app-scripts')
 <script src="{{ url('/js/tagify/product.js') }}"></script>
 <script src="{{ url('/js/tagify/supplier.js') }}"></script>
+<script src="{{ url('/js/tagify/consign-order.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/inventory.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/receive-products.js') }}"></script>
 <script src="{{ url('/js/inventory/inventory/pay-supplier.js') }}"></script>
